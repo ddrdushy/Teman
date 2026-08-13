@@ -2,9 +2,10 @@ import type { ReactNode } from 'react';
 
 /* Shared shell for the prose-led public pages: measure capped, body 18px,
    generous rhythm (docs/08). */
-export function ProsePage({ title, lede, children }: {
+export function ProsePage({ title, lede, photo, children }: {
   title: string;
   lede?: string;
+  photo?: ReactNode;          // a <Photo eager> — sits between lede and body
   children: ReactNode;
 }) {
   return (
@@ -17,6 +18,7 @@ export function ProsePage({ title, lede, children }: {
           {lede}
         </p>
       )}
+      {photo && <div style={{ margin: '0 0 var(--s-6)' }}>{photo}</div>}
       <div style={{ display: 'grid', gap: 'var(--s-5)', lineHeight: 1.65 }}>{children}</div>
     </main>
   );

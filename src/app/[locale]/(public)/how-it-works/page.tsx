@@ -1,11 +1,13 @@
 import { getTranslations } from 'next-intl/server';
 import { ProsePage, Section } from '../ProsePage';
+import { Photo } from '@/components/Photo';
 import { Sisi } from '@/components/Sisi';
 
 /* P2 · Remove uncertainty — both journeys, four steps each, side by side
    where the screen allows. */
 export default async function HowItWorksPage() {
   const t = await getTranslations('site.how');
+  const tImg = await getTranslations('site.img');
 
   const journey = (side: 'need' | 'help') => (
     <div style={{ flex: '1 1 280px', display: 'grid', gap: 'var(--s-2)', alignContent: 'start' }}>
@@ -17,7 +19,7 @@ export default async function HowItWorksPage() {
   );
 
   return (
-    <ProsePage title={t('title')} lede={t('lede')}>
+    <ProsePage title={t('title')} lede={t('lede')} photo={<Photo slot="market" alt={tImg('market')} eager />}>
       <div style={{ display: 'flex', gap: 'var(--s-6)', flexWrap: 'wrap' }}>
         {journey('need')}
         {journey('help')}

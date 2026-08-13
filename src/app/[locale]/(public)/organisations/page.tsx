@@ -1,15 +1,17 @@
 import Link from 'next/link';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { ProsePage, Section } from '../ProsePage';
+import { Photo } from '@/components/Photo';
 
 /* P6 ★ · Get an NGO or residents association to partner. Contact goes to
    a real person; the platform costs the organisation nothing. */
 export default async function OrganisationsPage() {
   const locale = await getLocale();
   const t = await getTranslations('site.orgs');
+  const tImg = await getTranslations('site.img');
 
   return (
-    <ProsePage title={t('title')} lede={t('lede')}>
+    <ProsePage title={t('title')} lede={t('lede')} photo={<Photo slot="corridor" alt={tImg('corridor')} eager />}>
       <Section heading={t('whatTitle')}>
         <p style={{ margin: 0 }}>{t('whatBody')}</p>
       </Section>

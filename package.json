@@ -20,7 +20,8 @@
     "test:report:open": "playwright show-report test-reports/playwright-html",
     "seed:demo": "node scripts/seed/areas.mjs && node scripts/seed/categories.mjs && node scripts/seed/admins.mjs && node scripts/seed/demo.mjs",
     "build:migrate": "esbuild src/migrate.ts --bundle --platform=node --target=node22 --external:pg-native --outfile=dist/migrate.js",
-    "check:messages": "node scripts/check-messages.mjs"
+    "check:messages": "node scripts/check-messages.mjs",
+    "build:images": "node scripts/build-images.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1109.0",
