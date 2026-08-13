@@ -44,7 +44,8 @@
     "areaSearchLabel": "Search for your area",
     "areaNoneTitle": "We could not find that area",
     "areaNoneBody": "Try a different spelling, or pick the nearest area to you.",
-    "intentPrompt": "What brings you to Teman?"
+    "intentPrompt": "What brings you to Teman?",
+    "confirm": "Confirm"
   },
   "home": {
     "greeting": "Selamat pagi, {name}",
@@ -412,6 +413,11 @@
         "active": "Active"
       },
       "approve": "Approve this circle"
+    },
+    "dup": {
+      "title": "Duplicate documents",
+      "empty": "No document appears on more than one account.",
+      "groupLabel": "Same document, different accounts — usually a re-registration, occasionally not:"
     }
   },
   "profile": {
@@ -679,7 +685,9 @@
     "matchedWith": "{name} will be there",
     "openMatch": "Meeting details",
     "speechStart": "Say it instead — tap and speak",
-    "speechStop": "Stop and fill the form"
+    "speechStop": "Stop and fill the form",
+    "continue": "Continue",
+    "back": "Back"
   },
   "nearby": {
     "title": "People near you",
@@ -863,7 +871,8 @@
     "g3Title": "Not a dating app",
     "g3Body": "Romantic or sexual approaches are against the rules, in messages and in person, and are a report category taken seriously.",
     "g4Title": "Your information stays yours",
-    "g4Body": "Exact addresses and phone numbers are only shared after both sides accept, and every reveal is recorded. Never share banking details, PINs or OTP codes with anyone."
+    "g4Body": "Exact addresses and phone numbers are only shared after both sides accept, and every reveal is recorded. Never share banking details, PINs or OTP codes with anyone.",
+    "reportRowSub": "Tell a person what happened"
   },
   "feedback": {
     "howWasIt": "How was {name}?",
@@ -1177,6 +1186,25 @@
       "responseTime": "A person replies, usually within two working days.",
       "orgTitle": "Organisations",
       "orgBody": "For partnership conversations, mention your organisation and area — the coordinator for your district will reply directly."
+    },
+    "faq": {
+      "title": "The ones people actually ask.",
+      "freeQ": "Is it really free? What is the catch?",
+      "freeA": "Yes, and there is not one. No payments between members, no subscription, no commission, no tipping, no ads. If anyone on Teman asks you for money, report it — that is the single most common way people are taken advantage of, and it is why we say it this bluntly.",
+      "whoQ": "Who are these people, really?",
+      "whoA": "Neighbours — mostly people with a few free hours who wanted a way to use them. Every Teman gives a phone number and a photo, and most complete a MyKad check reviewed by a person at a partner organisation. You see their record, their languages, how many times they have shown up and what other members said, before you decide anything.",
+      "nobodyQ": "What if nobody comes?",
+      "nobodyA": "Sometimes nobody can. If your request has not found anyone, we tell you the evening before — not on the morning — and suggest what else you could try. We would rather say it plainly than let you find out at the door.",
+      "wrongQ": "What happens if something goes wrong?",
+      "wrongA": "There is a safety button in every session: contact your trusted person, call 999, share your location, or report what is happening. A serious report stops that person from being matched immediately, before a human has even reviewed it. Reports are read by a person, usually within a day, and you are told what was decided.",
+      "noPhoneQ": "My father does not have a smartphone.",
+      "noPhoneA": "That is the common case, and the app is built for it. You create a profile for him, you make the requests, and you get every update. He never needs to touch a phone — and his preferred language is set separately from yours.",
+      "genderQ": "Can I ask for a woman for my mother?",
+      "genderA": "Yes. Women only, men only, or no preference — alongside language, age range and whether the person needs to drive. Nobody is ever matched against a preference you set.",
+      "datingQ": "Is this a dating app?",
+      "datingA": "No, and romantic or sexual approaches are against the guidelines in messages and in person. It is a report category, and it is treated seriously.",
+      "idQ": "What happens to my ID after verification?",
+      "idA": "One trained reviewer checks it, then it is deleted within 90 days. The number itself is never stored — only a scrambled code that detects the same document on two accounts."
     }
   }
 }
