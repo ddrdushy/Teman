@@ -4,6 +4,7 @@ import { getLocale } from 'next-intl/server';
 import { db } from '@/db';
 import { person, careRecipient, category } from '@/db/schema';
 import { personIdFromSession } from '@/auth';
+import { ai } from '@/lib/ai';
 import { RequestWizard } from './RequestWizard';
 
 /* E1–E11 · Seven steps, one decision per screen, autosaved to the device so
@@ -39,6 +40,7 @@ export default async function RequestNewPage() {
           c.nameEn,
       }))}
       defaultAreaId={p.areaId}
+      aiAvailable={ai.available()}
     />
   );
 }

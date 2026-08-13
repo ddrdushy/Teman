@@ -677,7 +677,9 @@
     "tryDifferentTime": "Try a different time",
     "seeCommunity": "See who is around you",
     "matchedWith": "{name} will be there",
-    "openMatch": "Meeting details"
+    "openMatch": "Meeting details",
+    "speechStart": "Say it instead — tap and speak",
+    "speechStop": "Stop and fill the form"
   },
   "nearby": {
     "title": "People near you",

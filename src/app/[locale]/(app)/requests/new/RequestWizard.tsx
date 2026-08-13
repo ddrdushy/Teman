@@ -19,6 +19,56 @@ import { Banner } from '@/components/Banner';
 import { Sisi } from '@/components/Sisi';
 import { Skeleton } from '@/components/Skeleton';
 
+/* Speech → pre-filled form, EVERY field shown for confirmation before
+   anything is published (docs/12 §1). Renders only when a provider exists. */
+function SpeechIntake({ onDraft }: { onDraft: (patch: Partial<Draft>) => void }) {
+  const t = useTranslations('req');
+  const locale = useLocale();
+  const [state, setState] = useState<'idle' | 'recording' | 'busy'>('idle');
+  const recRef = { current: null as MediaRecorder | null };
+
+  async function start() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const rec = new MediaRecorder(stream);
+      const chunks: Blob[] = [];
+      rec.ondataavailable = (e) => chunks.push(e.data);
+      rec.onstop = async () => {
+        stream.getTracks().forEach((tr) => tr.stop());
+        setState('busy');
+        const form = new FormData();
+        form.set('audio', new Blob(chunks, { type: rec.mimeType }));
+        form.set('locale', locale);
+        const res = await fetch('/api/ai/transcribe', { method: 'POST', body: form });
+        setState('idle');
+        if (!res.ok) return; /* silently: the plain form is right here */
+        const { data } = await res.json();
+        onDraft({
+          destinationText: data.destinationText ?? '',
+          description: data.descriptionText ?? '',
+        });
+      };
+      rec.start();
+      recRef.current = rec;
+      setState('recording');
+      setTimeout(() => rec.state === 'recording' && rec.stop(), 30_000);
+    } catch {
+      setState('idle');
+    }
+  }
+
+  return (
+    <Button
+      variant="ghost"
+      size="md"
+      loading={state === 'busy'}
+      onClick={() => (state === 'recording' ? recRef.current?.stop() : start())}
+    >
+      {state === 'recording' ? t('speechStop') : t('speechStart')}
+    </Button>
+  );
+}
+
 type Recipient = { id: string; name: string; relationship: string | null; accessibility: string[] };
 type Cat = { id: string; group: string; key: string; name: string };
 type AreaRow = { id: string; name: string; nameMs: string | null; nameTa: string | null; nameZh: string | null };
@@ -58,10 +108,15 @@ const EMPTY: Draft = {
 
 const HOURS = Array.from({ length: 15 }, (_, i) => `${String(i + 7).padStart(2, '0')}:00`);
 
-export function RequestWizard({ recipients, categories, defaultAreaId }: {
+export function RequestWizard({ recipients, categories, defaultAreaId, aiAvailable = false }: {
   recipients: Recipient[];
   categories: Cat[];
   defaultAreaId: string;
+  /* docs/12: speech input and category suggestion appear ONLY when a
+     provider is configured. With AI_PROVIDER=none nothing here renders and
+     the seven steps are unchanged — speech is an accelerant, never the
+     only route. */
+  aiAvailable?: boolean;
 }) {
   const t = useTranslations('req');
   const tp = useTranslations('profile');
@@ -184,6 +239,7 @@ export function RequestWizard({ recipients, categories, defaultAreaId }: {
       <main className="screen-pad" style={{ display: 'grid', gap: 'var(--s-4)' }}>
         {header}
         <h1 style={{ fontFamily: 'var(--serif)', fontSize: '1.5em', margin: 0 }}>{t('step1Title')}</h1>
+        {aiAvailable && <SpeechIntake onDraft={(patch) => set(patch)} />}
         <RadioCards
           columns={2}
           value={d.group}

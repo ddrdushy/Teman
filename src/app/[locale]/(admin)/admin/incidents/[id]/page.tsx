@@ -5,6 +5,8 @@ import { db } from '@/db';
 import { report, person, session, match, request, message, auditLog } from '@/db/schema';
 import { requireRole } from '@/lib/admin';
 import { audit } from '@/lib/privacy';
+import { ai } from '@/lib/ai';
+import { firstNameOnly } from '@/lib/ai/guard';
 import { IncidentActions } from './IncidentActions';
 
 /* N11 · Incident detail — the full timeline: request, match, messages,
@@ -52,6 +54,24 @@ export default async function IncidentDetailPage({
         {subject?.suspendedAt && <> · <span className="pill pill-error">{t('inc.restricted')}</span></>}
       </p>
       {r.detail && <blockquote style={{ margin: 0, borderInlineStart: '3px solid var(--n-300)', paddingInlineStart: '12px' }}>{r.detail}</blockquote>}
+
+      {/* docs/12 §6: a summary ABOVE the timeline when a provider is
+          configured; the full timeline always stays. With AI_PROVIDER=none
+          this block simply never renders. First names only reach the model. */}
+      {ai.available() && await (async () => {
+        const summary = await ai.summariseIncident([
+          { category: r.category, detail: r.detail },
+          ...msgs.map((x) => ({
+            from: firstNameOnly(x.senderId === r.subjectPersonId ? subject?.displayName ?? '' : reporter?.displayName ?? ''),
+            body: x.body,
+          })),
+        ]);
+        return summary.ok ? (
+          <p style={{ margin: 0, padding: '10px 12px', background: 'var(--info-fill)', color: 'var(--info-text)', borderRadius: '10px', fontSize: '14px' }}>
+            {summary.data}
+          </p>
+        ) : null;
+      })()}
 
       {req && (
         <section>
