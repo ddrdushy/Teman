@@ -20,6 +20,8 @@ export async function POST(req: NextRequest) {
     categories?: string[];
     transport?: string[];
     repeatsWeekly?: boolean;
+    /* set => this is a journey (F5): availability with a destination */
+    destinationAreaId?: string;
   };
   try {
     body = await req.json();
@@ -52,6 +54,15 @@ export async function POST(req: NextRequest) {
   }
   if (!centre) return NextResponse.json({ ok: false }, { status: 400 });
 
+  let destinationPoint: string | null = null;
+  if (body.destinationAreaId) {
+    const [dest] = await db.select({
+      wkt: dsql<string>`ST_AsText(${area.centroid}::geometry)`,
+    }).from(area).where(eq(area.id, body.destinationAreaId));
+    if (!dest?.wkt) return NextResponse.json({ ok: false, reason: 'unknown_area' }, { status: 400 });
+    destinationPoint = dest.wkt;
+  }
+
   const values = {
     startsAt,
     endsAt,
@@ -61,6 +72,7 @@ export async function POST(req: NextRequest) {
     categories: body.categories ?? [],
     transport: body.transport ?? [],
     repeatsWeekly: Boolean(body.repeatsWeekly),
+    destinationPoint,
     isActive: true,
   };
 

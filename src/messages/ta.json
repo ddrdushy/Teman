@@ -602,5 +602,25 @@
     "writeLabel": "Write a message",
     "sendCta": "Send",
     "sendFailed": "Not sent. Your message is still here — try again."
+  },
+  "journey": {
+    "title": "Going somewhere?",
+    "lead": "If you are already heading somewhere, someone nearby may need company to the same place.",
+    "emptyTitle": "No journeys saved",
+    "emptyBody": "Tell us where you are going and when. If someone needs a Teman to the same place around the same time, we will show you.",
+    "addCta": "I am going somewhere",
+    "newTitle": "Where are you going?",
+    "destLabel": "Destination area",
+    "destHint": "The area you are travelling to.",
+    "moreDays": "More",
+    "fromLabel": "From",
+    "untilLabel": "Until",
+    "saveCta": "Save my journey",
+    "saveFailed": "That did not go through — try again.",
+    "notAutoMatched": "Nobody is matched automatically. You will see requests going the same way and choose whether to offer.",
+    "overlapTitle": "Going the same way",
+    "noneTitle": "No one needs company on this trip yet",
+    "noneBody": "If a request appears near your destination around your time, it will show here.",
+    "sameWay": "Near your destination, around your time"
   }
 }
