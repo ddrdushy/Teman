@@ -266,7 +266,7 @@ export function Gallery({ textScale }: { textScale: number }) {
       </Section>
 
       <Section n={21} name="Avatar">
-        <div style={{ display: 'flex', gap: 'var(--s-4)', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 'var(--s-4)', alignItems: 'center', flexWrap: 'wrap' }}>
           <Avatar name="Kumar" />
           <Avatar name="Siva" size="lg" />
           <AvatarGroup names={['Farah', 'Mei Ling', 'Kumar', 'Priya', 'Ravi']} />
@@ -285,7 +285,7 @@ export function Gallery({ textScale }: { textScale: number }) {
       </Section>
 
       <Section n={24} name="ProgressRing">
-        <div style={{ display: 'flex', gap: 'var(--s-4)', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 'var(--s-4)', alignItems: 'center', flexWrap: 'wrap' }}>
           <ProgressRing percent={70} label={t('ui.stepOf', { current: 7, total: 10 })} />
           <ProgressRing percent={100} label={t('ui.stepOf', { current: 10, total: 10 })} />
         </div>

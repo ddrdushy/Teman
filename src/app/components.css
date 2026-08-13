@@ -76,8 +76,9 @@
 }
 
 /* ── 4 · RadioCards ─────────────────────────────────────────── */
-.radio-cards { display: grid; gap: var(--tap-gap); }
-.radio-cards.cols-2 { grid-template-columns: 1fr 1fr; }
+.radio-cards { display: grid; gap: var(--tap-gap); grid-template-columns: minmax(0, 1fr); }
+.radio-cards.cols-2 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.radio-cards > * { min-width: 0; }
 .radio-card {
   display: flex; align-items: center; justify-content: space-between; gap: 0.6em;
   min-height: var(--tap-primary); padding: 0.7em 0.9em;
@@ -210,7 +211,10 @@
 .option-row.is-selected .or-tick { color: var(--t-900); }
 
 /* ── shared layout helpers ──────────────────────────────────── */
-.stack { display: grid; gap: var(--tap-gap); }
+/* minmax(0,1fr): grid items default to min-width:auto, which lets a long
+   Tamil word force the column wider than the phone. Never let it. */
+.stack { display: grid; gap: var(--tap-gap); grid-template-columns: minmax(0, 1fr); }
+.stack > * { min-width: 0; }
 .screen-pad { padding: var(--s-6) var(--s-5); max-width: 44ch; margin: 0 auto; }
 
 /* ═══ Primitives 16–28 (batch 2) ═══════════════════════════════ */
@@ -279,10 +283,11 @@
 /* ── 19 · Segmented ─────────────────────────────────────────── */
 .segmented { display: flex; gap: 6px; border: 1.5px solid var(--n-500); border-radius: var(--r-btn); padding: 4px; background: var(--white); }
 .segmented button {
-  flex: 1; min-height: var(--tap-min);
+  flex: 1; min-width: 0; min-height: var(--tap-min);
   border: 0; border-radius: calc(var(--r-btn) - 4px);
   background: transparent; color: var(--n-900);
   font: 600 0.92em/1.25 inherit; cursor: pointer; padding: 0.4em 0.5em;
+  overflow-wrap: anywhere;
 }
 .segmented button[aria-pressed="true"] { background: var(--t-900); color: var(--white); }
 
