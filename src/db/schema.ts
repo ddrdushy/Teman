@@ -259,6 +259,25 @@ export const block = pgTable('block', {
   uniq: uniqueIndex('block_unique').on(t.blockerId, t.blockedId),
 }));
 
+/* One row per OTP sent. Rate limits are computed from these rows (3/number/hr,
+   10/IP/hr — the constants live in lib/otp.ts, not in config). Only the hash is
+   stored; codes are never persisted in clear. Device trust (A-04) is the 90-day
+   session cookie, not a table. */
+export const otpChallenge = pgTable('otp_challenge', {
+  id:         uuid('id').primaryKey().defaultRandom(),
+  phoneE164:  text('phone_e164').notNull(),
+  codeHash:   text('code_hash').notNull(),
+  salt:       text('salt').notNull(),
+  requestIp:  text('request_ip'),
+  attempts:   integer('attempts').notNull().default(0),
+  expiresAt:  timestamp('expires_at', { withTimezone: true }).notNull(),
+  consumedAt: timestamp('consumed_at', { withTimezone: true }),
+  createdAt:  timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+}, (t) => ({
+  phoneIdx: index('otp_phone').on(t.phoneE164, t.createdAt),
+  ipIdx:    index('otp_ip').on(t.requestIp, t.createdAt),
+}));
+
 /* Append-only. Verification decisions, address reveals, admin record access,
    moderation actions. The NGO will ask who saw what. */
 export const auditLog = pgTable('audit_log', {

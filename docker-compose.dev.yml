@@ -1,0 +1,9 @@
+# Local development overlay. Publishes Postgres to localhost so `pnpm dev`
+# outside Docker can reach it. Never used on the VPS — production compose
+# keeps 5432 off the host entirely.
+#
+#   docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d db
+services:
+  db:
+    ports:
+      - "127.0.0.1:5433:5432"

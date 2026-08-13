@@ -1,18 +1,20 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, setRequestLocale } from 'next-intl/server';
+import { getMessages } from 'next-intl/server';
 import { locales, type Locale } from '@/i18n';
+import { resolveTextScale } from '@/lib/preferences';
 import '../globals.css';
 
 export const metadata: Metadata = {
   title: 'Teman',
 };
 
-export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
-}
+/* The whole app renders per-account (text scale, session), so routes are
+   dynamic. Static prerendering returns for the public site in G20, which gets
+   its own segment. */
+export const dynamic = 'force-dynamic';
 
 export default async function LocaleLayout({
   children,
@@ -23,13 +25,13 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
   if (!locales.includes(locale as Locale)) notFound();
-  setRequestLocale(locale);
 
-  const messages = await getMessages();
+  const [messages, textScale] = await Promise.all([getMessages(), resolveTextScale()]);
 
   return (
-    /* tokens.css keys per-script typography off this lang attribute. */
-    <html lang={locale}>
+    /* tokens.css keys per-script typography off this lang attribute, and the
+       account's 18/22/26 choice overrides --fs-body for every descendant. */
+    <html lang={locale} style={{ '--fs-body': `${textScale}px` } as CSSProperties}>
       <head>
         {/* Self-host these before the pilot — a 3G Android should not wait on
             Google Fonts. Family names must match the stacks in tokens.css. */}

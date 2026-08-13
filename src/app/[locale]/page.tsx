@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 import { Sisi } from '@/components/Sisi';
 import { locales, localeNames, type Locale } from '@/i18n';
 
@@ -12,7 +12,6 @@ export default async function WelcomePage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  setRequestLocale(locale);
   const t = await getTranslations('welcome');
 
   return (

@@ -61,5 +61,13 @@
     "standard": "Standard",
     "large": "Large",
     "extraLarge": "Extra large"
+  },
+  "sms": {
+    "otp": "Teman: {code}. Valid for 10 minutes. Never share this code."
+  },
+  "dev": {
+    "harnessTitle": "Developer sign-in harness",
+    "signedIn": "Signed in. Your language and text size are now saved to your account.",
+    "signOut": "Sign out"
   }
 }
