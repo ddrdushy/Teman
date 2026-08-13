@@ -265,7 +265,10 @@ export default async function PublicHomePage() {
             <Link href={`/${locale}/start`} className="btn btn-lg ld-btn-light" style={{ textDecoration: 'none', width: 'auto' }}>
               {t('hero.ctaNeed')}
             </Link>
-            <Link href={`/${locale}/volunteer`} className="btn btn-lg btn-ghost" style={{ textDecoration: 'none', width: 'auto', color: 'var(--white)', borderColor: 'var(--t-300)' }}>
+            <Link href={`/${locale}/volunteer`} className="btn btn-lg" style={{
+              textDecoration: 'none', width: 'auto', background: 'transparent',
+              color: 'var(--white)', border: '1.5px solid var(--t-300)',
+            }}>
               {t('hero.ctaVolunteer')}
             </Link>
           </div>

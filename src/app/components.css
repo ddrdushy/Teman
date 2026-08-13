@@ -414,19 +414,23 @@
   display: flex; gap: var(--tap-gap); align-items: center; justify-self: end;
   grid-row: 1; grid-column: 2;
 }
+.site-actions .btn { white-space: nowrap; }
+/* phones: a predictable 2×2 link grid — no orphan rows, no tall stack */
 .site-links {
   grid-column: 1 / -1;
-  display: flex; gap: 0 var(--s-5); flex-wrap: wrap;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 var(--s-4);
 }
 @media (min-width: 880px) {
   .site-shell { grid-template-columns: auto 1fr auto; }
-  .site-links { grid-column: 2; padding: 0; }
+  .site-links { grid-column: 2; display: flex; gap: 0 var(--s-5); flex-wrap: wrap; padding: 0; }
   .site-actions { grid-column: 3; }
 }
 .site-links a {
   color: var(--n-800); text-decoration: none; font-weight: 600;
   font-size: 0.9em; padding: 0.5em 0; min-height: var(--tap-min);
   display: inline-flex; align-items: center;
+  white-space: nowrap;
 }
 .site-links a:hover { color: var(--t-900); }
 
