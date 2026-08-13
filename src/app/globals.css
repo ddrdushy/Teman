@@ -7,3 +7,6 @@
    wrap-don't-truncate) win over preflight. Every colour and type value lives
    in tokens.css — a hex code anywhere else is a bug. */
 @import './tokens.css';
+
+/* The 28 primitives' classes — every value traces to tokens.css. */
+@import './components.css';

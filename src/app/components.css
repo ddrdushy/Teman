@@ -1,0 +1,214 @@
+/* ═══════════════════════════════════════════════════════════════
+   Teman — component classes for the 28 primitives.
+   Every colour is a token. Sizes are em-based so components scale
+   with the account's 18/22/26 text setting. Tap targets never
+   shrink below the px floors, whatever the scale.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── 1 · Button ─────────────────────────────────────────────── */
+.btn {
+  display: flex; align-items: center; justify-content: center; gap: 0.5em;
+  width: 100%; min-height: var(--tap-min);
+  padding: 0.5em 1.2em; border: 0; border-radius: var(--r-btn);
+  font: 600 1em/1.2 inherit; cursor: pointer; text-align: center;
+  transition: filter var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+  position: relative;
+}
+.btn-lg { min-height: var(--tap-primary); }
+.btn:active { transform: scale(0.985); }
+.btn:disabled { background: var(--n-200); color: var(--n-500); cursor: default; filter: none; }
+.btn-primary { background: var(--t-900); color: var(--white); }
+.btn-primary:hover:not(:disabled) { filter: brightness(0.92); }
+/* Amber = a person answered. This variant appears ONLY on accepting a person
+   or completing a Teman Moment. Anywhere else, that is the bug. */
+.btn-connection { background: var(--a-400); color: var(--n-900); }
+.btn-connection:hover:not(:disabled) { background: var(--a-600); color: var(--white); }
+.btn-connection:focus-visible { outline-color: var(--t-900); }
+.btn-ghost { background: var(--white); color: var(--n-900); border: 1.5px solid var(--n-500); }
+.btn-ghost:hover:not(:disabled) { background: var(--n-050); border-color: var(--t-800); }
+.btn-line { background: transparent; color: var(--n-900); border: 1.5px solid var(--n-500); }
+.btn-line:hover:not(:disabled) { border-color: var(--t-800); }
+/* Safety red belongs to safety alone — never delete, never errors. */
+.btn-danger { background: var(--err-fill); color: var(--err-text); border: 1.5px solid var(--err-strong); }
+.btn.is-loading > .btn-label { visibility: hidden; }
+.btn-spinner {
+  position: absolute; width: 1.2em; height: 1.2em; border-radius: 50%;
+  border: 3px solid currentColor; border-top-color: transparent;
+  animation: btn-spin 0.8s linear infinite;
+}
+@keyframes btn-spin { to { transform: rotate(360deg); } }
+
+/* ── 2 · BigAction ──────────────────────────────────────────── */
+.big-action {
+  display: flex; align-items: center; gap: 0.8em; width: 100%; text-align: start;
+  min-height: var(--tap-primary); padding: 0.9em 1em;
+  border: 0; border-radius: var(--r-btn); cursor: pointer;
+  font: 600 1.06em/1.3 inherit; box-shadow: var(--shadow-1);
+  transition: filter var(--dur-fast) var(--ease);
+}
+.big-action > svg { flex: 0 0 auto; }
+.big-action .ba-text { display: block; min-width: 0; }
+.big-action .ba-sub { display: block; font-weight: 400; font-size: 0.8em; line-height: 1.4; margin-top: 0.2em; }
+.big-action-primary { background: var(--t-900); color: var(--white); }
+.big-action-primary .ba-sub { color: var(--t-100); }
+.big-action-primary:hover { filter: brightness(0.92); }
+.big-action-ghost { background: var(--white); color: var(--n-900); border: 1.5px solid var(--n-500); box-shadow: none; }
+.big-action-ghost .ba-sub { color: var(--n-700); }
+.big-action-ghost:hover { background: var(--n-050); border-color: var(--t-800); }
+
+/* ── 3 · TextField ──────────────────────────────────────────── */
+.field { display: grid; gap: 0.35em; }
+.field .label { color: var(--n-700); }
+.field-hint { font-size: 0.85em; color: var(--n-700); line-height: 1.45; }
+.input {
+  min-height: var(--tap-min); width: 100%;
+  padding: 0.55em 0.85em; border: 1.5px solid var(--n-500); border-radius: var(--r-btn);
+  background: var(--white); color: var(--n-900); font: inherit;
+}
+.input:focus { border-color: var(--t-900); }
+.field.has-error .input { border-color: var(--err-strong); }
+.field-error { display: flex; gap: 0.4em; align-items: baseline; color: var(--err-text); font-size: 0.9em; line-height: 1.45; }
+
+/* Uppercase field labels are a Latin-only device; tokens.css unsets them for ta/zh. */
+.label {
+  font-weight: 600; font-size: 0.78em; line-height: 1.3;
+  letter-spacing: 0.07em; text-transform: uppercase;
+}
+
+/* ── 4 · RadioCards ─────────────────────────────────────────── */
+.radio-cards { display: grid; gap: var(--tap-gap); }
+.radio-cards.cols-2 { grid-template-columns: 1fr 1fr; }
+.radio-card {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.6em;
+  min-height: var(--tap-primary); padding: 0.7em 0.9em;
+  border: 1.5px solid var(--n-500); border-radius: var(--r-card);
+  background: var(--white); cursor: pointer; text-align: start;
+}
+.radio-card .rc-text { min-width: 0; }
+.radio-card .rc-label { display: block; font-weight: 600; line-height: 1.3; }
+.radio-card .rc-desc { display: block; font-size: 0.85em; color: var(--n-700); line-height: 1.4; margin-top: 0.15em; }
+.radio-card .rc-tick { flex: 0 0 auto; color: var(--n-300); font-weight: 700; }
+/* Selection is border + fill + tick — never colour alone. */
+.radio-card.is-selected { border: 2.5px solid var(--t-900); background: var(--t-050); }
+.radio-card.is-selected .rc-tick { color: var(--t-900); }
+.radio-card:has(input:focus-visible) { outline: 3px solid var(--t-900); outline-offset: 3px; }
+
+/* ── 5 · Select ─────────────────────────────────────────────── */
+.select {
+  min-height: var(--tap-min); width: 100%;
+  padding: 0.55em 0.85em; border: 1.5px solid var(--n-500); border-radius: var(--r-btn);
+  background: var(--white); color: var(--n-900); font: inherit;
+}
+
+/* ── 6 · Sheet ──────────────────────────────────────────────── */
+.sheet-scrim {
+  position: fixed; inset: 0; z-index: 60;
+  background: color-mix(in srgb, var(--n-900) 45%, transparent);
+  display: flex; align-items: flex-end;
+}
+.sheet {
+  background: var(--white); width: 100%; max-height: 96%;
+  border-radius: 18px 18px 0 0; padding: var(--s-5) var(--s-4) var(--s-6);
+  overflow-y: auto; animation: sheet-up 180ms var(--ease);
+}
+@keyframes sheet-up { from { transform: translateY(24px); opacity: 0.6; } }
+.sheet-title { font-family: var(--serif); font-weight: 600; font-size: 1.15em; margin: 0 0 0.5em; }
+
+/* ── 7 · Card ───────────────────────────────────────────────── */
+.card {
+  background: var(--white); border: 1px solid var(--n-500);
+  border-radius: var(--r-card); box-shadow: var(--shadow-1);
+  padding: 0.85em 1em;
+}
+/* Amber accent ONLY when a person has answered — driven by the accent prop,
+   never decoration. */
+.card-accent-connection { border-inline-start: 4px solid var(--a-400); }
+.card-accent-none { border-inline-start: 4px solid var(--n-200); }
+.card-title { font-family: var(--serif); font-weight: 600; font-size: 1.05em; line-height: 1.3; margin: 0 0 0.2em; }
+.card-meta { color: var(--n-700); font-size: 0.85em; line-height: 1.45; }
+
+/* ── 8 · Pill ───────────────────────────────────────────────── */
+/* Semantic fills only. Amber is not available here — connection state is
+   carried by Sisi, not by a badge. */
+.pill {
+  display: inline-flex; align-items: center; gap: 0.35em;
+  font-weight: 600; font-size: 0.78em; line-height: 1.3;
+  padding: 0.35em 0.8em; border-radius: var(--r-pill);
+}
+.pill-neutral   { background: var(--n-100);    color: var(--n-700); }
+.pill-looking   { background: var(--warn-fill); color: var(--warn-text); }
+.pill-matched   { background: var(--t-050);    color: var(--t-900); }
+.pill-live      { background: var(--t-100);    color: var(--t-900); }
+.pill-completed { background: var(--ok-fill);  color: var(--ok-text); }
+.pill-error     { background: var(--err-fill); color: var(--err-text); }
+
+/* ── 9 · Banner ─────────────────────────────────────────────── */
+.banner {
+  display: grid; grid-template-columns: auto 1fr; gap: 0.6em;
+  padding: 0.8em 1em; border-radius: var(--r-card); line-height: 1.5;
+}
+.banner-icon { font-weight: 700; }
+.banner-title { font-weight: 600; display: block; }
+.banner-body { font-size: 0.92em; }
+.banner-info    { background: var(--info-fill); color: var(--info-text); }
+.banner-warning { background: var(--warn-fill); color: var(--warn-text); }
+.banner-success { background: var(--ok-fill);   color: var(--ok-text); }
+.banner-error   { background: var(--err-fill);  color: var(--err-text); }
+.banner .btn { margin-top: 0.6em; }
+
+/* ── 10 · EmptyState ────────────────────────────────────────── */
+.empty {
+  display: grid; justify-items: center; text-align: center;
+  gap: var(--s-3); padding: var(--s-8) var(--s-5);
+}
+.empty-title { font-family: var(--serif); font-weight: 600; font-size: 1.15em; margin: 0; }
+.empty-body { color: var(--n-700); max-width: 34ch; margin: 0; }
+
+/* ── 11 · Stepper ───────────────────────────────────────────── */
+.stepper { display: grid; gap: 0.4em; }
+.stepper-row { display: flex; justify-content: space-between; align-items: baseline; gap: 0.8em; }
+.stepper-words { font-weight: 600; font-size: 0.85em; color: var(--n-700); }
+.stepper-saved { font-size: 0.78em; color: var(--ok-text); font-weight: 600; }
+.stepper-track { height: 6px; border-radius: var(--r-pill); background: var(--n-100); overflow: hidden; }
+.stepper-fill { height: 100%; border-radius: var(--r-pill); background: var(--t-900); transition: width var(--dur-base) var(--ease); }
+
+/* ── 12 · NavBar ────────────────────────────────────────────── */
+.navbar {
+  position: sticky; bottom: 0; z-index: 40;
+  display: flex; align-items: stretch;
+  min-height: 66px; background: var(--white); border-top: 1px solid var(--n-500);
+}
+.navbar-tab {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; padding: 6px 2px; text-decoration: none;
+  color: var(--n-700); text-align: center; position: relative;
+}
+/* The one deliberate exception to the 15px floor: always icon-paired,
+   never information alone. */
+.navbar-label { font-weight: 600; font-size: 12px; line-height: 1.2; }
+.navbar-tab.is-active { color: var(--t-900); }
+.navbar-icon { width: 24px; height: 24px; border-radius: 7px; background: var(--n-300); }
+.navbar-tab.is-active .navbar-icon { background: var(--t-900); }
+.navbar-badge {
+  position: absolute; top: 4px; inset-inline-end: calc(50% - 26px);
+  background: var(--t-900); color: var(--white);
+  font-size: 12px; font-weight: 700; line-height: 1;
+  padding: 3px 6px; border-radius: var(--r-pill);
+}
+
+/* ── 13/14 · LanguageSheet · TextSizeControl ────────────────── */
+.option-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.6em;
+  width: 100%; min-height: var(--tap-primary);
+  padding: 0.7em 0.9em; border: 1.5px solid var(--n-500); border-radius: var(--r-btn);
+  background: var(--white); color: var(--n-900); cursor: pointer; text-align: start; font: inherit;
+}
+.option-row.is-selected { border: 2.5px solid var(--t-900); background: var(--t-050); }
+.option-row .or-own { display: block; font-weight: 600; font-size: 21px; line-height: 1.3; }
+.option-row .or-sub { display: block; font-size: 14px; color: var(--n-700); }
+.option-row .or-tick { color: var(--n-300); font-weight: 700; }
+.option-row.is-selected .or-tick { color: var(--t-900); }
+
+/* ── shared layout helpers ──────────────────────────────────── */
+.stack { display: grid; gap: var(--tap-gap); }
+.screen-pad { padding: var(--s-6) var(--s-5); max-width: 44ch; margin: 0 auto; }

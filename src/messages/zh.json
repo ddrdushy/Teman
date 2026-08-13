@@ -69,5 +69,13 @@
     "harnessTitle": "Developer sign-in harness",
     "signedIn": "Signed in. Your language and text size are now saved to your account.",
     "signOut": "Sign out"
+  },
+  "ui": {
+    "close": "Close",
+    "stepOf": "Step {current} of {total}",
+    "saved": "Saved",
+    "optional": "Optional",
+    "loading": "Loading",
+    "unread": "{count} unread"
   }
 }

@@ -16,6 +16,7 @@
   --n-200: #D3CEC4;   /* decorative dividers inside a card only   */
   --n-100: #E8E6E1;
   --n-050: #FAF9F7;   /* every app background — never pure white  */
+  --white: #FFFFFF;   /* card and button fills only, never a page background */
 
   /* ── Primary: Teal · dependability · ~20% ────────────────────── */
   --t-900: #0A4D4A;   /* default button + deep surfaces    9.66:1 */
@@ -122,12 +123,17 @@ h1, h2, h3, h4, p, li, button, a, label, td, th {
   text-overflow: clip;
 }
 
+/* Teal ring on light surfaces (9.18:1). Amber-on-light is 1.9:1 — it fails
+   the 3:1 non-text rule, so amber rings exist only on deep teal panels
+   (4.41:1), and amber surfaces flip back to teal (4.41:1). */
 :focus-visible {
-  outline: 3px solid var(--a-400);
+  outline: 3px solid var(--t-900);
   outline-offset: 3px;
 }
-/* amber-on-teal is the default ring; flip it on amber surfaces */
-.on-amber :focus-visible { outline-color: var(--t-900); }
+.on-deep :focus-visible,
+.on-deep:focus-visible { outline-color: var(--a-400); }
+.on-amber :focus-visible,
+.on-amber:focus-visible { outline-color: var(--t-900); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
