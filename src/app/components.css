@@ -410,7 +410,10 @@
   display: grid; grid-template-columns: auto 1fr; align-items: center;
   gap: 0 var(--s-4);
 }
-.site-actions { display: flex; gap: var(--tap-gap); align-items: center; justify-self: end; }
+.site-actions {
+  display: flex; gap: var(--tap-gap); align-items: center; justify-self: end;
+  grid-row: 1; grid-column: 2;
+}
 .site-links {
   grid-column: 1 / -1;
   display: flex; gap: 0 var(--s-5); flex-wrap: wrap;
