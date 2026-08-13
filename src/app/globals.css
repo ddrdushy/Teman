@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
+/* Self-hosted faces — no request ever leaves for fonts.google.com. */
+@import './fonts.css';
+
 /* Tokens come after Tailwind so the brand base styles (body, focus rings,
    wrap-don't-truncate) win over preflight. Every colour and type value lives
    in tokens.css — a hex code anywhere else is a bug. */
