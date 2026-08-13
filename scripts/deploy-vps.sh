@@ -15,6 +15,8 @@ DOMAIN="${DOMAIN:-$(echo "$IP" | tr '.' '-').sslip.io}"
 echo "→ deploying to $IP as https://$DOMAIN"
 
 echo "1/6 docker…"
+# swap first: `next build` inside compose needs headroom on small shapes
+$SSH 'test -f /swapfile || (sudo fallocate -l 4G /swapfile && sudo chmod 600 /swapfile && sudo mkswap /swapfile && sudo swapon /swapfile && echo "/swapfile none swap sw 0 0" | sudo tee -a /etc/fstab >/dev/null)'
 $SSH 'command -v docker >/dev/null || (curl -fsSL https://get.docker.com | sudo sh && sudo usermod -aG docker ubuntu)'
 # iptables on Oracle images blocks 80/443 by default, on top of the VCN rules
 $SSH 'sudo iptables -I INPUT -p tcp --dport 80 -j ACCEPT; sudo iptables -I INPUT -p tcp --dport 443 -j ACCEPT; sudo iptables -I INPUT -p udp --dport 443 -j ACCEPT; sudo netfilter-persistent save 2>/dev/null || true'
