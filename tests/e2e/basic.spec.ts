@@ -25,7 +25,7 @@ test.describe('Teman Application', () => {
       // Check for language options
       const languages = ['English', 'Malay', 'Tamil', 'Chinese'];
       for (const lang of languages) {
-        const option = page.locator(`text=${lang}`);
+        const option = page.getByRole('button').filter({ hasText: lang }).first();
         await expect(option).toBeVisible();
       }
     }
@@ -121,8 +121,8 @@ test.describe('Navigation', () => {
       await page.waitForLoadState('networkidle');
       
       // Verify we navigated
-      const url = page.url();
-      expect(url).toContain('localhost:3001');
+      const pathname = new URL(page.url()).pathname;
+      expect(pathname).toMatch(/^\/(en|ms|ta|zh)(\/|$)/);
     }
   });
 });

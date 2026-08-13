@@ -14,25 +14,35 @@ export default async function PublicHomePage() {
 
   return (
     <main>
-      <section style={{ maxWidth: '1000px', margin: '0 auto', padding: 'var(--s-14) var(--s-5)', display: 'grid', gap: 'var(--s-5)' }}>
-        <h1 style={{ fontFamily: 'var(--serif)', fontWeight: 700, fontSize: 'clamp(2em, 7vw, 3.4em)', lineHeight: 1.08, margin: 0, maxWidth: '14ch' }}>
-          <span style={{ display: 'block', color: 'var(--t-900)' }}>{t('hero.need')}</span>
-          <span style={{ display: 'block', color: 'var(--a-700)' }}>{t('hero.canBe')}</span>
-        </h1>
-        <HeroSisi missingLabel={t('hero.missing')} thereLabel={t('hero.there')} />
-        <p style={{ fontSize: '1.1em', color: 'var(--n-700)', maxWidth: '38ch', margin: 0, lineHeight: 1.55 }}>
-          {t('hero.lede')}
-        </p>
-        <p style={{ margin: 0 }}>
-          <span className="pill pill-matched">{t('hero.free')}</span>
-        </p>
-        <div style={{ display: 'flex', gap: 'var(--tap-gap)', flexWrap: 'wrap' }}>
-          <Link href={`/${locale}/start`} className="btn btn-primary btn-lg" style={{ width: 'auto', textDecoration: 'none', flex: '1 1 220px' }}>
-            {t('hero.ctaNeed')}
-          </Link>
-          <Link href={`/${locale}/volunteer`} className="btn btn-ghost btn-lg" style={{ width: 'auto', textDecoration: 'none', flex: '1 1 220px' }}>
-            {t('hero.ctaVolunteer')}
-          </Link>
+      <section style={{ maxWidth: '1000px', margin: '0 auto', padding: 'var(--s-10) var(--s-5) var(--s-14)' }}>
+        <div className="hero-grid">
+          <div style={{ display: 'grid', gap: 'var(--s-5)' }}>
+            <h1 style={{ fontFamily: 'var(--serif)', fontWeight: 700, fontSize: 'clamp(2em, 6vw, 3.2em)', lineHeight: 1.08, margin: 0, maxWidth: '14ch' }}>
+              <span style={{ display: 'block', color: 'var(--t-900)' }}>{t('hero.need')}</span>
+              <span style={{ display: 'block', color: 'var(--a-700)' }}>{t('hero.canBe')}</span>
+            </h1>
+            <p style={{ fontSize: '1.1em', color: 'var(--n-700)', maxWidth: '42ch', margin: 0, lineHeight: 1.55 }}>
+              {t('hero.lede')}
+            </p>
+            <p style={{ margin: 0 }}>
+              <span className="pill pill-matched">{t('hero.free')}</span>
+            </p>
+            <div className="hero-ctas">
+              <Link href={`/${locale}/start`} className="btn btn-primary btn-lg" style={{ textDecoration: 'none' }}>
+                {t('hero.ctaNeed')}
+              </Link>
+              <Link href={`/${locale}/volunteer`} className="btn btn-ghost btn-lg" style={{ textDecoration: 'none' }}>
+                {t('hero.ctaVolunteer')}
+              </Link>
+            </div>
+            <p className="hero-signin" style={{ margin: 0 }}>
+              {t('hero.already')}{' '}
+              <Link href={`/${locale}/join/phone`}>{t('nav.signIn')}</Link>
+            </p>
+          </div>
+          <div className="hero-sisi">
+            <HeroSisi missingLabel={t('hero.missing')} thereLabel={t('hero.there')} />
+          </div>
         </div>
       </section>
 

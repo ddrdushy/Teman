@@ -404,3 +404,38 @@
 .chip[aria-pressed="true"] {
   border: 2.5px solid var(--t-900); background: var(--t-050); color: var(--t-900);
 }
+
+/* ── Public site shell & hero (media queries need classes, not inline) ── */
+.site-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--s-3); flex-wrap: wrap;
+}
+.site-links {
+  display: flex; gap: var(--s-4) var(--s-5); flex-wrap: wrap;
+  padding: var(--s-2) 0 0;
+}
+.site-links a {
+  color: var(--n-800); text-decoration: none; font-weight: 600;
+  font-size: 0.9em; padding: 0.5em 0; min-height: var(--tap-min);
+  display: inline-flex; align-items: center;
+}
+.site-links a:hover { color: var(--t-900); }
+
+.hero-grid { display: grid; gap: var(--s-6); align-items: center; }
+.hero-sisi { justify-self: start; }
+@media (min-width: 880px) {
+  .hero-grid { grid-template-columns: 1.1fr 0.9fr; }
+  .hero-sisi { justify-self: end; padding-inline-end: var(--s-8); }
+  .hero-sisi svg { width: 240px; height: auto; }
+}
+.hero-ctas { display: flex; gap: var(--tap-gap); flex-wrap: wrap; }
+.hero-ctas > a { flex: 0 1 auto; width: auto; min-width: 220px; }
+.hero-signin { font-size: 0.9em; color: var(--n-700); }
+.hero-signin a { color: var(--t-900); font-weight: 600; }
+.site-header {
+  background: var(--n-050);
+  border-bottom: 1px solid var(--n-200);
+}
+@media (min-width: 880px) {
+  .site-header { position: sticky; top: 0; z-index: 40; }
+}

@@ -40,7 +40,7 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'pnpm dev',
+    command: 'NEXT_DIST_DIR=.next-e2e corepack pnpm exec next dev -p 3001',
     url: 'http://localhost:3001',
     reuseExistingServer: !process.env.CI,
   },

@@ -1,0 +1,67 @@
+name: Verification report
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      DATABASE_URL: postgres://teman:ci-test@localhost:5433/teman
+      AUTH_SECRET: ci-only-secret-ci-only-secret-ci-only
+      AUTH_URL: http://localhost:3001
+      AUTH_TRUST_HOST: 'true'
+      REQUESTS_OPEN: 'true'
+      POSTGRES_USER: teman
+      POSTGRES_PASSWORD: ci-test
+      POSTGRES_DB: teman
+
+    steps:
+      - name: Check out commit
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Enable pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@9.12.0 --activate
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium firefox webkit
+
+      - name: Start test database
+        run: |
+          docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d db
+          for attempt in {1..30}; do
+            if docker compose -f docker-compose.yml -f docker-compose.dev.yml exec -T db pg_isready -U teman -d teman; then
+              exit 0
+            fi
+            sleep 2
+          done
+          exit 1
+
+      - name: Apply database schema
+        run: pnpm db:push --force
+
+      - name: Generate verification report
+        run: pnpm test:report
+
+      - name: Upload verification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report-${{ github.sha }}
+          path: test-reports/
+          if-no-files-found: error
+          retention-days: 30

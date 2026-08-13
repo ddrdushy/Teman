@@ -1010,7 +1010,8 @@
       "faq": "Questions",
       "privacy": "Privacy",
       "terms": "Terms",
-      "contact": "Contact"
+      "contact": "Contact",
+      "signIn": "Sign in"
     },
     "hero": {
       "need": "I need someone.",
@@ -1020,7 +1021,8 @@
       "lede": "Teman connects people in Kuala Lumpur who need someone beside them with neighbours who have a few hours to give.",
       "free": "Always free. No payments, ever.",
       "ctaNeed": "Find a Teman",
-      "ctaVolunteer": "Become a Teman"
+      "ctaVolunteer": "Become a Teman",
+      "already": "Already with Teman?"
     },
     "why": {
       "title": "Loneliness in a city is rarely a logistics problem.",

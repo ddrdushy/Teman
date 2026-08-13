@@ -19,25 +19,28 @@ export default async function PublicLayout({ children }: { children: ReactNode }
 
   return (
     <div style={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column' }}>
-      <header style={{
-        position: 'sticky', top: 0, zIndex: 40, background: 'var(--n-050)',
-        borderBottom: '1px solid var(--n-200)',
-      }}>
-        <div style={{
-          maxWidth: '1000px', margin: '0 auto', padding: 'var(--s-3) var(--s-5)',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--s-4)', flexWrap: 'wrap',
-        }}>
-          <Link href={`/${locale}`} aria-label={t('nav.homeAria')} style={{ display: 'flex' }}>
-            <TemanLogo height={28} />
-          </Link>
-          <nav style={{ display: 'flex', gap: 'var(--s-4)', alignItems: 'center', flexWrap: 'wrap' }}>
-            {nav.map(([path, label]) => (
-              <Link key={path} href={`/${locale}/${path}`}
-                style={{ color: 'var(--n-800)', textDecoration: 'none', fontWeight: 600, padding: '0.6em 0', fontSize: '0.9em' }}>
-                {label}
+      {/* sticky only on wide screens — four wrapped rows must not pin
+          themselves over a phone viewport */}
+      <header className="site-header">
+        <div style={{ maxWidth: '1000px', margin: '0 auto', padding: 'var(--s-3) var(--s-5)' }}>
+          {/* row 1: identity left; the two actions a returning person needs right */}
+          <div className="site-bar">
+            <Link href={`/${locale}`} aria-label={t('nav.homeAria')} style={{ display: 'flex' }}>
+              <TemanLogo height={28} />
+            </Link>
+            <div style={{ display: 'flex', gap: 'var(--tap-gap)', alignItems: 'center' }}>
+              <Link href={`/${locale}/join/phone`} className="btn btn-primary"
+                style={{ width: 'auto', minHeight: 'var(--tap-min)', textDecoration: 'none', fontSize: '0.9em' }}>
+                {t('nav.signIn')}
               </Link>
+              <PublicLangSwitch />
+            </div>
+          </div>
+          {/* row 2: the reading nav, wrapping tidily on small screens */}
+          <nav className="site-links">
+            {nav.map(([path, label]) => (
+              <Link key={path} href={`/${locale}/${path}`}>{label}</Link>
             ))}
-            <PublicLangSwitch />
           </nav>
         </div>
       </header>
