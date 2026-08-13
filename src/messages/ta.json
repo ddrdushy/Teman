@@ -245,5 +245,151 @@
       "confirm": "Reject with this reason",
       "back": "Back"
     }
+  },
+  "profile": {
+    "ringLabel": "Profile {percent}% complete",
+    "checkName": "Name and phone",
+    "checkArea": "Your area",
+    "checkPhoto": "A photo of you",
+    "checkLanguages": "Languages you speak",
+    "checkCategories": "What you can help with",
+    "checkBio": "A little about you",
+    "photoSection": "Your photo",
+    "photoWhy": "People are far more likely to offer or accept help when they can see who they would be meeting.",
+    "choosePhoto": "Choose a photo",
+    "bioLabel": "A little about you",
+    "bioHint": "Temans and families read this before deciding. Your own words — nobody writes this for you.",
+    "langSection": "Languages you speak",
+    "lang": {
+      "ms": "Bahasa Melayu",
+      "en": "English",
+      "ta": "தமிழ் Tamil",
+      "zh-mandarin": "中文 Mandarin",
+      "zh-cantonese": "廣東話 Cantonese",
+      "hokkien": "福建話 Hokkien",
+      "other": "Other"
+    },
+    "catSection": "What you can help with",
+    "group": {
+      "health": "Health & appointments",
+      "errands": "Everyday errands",
+      "elderly": "Elderly companionship",
+      "emotional": "Company & conversation",
+      "social": "Social",
+      "welfare": "Check-in visits",
+      "digital": "Phone & digital help"
+    },
+    "transportSection": "Getting around",
+    "transport": {
+      "car": "I have a car",
+      "canDrive": "I can drive",
+      "publicTransport": "Public transport",
+      "accompanyYours": "I can ride along",
+      "meetThere": "Meet at the place"
+    }
+  },
+  "care": {
+    "title": "People you care for",
+    "lead": "Create requests for someone who does not use the app.",
+    "emptyTitle": "Nobody added yet",
+    "emptyBody": "Add a parent or someone you look after. They never need a phone or an account — you create requests and get every update.",
+    "addCta": "Add someone",
+    "addTitle": "Someone you care for",
+    "editLead": "Everything here can be changed. A Teman sees only what helps them help — never the emergency contact.",
+    "neverNeedsPhone": "They never need a phone or an account.",
+    "nameLabel": "What should we call them?",
+    "nameHint": "Their preferred name — what a Teman would call them.",
+    "relationshipLabel": "They are your…",
+    "relationship": {
+      "parent": "Parent",
+      "relative": "Relative",
+      "spouse": "Spouse",
+      "friend": "Friend",
+      "other": "Someone else"
+    },
+    "ageLabel": "Their age",
+    "ageBand": {
+      "under60": "Under 60",
+      "60s": "In their 60s",
+      "70s": "In their 70s",
+      "80s": "In their 80s",
+      "90plus": "90 or older"
+    },
+    "languageLabel": "The language they prefer",
+    "accessLabel": "Getting around",
+    "access": {
+      "wheelchair": "Uses a wheelchair",
+      "slowWalking": "Walks slowly",
+      "restsOften": "Needs rests",
+      "hearing": "Hearing difficulty",
+      "vision": "Vision difficulty",
+      "noStairs": "Cannot climb stairs"
+    },
+    "convLabel": "Talking together",
+    "conv": {
+      "justListen": "Just listen",
+      "casualChat": "Casual conversation",
+      "adviceOkay": "Advice is okay",
+      "noAdvice": "Please do not give advice"
+    },
+    "notesLabel": "Anything a Teman should know",
+    "notesHint": "Your own words. This is not a medical record — just what helps someone be good company.",
+    "ecLabel": "Emergency contact",
+    "ecHint": "Only used if something goes wrong during a session. Never shown to Temans.",
+    "ecName": "Name",
+    "ecPhone": "Phone number",
+    "ecRel": "Relationship",
+    "saveCta": "Save",
+    "next": "Continue",
+    "back": "Back"
+  },
+  "avail": {
+    "listTitle": "When you are free",
+    "emptyTitle": "No times saved yet",
+    "emptyBody": "Say when you are free and how far you would go. You will hear about requests that fit — nobody can contact you directly.",
+    "addCta": "Add a time",
+    "newTitle": "I am free",
+    "editTitle": "Change this time",
+    "whenTitle": "When are you free?",
+    "moreDays": "More",
+    "fromLabel": "From",
+    "untilLabel": "Until",
+    "whereTitle": "How far can you go?",
+    "startingFrom": "Starting from {area}",
+    "radius": {
+      "walking": "Walking distance",
+      "area": "Around my area",
+      "city": "Anywhere in the city"
+    },
+    "radiusSub": {
+      "walking": "About 1 km",
+      "area": "About 5 km",
+      "city": "I can travel"
+    },
+    "whatTitle": "What kind of help?",
+    "whatHint": "Pick as many as you like.",
+    "transportTitle": "Getting around",
+    "transport": {
+      "car": "I have a car",
+      "canDrive": "I can drive",
+      "publicTransport": "Public transport",
+      "meetThere": "Meet at the place"
+    },
+    "reviewTitle": "Here is what you are saying",
+    "reviewWords": {
+      "walking": "You will hear about requests within about 1 km of {area} — {count, plural, =0 {any kind of help} one {# kind of help} other {# kinds of help}}.",
+      "area": "You will hear about requests within about 5 km of {area} — {count, plural, =0 {any kind of help} one {# kind of help} other {# kinds of help}}.",
+      "city": "You will hear about requests anywhere in the city — {count, plural, =0 {any kind of help} one {# kind of help} other {# kinds of help}}."
+    },
+    "repeatTitle": "Repeat every week",
+    "repeatSub": "Until you turn it off",
+    "saveCta": "Save my availability",
+    "nobodyContacts": "Nobody can contact you directly. You will see requests and choose whether to offer.",
+    "removedToast": "Availability removed",
+    "repeatsWeekly": "Repeats weekly",
+    "edit": "Change",
+    "remove": "Remove",
+    "next": "Continue",
+    "back": "Back"
   }
 }
