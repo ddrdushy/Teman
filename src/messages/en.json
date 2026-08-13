@@ -14,7 +14,9 @@
     "title": "Someone nearby can be there.",
     "line1": "Teman connects people who need someone beside them with neighbours who have a few hours to give. Always free.",
     "cta": "Get started",
-    "languagesLabel": "Choose your language"
+    "languagesLabel": "Choose your language",
+    "line2": "You say what you need, or when you are free. Someone nearby answers.",
+    "line3": "Verified neighbours, no payments, no ratings — just company."
   },
   "join": {
     "phoneTitle": "What's your phone number?",
@@ -31,7 +33,18 @@
     "areaHint": "Just the area — never your address.",
     "doneTitle": "You're part of {area} now.",
     "intentHelp": "I want to help someone",
-    "intentNeed": "I need someone with me"
+    "intentNeed": "I need someone with me",
+    "phoneInvalid": "That does not look like a Malaysian mobile number. Check it and try again.",
+    "rateLimited": "Too many codes were asked for. You can try again in about {minutes, plural, one {# minute} other {# minutes}}.",
+    "smsSent": "We sent a code by SMS to {phone}.",
+    "resendIn": "You can ask for a new code in {seconds}s",
+    "nameHint": "This is the name people will see.",
+    "nameEmpty": "A name is needed so people know who they are meeting.",
+    "continueLabel": "Continue",
+    "areaSearchLabel": "Search for your area",
+    "areaNoneTitle": "We could not find that area",
+    "areaNoneBody": "Try a different spelling, or pick the nearest area to you.",
+    "intentPrompt": "What brings you to Teman?"
   },
   "home": {
     "greeting": "Good morning, {name}",
@@ -81,5 +94,9 @@
     "off": "OFF",
     "undo": "Undo",
     "more": "More"
+  },
+  "placeholder": {
+    "title": "This part is still being built",
+    "body": "It will be here before the pilot. Nothing you have entered is lost."
   }
 }
