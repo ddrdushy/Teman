@@ -19,3 +19,8 @@ pnpm-debug.log*
 test-results/
 playwright-report/
 .next-goal/
+.next-report/
+.next-e2e/
+test-reports/
+
+.vercel/

@@ -16,26 +16,46 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 const LOCAL_ROOT = '.data/uploads';
 
+/* Any S3-compatible endpoint: R2 (via R2_* vars) or an explicit
+   STORAGE_S3_ENDPOINT (e.g. Supabase Storage's S3 gateway). */
+function s3Config() {
+  if (process.env.STORAGE_S3_ENDPOINT && process.env.STORAGE_S3_ACCESS_KEY) {
+    return {
+      endpoint: process.env.STORAGE_S3_ENDPOINT,
+      region: process.env.STORAGE_S3_REGION ?? 'auto',
+      accessKeyId: process.env.STORAGE_S3_ACCESS_KEY,
+      secretAccessKey: process.env.STORAGE_S3_SECRET_KEY ?? '',
+      forcePathStyle: true,
+    };
+  }
+  if (process.env.R2_ACCOUNT_ID && process.env.R2_ACCESS_KEY_ID) {
+    return {
+      endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+      region: 'auto',
+      accessKeyId: process.env.R2_ACCESS_KEY_ID,
+      secretAccessKey: process.env.R2_SECRET_ACCESS_KEY ?? '',
+      forcePathStyle: false,
+    };
+  }
+  return null;
+}
+
 export function storageConfigured(): boolean {
-  return Boolean(
-    process.env.R2_ACCOUNT_ID &&
-    process.env.R2_ACCESS_KEY_ID &&
-    process.env.R2_SECRET_ACCESS_KEY,
-  );
+  return s3Config() !== null;
 }
 
 function client(): S3Client {
+  const cfg = s3Config();
+  if (!cfg) throw new Error('no S3 storage configured');
   return new S3Client({
-    region: 'auto',
-    endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-    credentials: {
-      accessKeyId: process.env.R2_ACCESS_KEY_ID!,
-      secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
-    },
+    region: cfg.region,
+    endpoint: cfg.endpoint,
+    forcePathStyle: cfg.forcePathStyle,
+    credentials: { accessKeyId: cfg.accessKeyId, secretAccessKey: cfg.secretAccessKey },
   });
 }
 
-const bucket = () => process.env.R2_BUCKET ?? 'teman-documents';
+const bucket = () => process.env.STORAGE_S3_BUCKET ?? process.env.R2_BUCKET ?? 'teman-documents';
 
 function localPath(key: string): string {
   const p = normalize(join(LOCAL_ROOT, key));

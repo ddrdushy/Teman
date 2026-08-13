@@ -5,7 +5,6 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { locales, type Locale } from '@/i18n';
 import { resolveTextScale } from '@/lib/preferences';
-import { token } from '@/lib/tokens';
 import { PwaSetup } from './PwaSetup';
 import '../globals.css';
 
@@ -17,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 export function generateViewport() {
-  return { themeColor: token('t-900') };
+  return { themeColor: process.env.TEMAN_TOKEN_T900 };
 }
 
 /* The whole app renders per-account (text scale, session), so routes are
