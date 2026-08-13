@@ -652,7 +652,8 @@
     "notEmergency": "Teman is not an emergency service. In a real emergency call 999 first.",
     "endedTitle": "The session has ended",
     "endedBody": "Your trusted contact has been told it ended safely.",
-    "backHome": "Back to home"
+    "backHome": "Back to home",
+    "feedbackCta": "Tell us how it went"
   },
   "safety": {
     "contactsTitle": "Trusted contacts",
@@ -706,5 +707,50 @@
     "g3Body": "Romantic or sexual approaches are against the rules, in messages and in person, and are a report category taken seriously.",
     "g4Title": "Your information stays yours",
     "g4Body": "Exact addresses and phone numbers are only shared after both sides accept, and every reveal is recorded. Never share banking details, PINs or OTP codes with anyone."
+  },
+  "feedback": {
+    "howWasIt": "How was {name}?",
+    "wordsHint": "Pick any words that fit. Other members will see these. Nothing is required.",
+    "descriptor": {
+      "kind": "Kind",
+      "respectful": "Respectful",
+      "patient": "Patient",
+      "reliable": "Reliable",
+      "helpful": "Helpful",
+      "goodListener": "Good listener"
+    },
+    "continue": "Continue",
+    "privateTitle": "Two private questions",
+    "privateNote": "{name} never sees these answers, and they never appear on anyone’s profile.",
+    "feltSafeQ": "Did you feel safe?",
+    "againQ": "Would you ask {name} again?",
+    "yes": "Yes",
+    "no": "No",
+    "unsafeWhatHappens": "Saying no opens a case with a person who reviews it, and that person cannot be matched with anyone while it is reviewed. It never becomes a public number.",
+    "failed": "That did not go through. Your answers are still here — try again.",
+    "send": "Send",
+    "back": "Back",
+    "momentTitle": "That was a Teman Moment.",
+    "momentBody": "Nobody went alone. Thank you, and thank {name}.",
+    "done": "Done"
+  },
+  "people": {
+    "verified": "Identity verified",
+    "moments": "Teman Moments",
+    "momentsValue": "{count, plural, =0 {None yet} one {# completed} other {# completed}}",
+    "memberSince": "Member since",
+    "area": "Lives around",
+    "saidAbout": "What members have said",
+    "descriptor": {
+      "kind": "Kind",
+      "respectful": "Respectful",
+      "patient": "Patient",
+      "reliable": "Reliable",
+      "helpful": "Helpful",
+      "goodListener": "Good listener"
+    },
+    "momentsTitle": "{count, plural, =0 {Your Teman Moments} one {# Teman Moment} other {# Teman Moments}}",
+    "momentsEmptyTitle": "No Moments yet",
+    "momentsEmptyBody": "A Moment is a completed companionship — the only badge Teman ever gives."
   }
 }

@@ -70,7 +70,10 @@ export function SessionView(p: Props) {
         <h1 style={{ fontFamily: 'var(--serif)', fontSize: '1.5em', margin: 0 }}>{t('endedTitle')}</h1>
         <p style={{ color: 'var(--n-700)', margin: 0 }}>{t('endedBody')}</p>
         <div style={{ display: 'flex', justifyContent: 'center' }}><TickDraw /></div>
-        <Link href={`/${locale}/home`} className="btn btn-primary btn-lg" style={{ textDecoration: 'none' }}>
+        <Link href={`/${locale}/sessions/${p.sessionId}/feedback`} className="btn btn-primary btn-lg" style={{ textDecoration: 'none' }}>
+          {t('feedbackCta')}
+        </Link>
+        <Link href={`/${locale}/home`} className="btn btn-ghost btn-lg" style={{ textDecoration: 'none' }}>
           {t('backHome')}
         </Link>
       </main>
