@@ -278,6 +278,22 @@ export const otpChallenge = pgTable('otp_challenge', {
   ipIdx:    index('otp_ip').on(t.requestIp, t.createdAt),
 }));
 
+/* Notifications are stored as kind + params and rendered through the message
+   catalogues at read time, in the RECIPIENT'S language — a caregiver in
+   English and a volunteer in Tamil see the same event correctly. Helpful
+   only, never engagement-driven (§39): no streaks, no "come back" nudges. */
+export const notification = pgTable('notification', {
+  id:        uuid('id').primaryKey().defaultRandom(),
+  personId:  uuid('person_id').notNull().references(() => person.id, { onDelete: 'cascade' }),
+  kind:      text('kind').notNull(),        // maps to messages notifications.<kind>
+  params:    jsonb('params'),               // interpolation values, no PII beyond first names
+  sisiState: text('sisi_state'),            // waiting | answered | together | moment
+  readAt:    timestamp('read_at', { withTimezone: true }),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+}, (t) => ({
+  byPerson: index('notification_person').on(t.personId, t.createdAt),
+}));
+
 /* Append-only. Verification decisions, address reveals, admin record access,
    moderation actions. The NGO will ask who saw what. */
 export const auditLog = pgTable('audit_log', {

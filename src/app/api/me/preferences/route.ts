@@ -12,7 +12,7 @@ const TEXT_SCALES = [18, 22, 26] as const;
 export async function POST(req: NextRequest) {
   const personId = await personIdFromSession();
 
-  let body: { language?: string; textScale?: number };
+  let body: { language?: string; textScale?: number; isElderView?: boolean };
   try {
     body = await req.json();
   } catch {
@@ -25,7 +25,8 @@ export async function POST(req: NextRequest) {
   const textScale = TEXT_SCALES.includes(body.textScale as (typeof TEXT_SCALES)[number])
     ? (body.textScale as (typeof TEXT_SCALES)[number])
     : undefined;
-  if (!language && !textScale) {
+  const isElderView = typeof body.isElderView === 'boolean' ? body.isElderView : undefined;
+  if (!language && !textScale && isElderView === undefined) {
     return NextResponse.json({ ok: false }, { status: 400 });
   }
 
@@ -34,6 +35,9 @@ export async function POST(req: NextRequest) {
       .set({
         ...(language ? { preferredLanguage: language } : {}),
         ...(textScale ? { textScale } : {}),
+        /* Elder view defaults text size to Large unless already larger (A-07). */
+        ...(isElderView !== undefined ? { isElderView } : {}),
+        ...(isElderView === true && !textScale ? { textScale: 22 } : {}),
         updatedAt: new Date(),
       })
       .where(eq(person.id, personId));

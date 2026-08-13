@@ -58,7 +58,21 @@
     "aroundNeed": "{count} 人需要陪伴",
     "aroundFree": "{count} 位 Teman 今天下午有空",
     "next": "你的下一次陪伴",
-    "stillLooking": "仍在寻找"
+    "stillLooking": "仍在寻找",
+    "greetingAfternoon": "Good afternoon, {name}",
+    "greetingEvening": "Good evening, {name}",
+    "requestsOpenIn": "Requests open in {month}.",
+    "weWillMessage": "We will message you the day they do.",
+    "volunteersJoined": "{count, plural, one {# volunteer has} other {# volunteers have}} already joined {area}.",
+    "verificationRow": "Your verification",
+    "availabilityRow": "When you are free",
+    "availabilitySet": "{count, plural, one {# time saved} other {# times saved}}",
+    "availabilityNone": "Tell us when you are free, so we can tell you who needs company",
+    "completeness": "Finish your profile",
+    "checkName": "Name and phone",
+    "checkArea": "Your area",
+    "checkPhoto": "A photo of you",
+    "checkLanguages": "Languages you speak"
   },
   "nav": {
     "home": "首页",
@@ -98,5 +112,47 @@
   "placeholder": {
     "title": "This part is still being built",
     "body": "It will be here before the pilot. Nothing you have entered is lost."
+  },
+  "verify": {
+    "tier": {
+      "none": "Not verified yet",
+      "basic": "Phone verified",
+      "identity": "Identity verified",
+      "community": "Community verified",
+      "enhanced": "Enhanced verification"
+    }
+  },
+  "around": {
+    "volunteersLine": "volunteers ready to help around here",
+    "emptyTitle": "You are the first one here",
+    "emptyBody": "As neighbours join, you will see them counted here. Exact locations are never shown."
+  },
+  "notifications": {
+    "title": "Notifications",
+    "emptyTitle": "Nothing yet",
+    "emptyBody": "When something happens that you need to know, it will be here.",
+    "verificationApproved": "Your identity has been verified. Welcome.",
+    "verificationRejected": "Your ID could not be accepted: {reason}. You can try again.",
+    "requestsOpen": "Requests are now open in {area}. Thank you for waiting."
+  },
+  "you": {
+    "languageRow": "Language & text size",
+    "verificationRow": "Verification",
+    "profileRow": "Your profile",
+    "profileSub": "Photo, languages, what you can help with",
+    "notificationsSub": "What happened recently",
+    "signOut": "Sign out",
+    "settingsTitle": "Language & text size",
+    "previewTitle": "How it will look",
+    "previewMeta": "This preview follows your choice straight away.",
+    "elderView": "Simple view",
+    "elderViewSub": "Three large actions, bigger text, nothing else"
+  },
+  "elder": {
+    "withMe": "Someone to come with me",
+    "talkTo": "Someone to talk to",
+    "callFamily": "Call my family",
+    "noContactsTitle": "No family contact saved yet",
+    "noContactsBody": "Ask the person who helps you with this phone to add a family contact in Teman."
   }
 }

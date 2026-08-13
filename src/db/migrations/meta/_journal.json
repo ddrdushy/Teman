@@ -8,6 +8,13 @@
       "when": 1786609352573,
       "tag": "0000_sudden_madelyne_pryor",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1786611614096,
+      "tag": "0001_robust_marvel_boy",
+      "breakpoints": true
     }
   ]
 }
