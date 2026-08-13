@@ -132,6 +132,8 @@ export function RequestWizard({ recipients, categories, defaultAreaId, aiAvailab
   const [busy, setBusy] = useState(false);
   const [publishedId, setPublishedId] = useState<string | null>(null);
   const [expiresAt, setExpiresAt] = useState<string | null>(null);
+  const [trustedCount, setTrustedCount] = useState(0);
+  const [askedTrusted, setAskedTrusted] = useState(false);
   const [failed, setFailed] = useState(false);
 
   /* Autosave every change; resume on mount. A force-quit loses nothing. */
@@ -195,6 +197,18 @@ export function RequestWizard({ recipients, categories, defaultAreaId, aiAvailab
     localStorage.removeItem(DRAFT_KEY);
     setPublishedId(body.id);
     setExpiresAt(body.expiresAt);
+    setTrustedCount(body.trustedCount ?? 0);
+  }
+
+  /* E12 · narrow to the trusted circle for six hours before going wide */
+  async function askTrustedFirst() {
+    if (!publishedId) return;
+    const res = await fetch(`/api/requests/${publishedId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'ask-trusted-first' }),
+    });
+    if (res.ok) setAskedTrusted(true);
   }
 
   if (!hydrated) {
@@ -220,6 +234,12 @@ export function RequestWizard({ recipients, categories, defaultAreaId, aiAvailab
             })}
           </Banner>
         )}
+        {trustedCount > 0 && !askedTrusted && (
+          <Button variant="ghost" onClick={askTrustedFirst}>
+            {t('askTrustedCta', { count: trustedCount })}
+          </Button>
+        )}
+        {askedTrusted && <Banner variant="success">{t('askTrustedDone')}</Banner>}
         <Link href={`/${locale}/requests/${publishedId}`} className="btn btn-primary btn-lg" style={{ textDecoration: 'none' }}>
           {t('viewRequest')}
         </Link>

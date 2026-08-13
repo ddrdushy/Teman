@@ -687,7 +687,9 @@
     "speechStart": "Say it instead — tap and speak",
     "speechStop": "Stop and fill the form",
     "continue": "Continue",
-    "back": "Back"
+    "back": "Back",
+    "askTrustedCta": "Ask {count, plural, one {your trusted Teman} other {your # trusted Temans}} first",
+    "askTrustedDone": "Asked. Only your trusted Temans see this for the next six hours — then it opens to everyone nearby."
   },
   "nearby": {
     "title": "People near you",

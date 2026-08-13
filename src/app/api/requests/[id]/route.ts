@@ -43,6 +43,22 @@ export async function PATCH(
     return NextResponse.json({ ok: true });
   }
 
+  /* E12/D-16 · Ask trusted Temans first: narrow to trusted_only for six
+     hours, then the worker widens it back to public with a notification. */
+  if (b.action === 'ask-trusted-first') {
+    if (row.status !== 'looking' || row.visibility !== 'public') {
+      return NextResponse.json({ ok: false, reason: 'state' }, { status: 409 });
+    }
+    const widenAt = new Date(Date.now() + 6 * 3600_000).toISOString();
+    await db.update(request).set({
+      visibility: 'trusted_only',
+      prefs: { ...((row.prefs as object) ?? {}), widenPublicAt: widenAt },
+      updatedAt: new Date(),
+    }).where(eq(request.id, id));
+    await audit(personId, 'request_narrowed_to_trusted', 'request', id);
+    return NextResponse.json({ ok: true, widenAt });
+  }
+
   if (b.action === 'edit') {
     if (row.status !== 'looking') {
       return NextResponse.json({ ok: false, reason: 'not_editable' }, { status: 409 });

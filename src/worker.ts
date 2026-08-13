@@ -122,6 +122,24 @@ async function spawnRecurring() {
   if (due.length) console.log(`recurring-spawn: ${due.length} occurrence(s) handled`);
 }
 
+/** E12: after the ask-trusted-first window, the request quietly widens back
+ *  to everyone nearby. */
+async function widenVisibility() {
+  const due = await db.select().from(request).where(and(
+    eq(request.status, 'looking'),
+    eq(request.visibility, 'trusted_only'),
+    sql`${request.prefs}->>'widenPublicAt' IS NOT NULL`,
+    sql`(${request.prefs}->>'widenPublicAt')::timestamptz < now()`,
+  ));
+  for (const r of due) {
+    const prefs = { ...((r.prefs as object) ?? {}) } as Record<string, unknown>;
+    delete prefs.widenPublicAt;
+    await db.update(request).set({ visibility: 'public', prefs, updatedAt: new Date() })
+      .where(eq(request.id, r.id));
+  }
+  if (due.length) console.log(`widen-visibility: ${due.length} request(s) opened to nearby`);
+}
+
 async function main() {
   const boss = new PgBoss({
     connectionString: process.env.DATABASE_URL,
@@ -145,6 +163,10 @@ async function main() {
   await boss.createQueue('recurring-spawn');
   await boss.schedule('recurring-spawn', '0 6 * * *', undefined, { tz: 'Asia/Kuala_Lumpur' });
   await boss.work('recurring-spawn', spawnRecurring);
+
+  await boss.createQueue('widen-visibility');
+  await boss.schedule('widen-visibility', '*/10 * * * *');
+  await boss.work('widen-visibility', widenVisibility);
 
   console.log('worker: jobs — purge-documents, request-expiry, reminders, recurring-spawn');
 }

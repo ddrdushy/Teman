@@ -54,6 +54,17 @@ export async function discoverRequests(params: {
            OR jsonb_array_length(r.prefs->'languages') = 0
            OR r.prefs->'languages' ?| ${sql.raw(`ARRAY[${params.temanLanguages.map((l) => `'${l.replace(/'/g, '')}'`).join(',') || `''`}]`)})
       AND (COALESCE(r.prefs->>'verifiedOnly', 'false') <> 'true' OR ${params.temanVerified})
+      AND (
+        r.visibility = 'public'
+        OR (r.visibility = 'trusted_only' AND EXISTS (
+              SELECT 1 FROM trusted_teman t
+              WHERE t.owner_id = r.requester_id AND t.teman_id = ${params.temanId}))
+        OR (r.visibility = 'circles' AND EXISTS (
+              SELECT 1 FROM circle_member cm1
+              JOIN circle_member cm2 ON cm1.circle_id = cm2.circle_id
+              WHERE cm1.person_id = r.requester_id AND cm2.person_id = ${params.temanId}
+                AND cm1.state = 'member' AND cm2.state = 'member'))
+      )
       AND r.requester_id <> ${params.temanId}
       AND NOT EXISTS (SELECT 1 FROM block b
                       WHERE (b.blocker_id = r.requester_id AND b.blocked_id = ${params.temanId})

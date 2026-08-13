@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { and, desc, eq, sql as dsql } from 'drizzle-orm';
 import { db } from '@/db';
-import { request, area, careRecipient, category } from '@/db/schema';
+import { request, area, careRecipient, category, trustedTeman } from '@/db/schema';
 import { personIdFromSession } from '@/auth';
 import { jitterPoint, toWkt } from '@/lib/geo';
 import { audit } from '@/lib/privacy';
@@ -124,7 +124,18 @@ export async function POST(req: NextRequest) {
   }).returning({ id: request.id });
 
   await audit(personId, 'request_published', 'request', row.id);
-  return NextResponse.json({ ok: true, id: row.id, expiresAt: expiresAt.toISOString() });
+
+  /* E12: tell the client whether "ask trusted first" is worth offering */
+  const trusted = await db.select({ n: dsql<number>`count(*)::int` }).from(trustedTeman)
+    .where(and(eq(trustedTeman.ownerId, personId),
+      b.beneficiaryType === 'care_recipient'
+        ? eq(trustedTeman.forRecipientId, b.beneficiaryId!)
+        : dsql`${trustedTeman.forRecipientId} IS NULL`));
+
+  return NextResponse.json({
+    ok: true, id: row.id, expiresAt: expiresAt.toISOString(),
+    trustedCount: trusted[0]?.n ?? 0,
+  });
 }
 
 /** E13 · my requests, all states. */
