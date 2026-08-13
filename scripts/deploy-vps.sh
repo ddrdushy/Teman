@@ -47,8 +47,7 @@ $SSH 'cd /opt/teman && sudo docker compose build app && sudo docker compose up -
 
 echo "5/6 migrate + seed…"
 $SSH 'cd /opt/teman && sudo docker compose run --rm app node dist/migrate.js'
-$SSH 'cd /opt/teman && sudo docker compose exec db psql -U teman -d teman -c "SELECT 1" >/dev/null && sudo docker compose run --rm -v /opt/teman/scripts:/seed --entrypoint sh app -c "true"' || true
-# seed runs from the host tooling image (node scripts use the postgres pkg):
+# seed runs via a disposable node container on the compose network:
 $SSH 'cd /opt/teman && sudo docker run --rm --network teman_default -v /opt/teman:/w -w /w -e DATABASE_URL=postgres://teman:$(grep POSTGRES_PASSWORD .env | cut -d= -f2)@db:5432/teman node:22-alpine sh -c "npm i --no-save postgres@3 >/dev/null 2>&1 && node scripts/seed/areas.mjs && node scripts/seed/categories.mjs && node scripts/seed/admins.mjs && node scripts/seed/demo.mjs --reset --force"'
 
 echo "6/6 verify…"
