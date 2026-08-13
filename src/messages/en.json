@@ -76,6 +76,10 @@
     "saved": "Saved",
     "optional": "Optional",
     "loading": "Loading",
-    "unread": "{count} unread"
+    "unread": "{count} unread",
+    "on": "ON",
+    "off": "OFF",
+    "undo": "Undo",
+    "more": "More"
   }
 }
