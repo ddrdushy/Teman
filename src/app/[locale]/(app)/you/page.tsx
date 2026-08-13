@@ -7,6 +7,7 @@ import { personIdFromSession } from '@/auth';
 import { Avatar } from '@/components/Avatar';
 import { ListRow } from '@/components/ListRow';
 import { SignOutRow } from './SignOutRow';
+import { InstallRow } from './InstallRow';
 
 /* B6 · Account hub. Every row shows its current value. */
 export default async function YouPage() {
@@ -35,6 +36,7 @@ export default async function YouPage() {
         <ListRow href={`/${locale}/verify`} icon="✓" title={t('you.verificationRow')} sub={t(`verify.tier.${p.verificationTier}`)} />
         <ListRow href={`/${locale}/profile`} icon={p.displayName.charAt(0)} title={t('you.profileRow')} sub={t('you.profileSub')} />
         <ListRow href={`/${locale}/notifications`} icon="🔔" title={t('notifications.title')} sub={t('you.notificationsSub')} />
+        <InstallRow />
         <SignOutRow />
       </div>
     </main>

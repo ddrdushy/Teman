@@ -406,13 +406,19 @@
 }
 
 /* ── Public site shell & hero (media queries need classes, not inline) ── */
-.site-bar {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: var(--s-3); flex-wrap: wrap;
+.site-shell {
+  display: grid; grid-template-columns: auto 1fr; align-items: center;
+  gap: 0 var(--s-4);
 }
+.site-actions { display: flex; gap: var(--tap-gap); align-items: center; justify-self: end; }
 .site-links {
-  display: flex; gap: var(--s-4) var(--s-5); flex-wrap: wrap;
-  padding: var(--s-2) 0 0;
+  grid-column: 1 / -1;
+  display: flex; gap: 0 var(--s-5); flex-wrap: wrap;
+}
+@media (min-width: 880px) {
+  .site-shell { grid-template-columns: auto 1fr auto; }
+  .site-links { grid-column: 2; padding: 0; }
+  .site-actions { grid-column: 3; }
 }
 .site-links a {
   color: var(--n-800); text-decoration: none; font-weight: 600;
@@ -439,3 +445,180 @@
 @media (min-width: 880px) {
   .site-header { position: sticky; top: 0; z-index: 40; }
 }
+.navbar-svg { display: flex; color: var(--n-700); }
+.navbar-tab.is-active .navbar-svg { color: var(--t-900); }
+
+/* ── Landing (P1) — ported from design/teman-landing.html, tokens only ── */
+.ld-wrap { max-width: 1120px; margin: 0 auto; padding-inline: clamp(20px, 4vw, 40px); }
+.ld-narrow { max-width: 680px; }
+.ld-section { padding-block: clamp(56px, 8vw, 104px); }
+.ld-eyebrow {
+  font-weight: 600; font-size: 0.8em; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--t-900); margin: 0 0 14px;
+}
+.ld-h2 {
+  font-family: var(--serif); font-size: clamp(1.7em, 4.4vw, 2.55em); font-weight: 700;
+  line-height: 1.14; max-width: 19ch; margin: 0; letter-spacing: -0.012em;
+}
+.ld-lead { font-size: clamp(1em, 1.9vw, 1.15em); color: var(--n-700); max-width: 60ch; margin: 20px 0 0; line-height: 1.62; }
+.ld-dark { background: var(--t-900); color: var(--white); }
+.ld-dark .ld-eyebrow { color: var(--a-300); }
+.ld-dark .ld-h2 { color: var(--white); }
+.ld-dark .ld-lead { color: var(--t-100); }
+
+/* hero mid divider — "and nearby" between the two voices */
+.ld-mid { display: flex; align-items: center; gap: 18px; margin: 14px 0; max-width: 520px; }
+.ld-mid-ln { flex: 1; height: 2px; background: var(--n-200); }
+.ld-mid-lb {
+  font-weight: 600; font-size: 0.72em; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--n-700); white-space: nowrap;
+}
+
+/* situations — prose, deliberately not three identical cards */
+.ld-sits {
+  margin-top: 44px; display: grid; gap: 2px; background: var(--n-200);
+  border: 1px solid var(--n-200); border-radius: 16px; overflow: hidden;
+}
+.ld-sit {
+  background: var(--n-050); padding: clamp(22px, 3vw, 32px);
+  display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start;
+}
+.ld-sit-q { font-family: var(--serif); font-style: italic; font-size: clamp(1.1em, 2.4vw, 1.4em); line-height: 1.42; margin: 0; }
+.ld-sit-who { font-weight: 600; font-size: 0.85em; color: var(--n-700); margin: 12px 0 0; }
+.ld-sit-mark { width: 6px; align-self: stretch; border-radius: 99px; background: var(--n-200); }
+.ld-sit:nth-child(1) .ld-sit-mark { background: var(--t-900); }
+.ld-sit:nth-child(2) .ld-sit-mark { background: var(--t-700); }
+/* the third voice is the one that answers — that is what amber means here */
+.ld-sit:nth-child(3) .ld-sit-mark { background: var(--a-400); }
+@media (max-width: 620px) {
+  .ld-sit { grid-template-columns: 1fr; }
+  .ld-sit-mark { width: 44px; height: 5px; align-self: start; }
+}
+
+/* the two paths — asymmetric on purpose */
+.ld-paths { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 44px; }
+@media (min-width: 880px) { .ld-paths { grid-template-columns: 1.08fr 0.92fr; } }
+.ld-path { border-radius: 18px; padding: clamp(26px, 3.4vw, 38px); display: flex; flex-direction: column; }
+.ld-path-a { background: var(--t-900); color: var(--white); }
+.ld-path-b { background: var(--white); border: 1.5px solid var(--n-500); }
+.ld-path h3 { font-family: var(--serif); font-size: clamp(1.3em, 3vw, 1.7em); font-weight: 700; line-height: 1.2; margin: 0 0 14px; }
+.ld-path-a p { color: var(--t-100); }
+.ld-path-b p { color: var(--n-700); }
+.ld-path ul { margin: 20px 0 0; padding: 0; list-style: none; }
+.ld-path li { display: flex; gap: 11px; padding: 7px 0; font-size: 0.92em; line-height: 1.5; }
+.ld-path li::before { content: "·"; font-weight: 700; flex: 0 0 auto; }
+.ld-path-a li { color: var(--t-100); }
+.ld-path-a li::before { color: var(--a-300); }
+.ld-path-b li { color: var(--n-800); }
+.ld-path-b li::before { color: var(--t-900); }
+.ld-path .btn { margin-top: 26px; text-decoration: none; }
+.ld-btn-light { background: var(--white); color: var(--t-900); border: none; }
+.ld-btn-light:hover { background: var(--t-050); }
+
+/* the product moment — steps beside a real screen */
+.ld-moment { margin-top: 44px; display: grid; grid-template-columns: 1fr; gap: clamp(26px, 5vw, 56px); align-items: center; }
+@media (min-width: 880px) { .ld-moment { grid-template-columns: 0.95fr 1.05fr; } }
+.ld-steps { counter-reset: s; margin: 0; padding: 0; list-style: none; }
+.ld-steps li {
+  counter-increment: s; display: grid; grid-template-columns: auto 1fr; gap: 18px;
+  padding: 15px 0; border-bottom: 1px solid var(--t-800);
+}
+.ld-steps li:last-child { border: 0; }
+.ld-steps li::before {
+  content: counter(s); font-weight: 700; font-size: 0.85em; width: 32px; height: 32px;
+  border-radius: 50%; border: 1.5px solid var(--t-500); display: flex; align-items: center;
+  justify-content: center; color: var(--t-100);
+}
+.ld-steps b { grid-column: 2; display: block; font-weight: 600; color: var(--white); line-height: 1.35; }
+.ld-steps span { grid-column: 2; display: block; font-size: 0.9em; color: var(--t-100); margin-top: 3px; line-height: 1.5; }
+
+/* phone frames for real screenshots */
+.ld-phone {
+  width: min(290px, 78vw); aspect-ratio: 375 / 812; border-radius: 34px;
+  border: 9px solid var(--n-900); background: var(--n-900);
+  box-shadow: var(--shadow-2); overflow: hidden; margin-inline: auto;
+}
+.ld-phone img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ld-shotcap { text-align: center; font-size: 0.85em; color: var(--t-100); margin-top: 16px; font-style: italic; }
+.ld-shots { display: grid; gap: var(--s-8); margin-top: 44px; grid-template-columns: 1fr; }
+@media (min-width: 880px) {
+  .ld-shots { grid-template-columns: repeat(3, 1fr); align-items: start; }
+  .ld-shots > div:nth-child(2) { transform: translateY(22px); }
+}
+.ld-shots .ld-shotcap { color: var(--n-700); font-style: normal; font-weight: 600; }
+
+/* safety facts */
+.ld-facts {
+  margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1px; background: var(--n-200); border: 1px solid var(--n-200); border-radius: 16px; overflow: hidden;
+}
+.ld-fact { background: var(--n-050); padding: 26px 24px; }
+.ld-fact-n { font-family: var(--serif); font-size: 2.1em; font-weight: 700; color: var(--t-900); line-height: 1; }
+.ld-fact h4 { font-weight: 600; font-size: 0.95em; margin: 12px 0 6px; }
+.ld-fact p { font-size: 0.87em; color: var(--n-700); line-height: 1.55; margin: 0; }
+.ld-emg {
+  margin-top: 28px; background: var(--white); border: 1.5px solid var(--err-text);
+  border-radius: 14px; padding: 18px 22px; color: var(--err-text); line-height: 1.55;
+}
+
+/* what it is not */
+.ld-nots { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 10px; max-width: 760px; }
+.ld-not {
+  border: 1.5px solid var(--n-500); border-radius: 99px; padding: 10px 18px;
+  font-weight: 600; font-size: 0.88em; color: var(--n-700);
+  text-decoration: line-through; text-decoration-thickness: 1.5px;
+}
+.ld-is {
+  margin-top: 30px; font-family: var(--serif); font-size: clamp(1.3em, 3.2vw, 1.85em);
+  font-weight: 600; line-height: 1.32; max-width: 22ch; color: var(--t-900);
+}
+
+/* ngo */
+.ld-ngo {
+  display: grid; grid-template-columns: 1fr; gap: 32px; align-items: center;
+  background: var(--white); border: 1.5px solid var(--n-500); border-radius: 18px;
+  padding: clamp(24px, 3.4vw, 38px); margin-top: 40px;
+}
+@media (min-width: 760px) { .ld-ngo { grid-template-columns: 1fr auto; } }
+
+/* faq */
+.ld-faq { margin-top: 36px; max-width: 760px; }
+.ld-q { border-bottom: 1px solid var(--n-200); }
+.ld-q summary {
+  list-style: none; cursor: pointer; display: flex; justify-content: space-between;
+  gap: 20px; align-items: center; padding: 22px 2px; font-weight: 600;
+  line-height: 1.4; min-height: var(--tap-min);
+}
+.ld-q summary::-webkit-details-marker { display: none; }
+.ld-q .ld-pm { flex: 0 0 auto; color: var(--t-900); font-size: 1.4em; font-weight: 400; transition: transform 200ms var(--ease); line-height: 1; }
+.ld-q[open] .ld-pm { transform: rotate(45deg); }
+.ld-q .ld-ans { padding: 0 2px 24px; color: var(--n-700); line-height: 1.68; max-width: 62ch; margin: 0; }
+
+/* closing */
+.ld-close { text-align: center; }
+.ld-close-ex { font-family: var(--serif); font-weight: 700; font-size: clamp(1.8em, 5.6vw, 3.3em); line-height: 1.1; color: var(--white); margin: 0; }
+.ld-close-ex span { color: var(--a-300); }
+
+/* the spine — Sisi as page structure, wide screens only */
+.ld-spine { display: none; }
+@media (min-width: 1240px) {
+  .ld-spine {
+    display: block; position: fixed; z-index: 5; pointer-events: none;
+    left: max(14px, calc((100vw - 1120px) / 2 - 34px));
+    top: 22vh; bottom: 22vh; width: 12px;
+  }
+  .ld-spine-track { position: absolute; inset: 0; border-radius: 99px; border: 2px dashed var(--n-300); }
+  .ld-spine-fill { position: absolute; left: 0; right: 0; top: 0; height: 0; border-radius: 99px; background: var(--a-400); }
+  .ld-spine-you { position: absolute; left: -20px; top: 0; bottom: 0; width: 12px; border-radius: 99px; background: var(--t-900); }
+}
+
+/* reveals — armed only once JS mounts, so no-JS readers see everything */
+.ld-anim .rv { opacity: 0; transform: translateY(16px); transition: opacity 520ms var(--ease), transform 520ms var(--ease); }
+.ld-anim .rv.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .ld-anim .rv { opacity: 1; transform: none; transition: none; }
+  .ld-spine-fill { height: 100% !important; transition: none; }
+  .ld-q .ld-pm { transition: none; }
+}
+.ld-split { display: grid; gap: var(--s-6); align-items: center; }
+@media (min-width: 880px) { .ld-split { grid-template-columns: 1.05fr 0.95fr; } }

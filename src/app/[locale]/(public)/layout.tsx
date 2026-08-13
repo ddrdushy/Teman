@@ -22,26 +22,24 @@ export default async function PublicLayout({ children }: { children: ReactNode }
       {/* sticky only on wide screens — four wrapped rows must not pin
           themselves over a phone viewport */}
       <header className="site-header">
-        <div style={{ maxWidth: '1000px', margin: '0 auto', padding: 'var(--s-3) var(--s-5)' }}>
-          {/* row 1: identity left; the two actions a returning person needs right */}
-          <div className="site-bar">
-            <Link href={`/${locale}`} aria-label={t('nav.homeAria')} style={{ display: 'flex' }}>
-              <TemanLogo height={28} />
-            </Link>
-            <div style={{ display: 'flex', gap: 'var(--tap-gap)', alignItems: 'center' }}>
-              <Link href={`/${locale}/join/phone`} className="btn btn-primary"
-                style={{ width: 'auto', minHeight: 'var(--tap-min)', textDecoration: 'none', fontSize: '0.9em' }}>
-                {t('nav.signIn')}
-              </Link>
-              <PublicLangSwitch />
-            </div>
-          </div>
-          {/* row 2: the reading nav, wrapping tidily on small screens */}
+        {/* one row on desktop: identity · reading nav · the returning person's
+            two actions. On phones the nav drops to its own tidy second row. */}
+        <div className="site-shell" style={{ maxWidth: '1120px', margin: '0 auto', padding: 'var(--s-3) clamp(20px, 4vw, 40px)' }}>
+          <Link href={`/${locale}`} aria-label={t('nav.homeAria')} style={{ display: 'flex' }}>
+            <TemanLogo height={28} />
+          </Link>
           <nav className="site-links">
             {nav.map(([path, label]) => (
               <Link key={path} href={`/${locale}/${path}`}>{label}</Link>
             ))}
           </nav>
+          <div className="site-actions">
+            <Link href={`/${locale}/join/phone`} className="btn btn-primary"
+              style={{ width: 'auto', minHeight: 'var(--tap-min)', textDecoration: 'none', fontSize: '0.9em' }}>
+              {t('nav.signIn')}
+            </Link>
+            <PublicLangSwitch />
+          </div>
         </div>
       </header>
 

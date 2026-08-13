@@ -17,10 +17,10 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
       <NavBar
         locale={locale}
         tabs={[
-          { href: '/home', label: t('home') },
-          { href: '/requests', label: t('requests') },
-          { href: '/messages', label: t('messages') },
-          { href: '/you', label: t('you') },
+          { href: '/home', label: t('home'), icon: 'home' },
+          { href: '/requests', label: t('requests'), icon: 'requests' },
+          { href: '/messages', label: t('messages'), icon: 'messages' },
+          { href: '/you', label: t('you'), icon: 'you' },
         ]}
       />
     </div>

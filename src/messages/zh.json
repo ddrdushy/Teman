@@ -1022,7 +1022,8 @@
       "free": "Always free. No payments, ever.",
       "ctaNeed": "Find a Teman",
       "ctaVolunteer": "Become a Teman",
-      "already": "Already with Teman?"
+      "already": "Already with Teman?",
+      "mid": "and nearby"
     },
     "why": {
       "title": "Loneliness in a city is rarely a logistics problem.",
@@ -1032,7 +1033,8 @@
       "sit2": "“I have been alone most of this week. I do not need advice. I would just like someone to have tea with.”",
       "sit2Who": "A member in Petaling Jaya",
       "sit3": "“I am free most Saturday mornings around Cheras. I have never known how to actually be useful with that.”",
-      "sit3Who": "A volunteer in Cheras"
+      "sit3Who": "A volunteer in Cheras",
+      "eyebrow": "Why this exists"
     },
     "safetyBrief": {
       "title": "Strangers meeting in real life. We treat that seriously.",
@@ -1209,10 +1211,105 @@
       "datingA": "No, and romantic or sexual approaches are against the guidelines in messages and in person. It is a report category, and it is treated seriously.",
       "idQ": "What happens to my ID after verification?",
       "idA": "One trained reviewer checks it, then it is deleted within 90 days. The number itself is never stored — only a scrambled code that detects the same document on two accounts."
+    },
+    "paths": {
+      "eyebrow": "Two ways in",
+      "title": "One exchange, from either side.",
+      "aTitle": "I need someone with me",
+      "aBody": "For yourself, or for a parent who does not use a phone. You say what you need and when. Nearby Temans see it and one of them offers.",
+      "aL1": "A hospital or clinic appointment",
+      "aL2": "The bank, a government office, a form",
+      "aL3": "Groceries, or a walk, or company for a while",
+      "aL4": "Someone to visit a parent while you are away",
+      "bTitle": "I can be there",
+      "bBody": "You do not need training, a car, or medical knowledge. You need to be willing to sit with someone for a couple of hours.",
+      "bL1": "Say when you are free and how far you would go",
+      "bL2": "See requests near you — offer only if it suits",
+      "bL3": "No commitment past the day you said yes to",
+      "bL4": "Never any money, in either direction"
+    },
+    "howHome": {
+      "eyebrow": "How it works",
+      "title": "Four steps, then you close the app.",
+      "lede": "The whole point is to get you off the screen and into the same room as fast as possible.",
+      "s1t": "Say what you need",
+      "s1s": "A few short questions. One at a time.",
+      "s2t": "Someone nearby offers",
+      "s2s": "You see who they are before you decide anything.",
+      "s3t": "You both accept",
+      "s3s": "Only then does the exact address get shared.",
+      "s4t": "You meet",
+      "s4s": "Your trusted contact is told when it starts and when it ends.",
+      "shotCap": "The actual screen. No stars, no percentage match — the things a person would want to know.",
+      "shotAlt": "A real Teman screen showing an offer from a nearby volunteer, with his languages and record, and an accept button"
+    },
+    "shots": {
+      "eyebrow": "What it looks like",
+      "title": "Three screens, and you are done.",
+      "cap1": "One clear home. Three big choices.",
+      "alt1": "The Teman home screen with three large buttons: need a Teman, I am available, going somewhere",
+      "cap2": "One question at a time, in your language.",
+      "alt2": "The new request screen asking a single question with large answer buttons",
+      "cap3": "See who is asking near you.",
+      "alt3": "A list of nearby requests from people in the neighbourhood"
+    },
+    "facts": {
+      "eyebrow": "Safety",
+      "title": "Strangers meeting in real life. We treat that seriously.",
+      "lede": "Not with a promise — with specifics you can check.",
+      "f1n": "1",
+      "f1t": "A person checks every ID",
+      "f1p": "MyKad or passport, matched against a selfie by a human reviewer at a partner organisation. Not an algorithm.",
+      "f2n": "90",
+      "f2t": "Days, then the document is gone",
+      "f2p": "Deleted automatically after review. We never store the ID number itself — only a scrambled version used to spot duplicates.",
+      "f3n": "2",
+      "f3t": "Both people must agree",
+      "f3p": "Until you both accept, only the general area is visible. The exact address and phone number unlock at that moment, and we record every time they are seen.",
+      "f4n": "0",
+      "f4t": "Ratings out of five",
+      "f4p": "Trust is shown as verification, the number of times someone has shown up, and words other members used. A score would turn a neighbour into a gig worker.",
+      "emgLead": "Teman is not an emergency service.",
+      "emgBody": "If someone is in danger or needs medical help right now, call 999 first. Our safety button sits alongside that, never instead of it."
+    },
+    "nots": {
+      "eyebrow": "Being clear",
+      "title": "What Teman is not.",
+      "lede": "Products get vague about their edges. This one should not — you are deciding whether to let a stranger sit beside your parent.",
+      "n1": "a ride service",
+      "n2": "home nursing",
+      "n3": "a healthcare provider",
+      "n4": "therapy",
+      "n5": "a dating app",
+      "n6": "a maid service",
+      "n7": "a task marketplace",
+      "n8": "a delivery service",
+      "n9": "a social network",
+      "n10": "an emergency service",
+      "isLine": "Teman does one thing: it puts a person beside another person."
+    },
+    "close": {
+      "l1": "No one should have to",
+      "l2": "go alone.",
+      "note": "Currently in Brickfields, Kuala Lumpur — with our NGO partner."
+    },
+    "ngoEyebrow": "For organisations",
+    "faqMore": "More questions",
+    "img": {
+      "waiting-room": "A row of empty clinic chairs; one umbrella and a bag left on a seat",
+      "arcade": "A covered five-foot walkway outside old shophouses, wet after rain",
+      "market": "A wet market aisle with vegetables stacked and a rattan basket",
+      "kopitiam": "A kopitiam marble table with two cups of tea, a newspaper and reading glasses",
+      "bus-stop": "An empty bus stop bench under one light, at dusk after rain",
+      "hands": "An older hand and a younger hand resting side by side on a wooden table",
+      "corridor": "The open walkway of an apartment block, slippers outside a door",
+      "chair-ticket": "A waiting-room chair holding folded glasses and a queue number ticket"
     }
   },
   "pwa": {
     "offlineTitle": "No connection right now",
-    "offlineBody": "Nothing you typed is lost. Teman will pick up where you left off the moment the connection returns."
+    "offlineBody": "Nothing you typed is lost. Teman will pick up where you left off the moment the connection returns.",
+    "install": "Install the Teman app",
+    "iosHint": "On iPhone: open the Share menu and choose \"Add to Home Screen\"."
   }
 }

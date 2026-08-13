@@ -3,12 +3,21 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import type { ReactNode } from 'react';
+import { IconHome, IconRequests, IconMessages, IconYou } from '@/components/icons';
+
+/* Icons resolve by name here — a server layout can't pass render functions
+   across the client boundary. */
+const ICONS = {
+  home: IconHome,
+  requests: IconRequests,
+  messages: IconMessages,
+  you: IconYou,
+} as const;
 
 export type NavTab = {
   href: string;             // locale-relative, e.g. '/home'
   label: string;            // caller passes t('nav.…')
-  icon?: (active: boolean) => ReactNode;
+  icon?: keyof typeof ICONS;
   badge?: number;           // unread count — a count, never a score
 };
 
@@ -23,6 +32,7 @@ export function NavBar({ tabs, locale }: { tabs: NavTab[]; locale: string }) {
       {tabs.map((tab) => {
         const full = `/${locale}${tab.href}`;
         const active = pathname === full || pathname.startsWith(`${full}/`);
+        const Icon = tab.icon ? ICONS[tab.icon] : null;
         return (
           <Link
             key={tab.href}
@@ -30,8 +40,8 @@ export function NavBar({ tabs, locale }: { tabs: NavTab[]; locale: string }) {
             className={['navbar-tab', active ? 'is-active' : ''].join(' ').trim()}
             aria-current={active ? 'page' : undefined}
           >
-            {tab.icon
-              ? <span aria-hidden="true">{tab.icon(active)}</span>
+            {Icon
+              ? <span className="navbar-svg" aria-hidden="true"><Icon active={active} /></span>
               : <span className="navbar-icon" aria-hidden="true" />}
             <span className="navbar-label">{tab.label}</span>
             {tab.badge ? (
