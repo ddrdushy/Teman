@@ -35,17 +35,18 @@ const RATIO = 72 / 100;
 export function Sisi({ state, size = 76, tone = 'light', className }: Props) {
   const dark = tone === 'dark';
 
-  // left form — you
-  const left = state === 'moment' ? '#EDCA97' : dark ? '#FAF9F7' : '#0A4D4A';
+  // left form — you  (all colours resolve through tokens.css)
+  const left = state === 'moment' ? 'var(--a-300)' : dark ? 'var(--n-050)' : 'var(--t-900)';
 
   // right form — the space beside you
   const rightFill =
-    state === 'waiting' ? 'transparent' : state === 'moment' ? '#EDCA97' : '#E8A13C';
-  const rightStroke = state === 'waiting' ? (dark ? '#4A6C6A' : '#B8B2A7') : 'transparent';
+    state === 'waiting' ? 'transparent' : state === 'moment' ? 'var(--a-300)' : 'var(--a-400)';
+  const rightStroke =
+    state === 'waiting' ? (dark ? 'var(--sisi-dash-dark)' : 'var(--n-300)') : 'transparent';
 
   // the join — only once they are actually together
   const joined = state === 'together' || state === 'moment';
-  const joinFill = state === 'moment' ? '#EDCA97' : '#126D6A';
+  const joinFill = state === 'moment' ? 'var(--a-300)' : 'var(--t-800)';
 
   return (
     <svg
@@ -83,9 +84,9 @@ export function Sisi({ state, size = 76, tone = 'light', className }: Props) {
 export function SisiMark({ size = 26 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 92 92" aria-hidden="true" focusable="false">
-      <rect width="92" height="92" rx="21" fill="#0A4D4A" />
-      <rect x="24" y="24" width="17" height="44" rx="8.5" fill="#FAF9F7" />
-      <rect x="51" y="24" width="17" height="44" rx="8.5" fill="#E8A13C" />
+      <rect width="92" height="92" rx="21" fill="var(--t-900)" />
+      <rect x="24" y="24" width="17" height="44" rx="8.5" fill="var(--n-050)" />
+      <rect x="51" y="24" width="17" height="44" rx="8.5" fill="var(--a-400)" />
     </svg>
   );
 }
@@ -100,15 +101,15 @@ export function TemanLogo({ height = 30, onDark = false }: { height?: number; on
       aria-label="Teman"
       style={{ display: 'block' }}
     >
-      <rect x="4" y="8" width="12" height="30" rx="6" fill={onDark ? '#FAF9F7' : '#0A4D4A'} />
-      <rect x="22" y="8" width="12" height="30" rx="6" fill="#E8A13C" />
+      <rect x="4" y="8" width="12" height="30" rx="6" fill={onDark ? 'var(--n-050)' : 'var(--t-900)'} />
+      <rect x="22" y="8" width="12" height="30" rx="6" fill="var(--a-400)" />
       <text
         x="46"
         y="34"
         fontFamily="Vollkorn, Georgia, serif"
         fontSize="32"
         fontWeight="700"
-        fill={onDark ? '#FFFFFF' : '#0A4D4A'}
+        fill={onDark ? 'var(--white)' : 'var(--t-900)'}
       >
         Teman
       </text>

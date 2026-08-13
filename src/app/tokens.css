@@ -28,6 +28,9 @@
   --t-100: #C7F5F3;
   --t-050: #E8FCFB;
 
+  /* Sisi's dashed outline on deep teal panels — nowhere else. */
+  --sisi-dash-dark: #4A6C6A;
+
   /* ── Signature: Amber · CONNECTION ONLY · under 5% ───────────── */
   /* A person has answered. Never a warning, never decoration,
      never a background field, never a gradient.                   */
