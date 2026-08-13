@@ -1,0 +1,31 @@
+{$DOMAIN} {
+	encode zstd gzip
+	reverse_proxy app:3000
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+		X-Content-Type-Options    "nosniff"
+		X-Frame-Options           "DENY"
+		Referrer-Policy           "strict-origin-when-cross-origin"
+		# Camera is needed for ID capture and the selfie step; geolocation for
+		# foreground session sharing. Nothing else is granted.
+		Permissions-Policy        "camera=(self), geolocation=(self), microphone=(), payment=()"
+		-Server
+	}
+
+	# The service worker must not be cached, or an install can pin an old build.
+	@sw path /sw.js /manifest.webmanifest
+	header @sw Cache-Control "no-cache, no-store, must-revalidate"
+
+	@static path /_next/static/* /fonts/* /icons/*
+	header @static Cache-Control "public, max-age=31536000, immutable"
+
+	log {
+		output file /data/access.log {
+			roll_size 20mb
+			roll_keep 5
+		}
+		# Never log query strings — a stray param could carry personal data.
+		format json
+	}
+}

@@ -1,0 +1,15 @@
+# deps / build
+node_modules/
+.next/
+dist/
+*.tsbuildinfo
+
+# env — .env.example is the only env file that belongs in the repo
+.env
+.env.local
+.env.production
+
+# misc
+.DS_Store
+npm-debug.log*
+pnpm-debug.log*

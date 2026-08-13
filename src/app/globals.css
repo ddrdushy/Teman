@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+
+/* Tokens come after Tailwind so the brand base styles (body, focus rings,
+   wrap-don't-truncate) win over preflight. Every colour and type value lives
+   in tokens.css — a hex code anywhere else is a bug. */
+@import './tokens.css';

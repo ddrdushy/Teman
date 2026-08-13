@@ -1,0 +1,65 @@
+{
+  "common": {
+    "appName": "Teman",
+    "tagline": "No one should have to go alone.",
+    "continue": "Continue",
+    "back": "Back",
+    "done": "Done",
+    "save": "Save",
+    "cancel": "Cancel",
+    "loading": "Loading",
+    "tryAgain": "Try again"
+  },
+  "welcome": {
+    "title": "Someone nearby can be there.",
+    "line1": "Teman connects people who need someone beside them with neighbours who have a few hours to give. Always free.",
+    "cta": "Get started",
+    "languagesLabel": "Choose your language"
+  },
+  "join": {
+    "phoneTitle": "What's your phone number?",
+    "phoneHint": "We'll send a 6-digit code by SMS.",
+    "sendCode": "Send me a code",
+    "otpTitle": "Enter the code",
+    "otpHint": "From the SMS we just sent. It works for 10 minutes.",
+    "otpWrong": "That code doesn't match. Check the SMS and try again — your typing is kept.",
+    "otpExpired": "That code has expired. We can send a new one.",
+    "resend": "Send it again",
+    "resendWait": "You can ask for a new code in {seconds} seconds",
+    "nameTitle": "What should people call you?",
+    "areaTitle": "Where are you based?",
+    "areaHint": "Just the area — never your address.",
+    "doneTitle": "You're part of {area} now.",
+    "intentHelp": "I want to help someone",
+    "intentNeed": "I need someone with me"
+  },
+  "home": {
+    "greeting": "Good morning, {name}",
+    "needTeman": "Need a Teman",
+    "needTemanSub": "For you or someone you care for",
+    "available": "I'm available",
+    "availableSub": "Tell your area when you're free",
+    "going": "Going somewhere?",
+    "goingSub": "Someone may be heading there too",
+    "around": "Around {area} today",
+    "aroundNeed": "{count, plural, one {# person needs a Teman} other {# people need a Teman}}",
+    "aroundFree": "{count, plural, one {# Teman free this afternoon} other {# Temans free this afternoon}}",
+    "next": "Your next Teman",
+    "stillLooking": "Still looking"
+  },
+  "nav": {
+    "home": "Home",
+    "requests": "Requests",
+    "messages": "Messages",
+    "you": "You"
+  },
+  "language": {
+    "control": "Language & text size",
+    "choose": "Choose your language",
+    "hint": "Every language is always shown in its own writing, so you can find yours without reading this sentence.",
+    "textSize": "Text size",
+    "standard": "Standard",
+    "large": "Large",
+    "extraLarge": "Extra large"
+  }
+}

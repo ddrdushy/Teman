@@ -1,0 +1,65 @@
+{
+  "common": {
+    "appName": "Teman",
+    "tagline": "No one should have to go alone.",
+    "continue": "Continue",
+    "back": "Back",
+    "done": "完成",
+    "save": "Save",
+    "cancel": "Cancel",
+    "loading": "Loading",
+    "tryAgain": "Try again"
+  },
+  "welcome": {
+    "title": "Someone nearby can be there.",
+    "line1": "Teman connects people who need someone beside them with neighbours who have a few hours to give. Always free.",
+    "cta": "Get started",
+    "languagesLabel": "选择你的语言"
+  },
+  "join": {
+    "phoneTitle": "What's your phone number?",
+    "phoneHint": "We'll send a 6-digit code by SMS.",
+    "sendCode": "Send me a code",
+    "otpTitle": "Enter the code",
+    "otpHint": "From the SMS we just sent. It works for 10 minutes.",
+    "otpWrong": "That code doesn't match. Check the SMS and try again — your typing is kept.",
+    "otpExpired": "That code has expired. We can send a new one.",
+    "resend": "Send it again",
+    "resendWait": "You can ask for a new code in {seconds} seconds",
+    "nameTitle": "What should people call you?",
+    "areaTitle": "Where are you based?",
+    "areaHint": "Just the area — never your address.",
+    "doneTitle": "You're part of {area} now.",
+    "intentHelp": "I want to help someone",
+    "intentNeed": "I need someone with me"
+  },
+  "home": {
+    "greeting": "早安，{name}",
+    "needTeman": "需要一位 Teman",
+    "needTemanSub": "为你自己或你照顾的人",
+    "available": "我今天有空",
+    "availableSub": "告诉附近的人你有空",
+    "going": "要出门吗？",
+    "goingSub": "也许有人也要去那里",
+    "around": "今天 {area} 附近",
+    "aroundNeed": "{count} 人需要陪伴",
+    "aroundFree": "{count} 位 Teman 今天下午有空",
+    "next": "你的下一次陪伴",
+    "stillLooking": "仍在寻找"
+  },
+  "nav": {
+    "home": "首页",
+    "requests": "请求",
+    "messages": "消息",
+    "you": "我的"
+  },
+  "language": {
+    "control": "语言与字体大小",
+    "choose": "选择你的语言",
+    "hint": "每种语言都以自己的文字显示，你不必读懂这句话也能找到自己的语言。",
+    "textSize": "字体大小",
+    "standard": "标准",
+    "large": "大",
+    "extraLarge": "特大"
+  }
+}

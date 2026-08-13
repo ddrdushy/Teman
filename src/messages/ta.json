@@ -1,0 +1,65 @@
+{
+  "common": {
+    "appName": "Teman",
+    "tagline": "No one should have to go alone.",
+    "continue": "Continue",
+    "back": "Back",
+    "done": "முடிந்தது",
+    "save": "Save",
+    "cancel": "Cancel",
+    "loading": "Loading",
+    "tryAgain": "Try again"
+  },
+  "welcome": {
+    "title": "Someone nearby can be there.",
+    "line1": "Teman connects people who need someone beside them with neighbours who have a few hours to give. Always free.",
+    "cta": "Get started",
+    "languagesLabel": "உங்கள் மொழியைத் தேர்ந்தெடுங்கள்"
+  },
+  "join": {
+    "phoneTitle": "What's your phone number?",
+    "phoneHint": "We'll send a 6-digit code by SMS.",
+    "sendCode": "Send me a code",
+    "otpTitle": "Enter the code",
+    "otpHint": "From the SMS we just sent. It works for 10 minutes.",
+    "otpWrong": "That code doesn't match. Check the SMS and try again — your typing is kept.",
+    "otpExpired": "That code has expired. We can send a new one.",
+    "resend": "Send it again",
+    "resendWait": "You can ask for a new code in {seconds} seconds",
+    "nameTitle": "What should people call you?",
+    "areaTitle": "Where are you based?",
+    "areaHint": "Just the area — never your address.",
+    "doneTitle": "You're part of {area} now.",
+    "intentHelp": "I want to help someone",
+    "intentNeed": "I need someone with me"
+  },
+  "home": {
+    "greeting": "காலை வணக்கம், {name}",
+    "needTeman": "ஒரு துணை வேண்டும்",
+    "needTemanSub": "உங்களுக்கு அல்லது நீங்கள் கவனித்துக்கொள்பவருக்கு",
+    "available": "நான் தயாராக இருக்கிறேன்",
+    "availableSub": "நேரம் இருக்கும்போது உங்கள் பகுதிக்குத் தெரிவியுங்கள்",
+    "going": "எங்காவது செல்கிறீர்களா?",
+    "goingSub": "அதே இடத்திற்கு வேறு யாராவது செல்லலாம்",
+    "around": "இன்று {area} பகுதியில்",
+    "aroundNeed": "{count} பேருக்குத் துணை தேவை",
+    "aroundFree": "{count} துணைகள் இன்று மதியம் தயார்",
+    "next": "உங்கள் அடுத்த துணை",
+    "stillLooking": "இன்னும் தேடுகிறோம்"
+  },
+  "nav": {
+    "home": "முகப்பு",
+    "requests": "கோரிக்கைகள்",
+    "messages": "செய்திகள்",
+    "you": "நீங்கள்"
+  },
+  "language": {
+    "control": "மொழி & எழுத்து அளவு",
+    "choose": "உங்கள் மொழியைத் தேர்ந்தெடுங்கள்",
+    "hint": "ஒவ்வொரு மொழியும் அதன் சொந்த எழுத்திலேயே காட்டப்படும் — இந்த வாக்கியத்தைப் படிக்காமலேயே உங்களுடையதைக் கண்டுபிடிக்கலாம்.",
+    "textSize": "எழுத்து அளவு",
+    "standard": "சாதாரணம்",
+    "large": "பெரியது",
+    "extraLarge": "மிகப் பெரியது"
+  }
+}

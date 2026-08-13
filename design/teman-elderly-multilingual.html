@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teman — Elderly UI &amp; Language System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Vollkorn:wght@600;700&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Serif+Tamil:wght@600;700&family=Noto+Sans+SC:wght@400;600;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --n-900:#27241D; --n-800:#423D33; --n-700:#504A40; --n-600:#625D52;
+  --n-500:#857F72; --n-400:#A39E93; --n-300:#B8B2A7; --n-200:#D3CEC4;
+  --n-100:#E8E6E1; --n-050:#FAF9F7;
+  --t-900:#0A4D4A; --t-800:#126D6A; --t-700:#1B8380; --t-100:#C7F5F3; --t-050:#E8FCFB;
+  --a-700:#895811; --a-400:#E8A13C; --a-300:#EDCA97;
+  --ok-text:#0E5814; --ok-fill:#E3F9E5;
+  --err-text:#780A0A; --err-fill:#FFEEEE; --err-strong:#911111;
+  --warn-text:#7C5E10; --warn-fill:#FFFAEB;
+  --info-text:#334E68; --info-fill:#F0F4F8;
+  --sans:"Source Sans 3",system-ui,sans-serif;
+  --serif:"Vollkorn",Georgia,serif;
+  --r-card:14px; --r-btn:12px;
+  --sh-1:0 1px 2px rgba(39,36,29,.06),0 2px 8px rgba(39,36,29,.05);
+  --sh-2:0 8px 28px rgba(10,77,74,.16);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--n-100);color:var(--n-900);font:400 17px/1.55 var(--sans)}
+h1,h2,h3{font-family:var(--serif);margin:0}
+p{margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.masthead{background:var(--t-900);color:#fff;padding:52px 0 44px}
+.masthead .eyebrow{font:600 15px var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--a-300)}
+.masthead h1{font-size:44px;line-height:1.12;font-weight:700;margin:12px 0 12px}
+.masthead p{max-width:60ch;color:#DCEFEE;font-size:18px}
+section{padding:50px 0;border-top:1px solid var(--n-200)}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px;flex-wrap:wrap}
+.sec-num{font:600 14px/1 var(--sans);letter-spacing:.1em;color:var(--t-900);background:var(--t-050);border:1px solid var(--t-100);padding:7px 10px;border-radius:999px}
+.sec-head h2{font-size:30px;font-weight:600}
+.sec-sub{color:var(--n-700);max-width:66ch;margin-bottom:26px}
+.card{background:#fff;border:1px solid var(--n-500);border-radius:var(--r-card);box-shadow:var(--sh-1)}
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:900px){.g2,.g3{grid-template-columns:1fr}}
+.lbl{font:600 14px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--n-700)}
+.tbl-wrap{overflow-x:auto;background:#fff;border:1px solid var(--n-500);border-radius:var(--r-card)}
+table{width:100%;border-collapse:collapse;font-size:16px}
+th{text-align:left;font:600 13px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--n-700);padding:12px 14px;border-bottom:2px solid var(--n-300);white-space:nowrap}
+td{padding:13px 14px;border-bottom:1px solid var(--n-100);vertical-align:top}
+.was{color:var(--err-text);background:var(--err-fill);font:600 13px var(--sans);padding:4px 9px;border-radius:999px;white-space:nowrap;display:inline-block}
+.now{color:var(--ok-text);background:var(--ok-fill);font:600 13px var(--sans);padding:4px 9px;border-radius:999px;white-space:nowrap;display:inline-block}
+code{font:600 15px ui-monospace,Menlo,monospace;background:var(--n-100);padding:2px 6px;border-radius:5px}
+.rule{padding:18px 20px;border-left:4px solid var(--t-800);background:#fff;border-radius:0 var(--r-card) var(--r-card) 0;border-top:1px solid var(--n-500);border-right:1px solid var(--n-500);border-bottom:1px solid var(--n-500)}
+.rule.stop{border-left-color:var(--err-strong)}
+.rule h4{font:600 17px var(--sans);margin:0 0 6px}
+.rule p{color:var(--n-700);font-size:15.5px;line-height:1.5}
+
+/* ── live demo ── */
+.demo-bar{background:#fff;border:1px solid var(--n-500);border-radius:var(--r-card);padding:18px 20px;margin-bottom:22px;box-shadow:var(--sh-1)}
+.ctl{display:flex;gap:9px;flex-wrap:wrap;margin-top:9px}
+.ctl button{font:600 16px var(--sans);padding:12px 16px;min-height:48px;border-radius:var(--r-btn);
+  border:1.5px solid var(--n-500);background:#fff;color:var(--n-900);cursor:pointer;transition:.14s}
+.ctl button:hover{background:var(--n-050);border-color:var(--t-800)}
+.ctl button[aria-pressed="true"]{background:var(--t-900);color:#fff;border-color:var(--t-900)}
+.ctl button:focus-visible{outline:3px solid var(--a-400);outline-offset:3px}
+.ta{font-family:"Noto Sans Tamil",var(--sans)}
+.zh{font-family:"Noto Sans SC",var(--sans)}
+
+.stage{display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap}
+.phone{width:340px;height:690px;background:var(--n-050);border:9px solid var(--n-900);border-radius:38px;
+  overflow:hidden;box-shadow:var(--sh-2);display:flex;flex-direction:column;flex:0 0 auto}
+.pstatus{height:26px;flex:0 0 26px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font:600 12px var(--sans);color:var(--n-700)}
+.pscreen{flex:1;overflow-y:auto;padding:4px 18px 0;position:relative}
+.pnav{flex:0 0 66px;border-top:1px solid var(--n-500);background:#fff;display:flex;align-items:stretch;justify-content:space-around}
+.pnav div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font:600 12px var(--sans);color:var(--n-700);text-align:center;line-height:1.2;padding:4px 2px;cursor:pointer}
+.pnav div.on{color:var(--t-900)}
+.pnav .d{width:24px;height:24px;border-radius:7px;background:var(--n-300)}
+.pnav div.on .d{background:var(--t-900)}
+
+/* everything inside the phone scales from --fs */
+#app{font-size:var(--fs,18px)}
+#app .greet{font-family:var(--dserif,var(--serif));font-size:1.5em;font-weight:600;line-height:1.3;margin:12px 0 3px}
+#app .date{color:var(--n-700);font-size:.86em;margin-bottom:16px}
+#app .act{display:flex;align-items:center;gap:14px;width:100%;text-align:left;border:0;cursor:pointer;
+  background:var(--t-900);color:#fff;padding:1em 1em;border-radius:var(--r-btn);
+  font:600 1.06em/1.3 inherit;margin-bottom:12px;min-height:64px;box-shadow:var(--sh-1);transition:.14s}
+#app .act small{display:block;font:400 .8em/1.4 inherit;color:#CFEAE9;margin-top:4px}
+#app .act:hover{background:#073735}
+#app .act:focus-visible{outline:3px solid var(--a-400);outline-offset:3px}
+#app .act.ghost{background:#fff;color:var(--n-900);border:1.5px solid var(--n-500)}
+#app .act.ghost small{color:var(--n-700)}
+#app .act.ghost:hover{background:var(--n-050);border-color:var(--t-800)}
+#app .around{background:#fff;border:1px solid var(--n-500);border-radius:var(--r-card);padding:.85em 1em;margin:20px 0 16px}
+#app .around .h{font:600 .74em/1.3 inherit;letter-spacing:.07em;text-transform:uppercase;color:var(--n-700);margin-bottom:10px}
+#app .around .ln{display:flex;align-items:baseline;gap:10px;padding:8px 0;font-size:.92em;border-bottom:1px solid var(--n-100);line-height:1.4}
+#app .around .ln:last-child{border:0}
+#app .around .n{font-weight:700;font-size:1.1em;color:var(--t-900);min-width:1.2em}
+#app .sect{font:600 .78em/1.3 inherit;letter-spacing:.07em;text-transform:uppercase;color:var(--n-700);margin:0 0 9px}
+#app .rq{background:#fff;border:1px solid var(--n-500);border-left:4px solid var(--a-400);border-radius:var(--r-card);padding:.85em 1em}
+#app .rq h5{font-family:var(--dserif,var(--serif));font-size:1.05em;font-weight:600;margin:0 0 4px;line-height:1.3}
+#app .rq .m{color:var(--n-700);font-size:.85em;line-height:1.45}
+#app .pill{display:inline-flex;align-items:center;gap:6px;font:600 .78em inherit;padding:6px 12px;border-radius:999px;margin-top:11px;background:var(--warn-fill);color:var(--warn-text)}
+/* Tamil and CJK take no letter-spacing and have no letter case — uppercase and tracking are Latin-only devices */
+#app[lang="ta"] .h,#app[lang="ta"] .sect,#app[lang="zh"] .h,#app[lang="zh"] .sect,
+.pnav[lang="ta"] div,.pnav[lang="zh"] div{letter-spacing:0;text-transform:none}
+#app .fab{position:sticky;bottom:-20px;margin:18px -18px 0;padding:10px 18px 20px;background:var(--n-050);border-top:1px solid var(--n-200)}
+#app .fab button{width:100%;min-height:60px;border:1.5px solid var(--n-500);background:#fff;border-radius:var(--r-btn);
+  font:600 .95em inherit;color:var(--n-900);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;padding:.8em}
+#app .fab button:hover{background:var(--n-050);border-color:var(--t-800)}
+
+/* language sheet */
+.sheet{position:absolute;inset:0;background:rgba(39,36,29,.45);display:none;align-items:flex-end}
+.sheet.open{display:flex}
+.sheet-in{background:#fff;width:100%;border-radius:18px 18px 0 0;padding:20px 18px 22px;max-height:96%;overflow-y:auto}
+.sheet-in h4{font-family:var(--serif);font-size:20px;font-weight:600;margin:0 0 4px}
+.sheet-in .hint{color:var(--n-700);font-size:14.5px;margin-bottom:14px;line-height:1.45}
+.langbtn{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;
+  min-height:64px;padding:14px 16px;margin-bottom:10px;border-radius:var(--r-btn);
+  border:1.5px solid var(--n-500);background:#fff;cursor:pointer;text-align:left;transition:.14s}
+.langbtn:hover{background:var(--n-050);border-color:var(--t-800)}
+.langbtn[aria-pressed="true"]{border:2.5px solid var(--t-900);background:var(--t-050)}
+.langbtn .nm{display:block;font-size:21px;font-weight:600;color:var(--n-900);line-height:1.35}
+.langbtn .sub{display:block;font:400 14px var(--sans);color:var(--n-700);margin-top:3px}
+.langbtn .tick{font-size:20px;color:var(--t-900);font-weight:700;visibility:hidden}
+.langbtn[aria-pressed="true"] .tick{visibility:visible}
+.sizerow{display:flex;gap:9px;margin-bottom:6px}
+.sizerow button{flex:1;min-height:60px;border-radius:var(--r-btn);border:1.5px solid var(--n-500);
+  background:#fff;cursor:pointer;font-weight:600;color:var(--n-900);transition:.14s;padding:8px 4px;line-height:1.25}
+.sizerow button:hover{background:var(--n-050);border-color:var(--t-800)}
+.sizerow button[aria-pressed="true"]{border:2.5px solid var(--t-900);background:var(--t-050)}
+.closebtn{width:100%;min-height:56px;border:0;border-radius:var(--r-btn);background:var(--t-900);color:#fff;
+  font:600 18px var(--sans);cursor:pointer;margin-top:12px}
+
+.side{flex:1;min-width:300px}
+.side h3{font-size:22px;font-weight:600;margin-bottom:10px}
+.side ul{margin:0;padding-left:20px;color:var(--n-700);line-height:1.6}
+.side li{margin-bottom:11px}
+.side li b{color:var(--n-900)}
+
+.big-quote{font-family:var(--serif);font-size:22px;line-height:1.45;color:var(--t-900);
+  border-left:4px solid var(--a-400);padding:4px 0 4px 18px;margin:6px 0 0}
+.flagx{background:var(--err-fill);border:1px solid #E9BDBD;border-radius:var(--r-card);padding:16px 18px}
+.flagx h4{font:700 17px var(--sans);color:var(--err-text);margin:0 0 6px}
+.flagx p{color:var(--err-text);font-size:15.5px;line-height:1.5}
+footer{background:var(--t-900);color:var(--t-100);padding:40px 0;text-align:center}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Teman — UI System · Part 2</div>
+    <h1>Built for older eyes,<br>older hands, four scripts</h1>
+    <p>The brand system holds. What changes here is everything the elderly audience and Malaysia's four languages force: bigger targets, stricter contrast, a language switch that works for someone who cannot read the current language, and type specs per script — because Vollkorn has no Tamil and no Chinese.</p>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- 01 LIVE DEMO -->
+<section style="border-top:0">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Try it — this is working, not a mockup</h2></div>
+  <p class="sec-sub">Switch language and text size below. Every string, every font family, and every line-height changes. This is the demo to put in front of the NGO — hand someone the phone and ask them to change the language back to Tamil without help.</p>
+
+  <div class="demo-bar">
+    <div class="lbl">Language</div>
+    <div class="ctl" role="group" aria-label="Language">
+      <button data-lang="en" aria-pressed="true">English</button>
+      <button data-lang="ms" aria-pressed="false">Bahasa Melayu</button>
+      <button data-lang="ta" aria-pressed="false" class="ta">தமிழ்</button>
+      <button data-lang="zh" aria-pressed="false" class="zh">中文</button>
+    </div>
+    <div class="lbl" style="margin-top:16px">Text size</div>
+    <div class="ctl" role="group" aria-label="Text size">
+      <button data-size="18" aria-pressed="true">Standard 18px</button>
+      <button data-size="22" aria-pressed="false" style="font-size:18px">Large 22px</button>
+      <button data-size="26" aria-pressed="false" style="font-size:20px">Extra large 26px</button>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="phone">
+      <div class="pstatus"><span>9:41</span><span>▮▮▮</span></div>
+      <div class="pscreen" id="app">
+        <p class="greet" data-k="greet">Good morning, Dushy</p>
+        <p class="date" data-k="date">Thursday, 13 August</p>
+
+        <button class="act">
+          <svg width="26" height="32" viewBox="0 0 34 40" style="flex:0 0 26px" aria-hidden="true"><rect x="2" y="5" width="12" height="30" rx="6" fill="#fff"/><rect x="20" y="5" width="12" height="30" rx="6" fill="none" stroke="#95E4E2" stroke-width="2" stroke-dasharray="4 4"/></svg>
+          <span><span data-k="a1">Need a Teman</span><small data-k="a1s">For you or someone you care for</small></span>
+        </button>
+        <button class="act ghost">
+          <svg width="26" height="32" viewBox="0 0 34 40" style="flex:0 0 26px" aria-hidden="true"><rect x="2" y="5" width="12" height="30" rx="6" fill="#0A4D4A"/><circle cx="26" cy="20" r="5" fill="#857F72"/></svg>
+          <span><span data-k="a2">I'm available</span><small data-k="a2s">Tell your area when you're free</small></span>
+        </button>
+        <button class="act ghost">
+          <svg width="26" height="32" viewBox="0 0 34 40" style="flex:0 0 26px" aria-hidden="true"><rect x="2" y="5" width="12" height="30" rx="6" fill="#0A4D4A"/><path d="M20 20h11m0 0-4-4m4 4-4 4" stroke="#857F72" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+          <span><span data-k="a3">Going somewhere?</span><small data-k="a3s">Someone may be heading there too</small></span>
+        </button>
+
+        <div class="around">
+          <div class="h" data-k="around">Around Brickfields today</div>
+          <div class="ln"><span class="n">3</span><span data-k="l1">people need a Teman</span></div>
+          <div class="ln"><span class="n">4</span><span data-k="l2">Temans free this afternoon</span></div>
+        </div>
+
+        <p class="sect" data-k="next">Your next Teman</p>
+        <div class="rq">
+          <h5 data-k="card">Hospital visit — Dad</h5>
+          <p class="m" data-k="cardm">Hospital Kuala Lumpur · Friday, 9:30 AM</p>
+          <span class="pill">◷ <span data-k="look">Still looking</span></span>
+        </div>
+
+        <div class="fab">
+          <button id="openSheet">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0A4D4A" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>
+            <span data-k="langsize">Language &amp; text size</span>
+          </button>
+        </div>
+
+        <div class="sheet" id="sheet">
+          <div class="sheet-in">
+            <h4 data-k="chooselang">Choose your language</h4>
+            <p class="hint" data-k="langhint">Every language is always shown in its own writing, so you can find yours without reading this sentence.</p>
+            <button class="langbtn" data-pick="en" aria-pressed="true"><span><span class="nm">English</span><span class="sub">English</span></span><span class="tick">✓</span></button>
+            <button class="langbtn" data-pick="ms" aria-pressed="false"><span><span class="nm">Bahasa Melayu</span><span class="sub">Malay</span></span><span class="tick">✓</span></button>
+            <button class="langbtn" data-pick="ta" aria-pressed="false"><span><span class="nm ta">தமிழ்</span><span class="sub">Tamil</span></span><span class="tick">✓</span></button>
+            <button class="langbtn" data-pick="zh" aria-pressed="false"><span><span class="nm zh">中文</span><span class="sub">Chinese</span></span><span class="tick">✓</span></button>
+
+            <h4 style="margin-top:20px" data-k="textsize">Text size</h4>
+            <div class="sizerow">
+              <button data-psize="18" aria-pressed="true" style="font-size:16px"><span data-k="sz1">Standard</span></button>
+              <button data-psize="22" aria-pressed="false" style="font-size:19px"><span data-k="sz2">Large</span></button>
+              <button data-psize="26" aria-pressed="false" style="font-size:22px"><span data-k="sz3">Extra large</span></button>
+            </div>
+            <button class="closebtn" id="closeSheet" data-k="done">Done</button>
+          </div>
+        </div>
+      </div>
+      <div class="pnav">
+        <div class="on"><span class="d"></span><span data-k="n1">Home</span></div>
+        <div><span class="d"></span><span data-k="n2">Requests</span></div>
+        <div><span class="d"></span><span data-k="n3">Messages</span></div>
+        <div><span class="d"></span><span data-k="n4">You</span></div>
+      </div>
+    </div>
+
+    <div class="side">
+      <h3>What to watch while you switch</h3>
+      <ul>
+        <li><b>Nothing breaks at 26 px.</b> Buttons grow with the text and labels wrap to two lines instead of truncating. Truncation is the single most common way an accessible-looking app fails an older user — the words they needed are the ones cut off.</li>
+        <li><b>Malay runs about 20% longer than English</b>, Tamil longer still. That's why no button has a fixed width and no label sits in a horizontal row with three others.</li>
+        <li><b>The heading font changes with the script.</b> Vollkorn covers no Tamil and no Chinese, so those switch to Noto Serif Tamil and Noto Serif SC — the serif voice survives, the fallback isn't left to the operating system.</li>
+        <li><b>Line-height changes too.</b> Latin 1.55, Tamil 1.75, Chinese 1.8. Tamil conjuncts stack above and below the baseline; CJK glyphs need breathing room. Same number for all three would look cramped in two of them.</li>
+        <li><b>The language button never says only "Language".</b> It carries a globe and sits in a fixed place at the bottom of the home screen — reachable by thumb, findable by someone who cannot read the current language.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 02 THE LANGUAGE PROBLEM -->
+<section>
+  <div class="sec-head"><span class="sec-num">02</span><h2>The language switch is a safety feature</h2></div>
+  <p class="sec-sub">If an 72-year-old opens the app and it is in the wrong language, they don't switch it — they close it and don't come back. Worse, in a live session, a person who cannot read the screen cannot reach the safety button. So this is not a settings-screen item.</p>
+
+  <div class="grid g3">
+    <div class="card" style="padding:20px 22px">
+      <div class="lbl">Entry point 1</div>
+      <h3 style="font-size:20px;font-weight:600;margin:8px 0">First screen, before anything</h3>
+      <p style="color:var(--n-700);font-size:15.5px;line-height:1.5">Before account, before permissions, before the value proposition. Four large cards, each in its own script, shown simultaneously. Nothing else on the screen.</p>
+    </div>
+    <div class="card" style="padding:20px 22px">
+      <div class="lbl">Entry point 2</div>
+      <h3 style="font-size:20px;font-weight:600;margin:8px 0">Bottom of the home screen</h3>
+      <p style="color:var(--n-700);font-size:15.5px;line-height:1.5">A permanent globe button in the same place every time. Not buried under "You → Settings → Preferences → Language" — that is three reading tasks for someone who can't read the words.</p>
+    </div>
+    <div class="card" style="padding:20px 22px">
+      <div class="lbl">Entry point 3</div>
+      <h3 style="font-size:20px;font-weight:600;margin:8px 0">Every onboarding and verification screen</h3>
+      <p style="color:var(--n-700);font-size:15.5px;line-height:1.5">The screens most likely to be reached in the wrong language, and the ones where abandoning means losing a verified volunteer the NGO already recruited.</p>
+    </div>
+  </div>
+
+  <div class="grid g2" style="margin-top:20px">
+    <div class="flagx">
+      <h4>No flags. Not one.</h4>
+      <p>A flag names a country, not a language. Malaysian Tamil speakers are Malaysian — showing them an Indian flag is wrong and it lands badly. Same for a Chinese flag next to 中文, and a British flag next to English. Language is named in its own script, and only in its own script.</p>
+    </div>
+    <div class="flagx" style="background:var(--info-fill);border-color:#D5E0EA">
+      <h4 style="color:var(--info-text)">The picker is never translated</h4>
+      <p style="color:var(--info-text)">All four options always appear together in their own writing, in the same order, every time. A person looking for தமிழ் scans for the shape they recognise. If the list re-labels itself into the current language, the shape they're looking for disappears.</p>
+    </div>
+  </div>
+
+  <p class="big-quote" style="margin-top:22px">A Malaysian household is often multilingual across generations. The caregiver may set the app up in English and hand the phone to a parent who reads only Tamil. Language is a per-profile setting, not a per-device one.</p>
+</section>
+
+<!-- 03 SCRIPT SPECS -->
+<section>
+  <div class="sec-head"><span class="sec-num">03</span><h2>Type specs per script</h2></div>
+  <p class="sec-sub">One size and one line-height across four scripts is the wrong answer in three of them. These are the numbers to implement.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Script</th><th>Body face</th><th>Heading face</th><th>Body size</th><th>Leading</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>Latin</b><br><span style="color:var(--n-700);font-size:15px">English, Bahasa Melayu</span></td>
+        <td>Source Sans 3</td><td>Vollkorn</td><td>18 px</td><td>1.55</td>
+        <td>Malay strings run ~20% longer. Never fix a button width to the English string.</td>
+      </tr>
+      <tr>
+        <td><b>Tamil</b><br><span class="ta" style="font-size:19px">தமிழ்</span></td>
+        <td>Noto Sans Tamil</td><td>Noto Serif Tamil</td><td>19 px</td><td>1.75</td>
+        <td>Conjuncts and vowel marks stack above and below the baseline. +1 px and extra leading, or ascenders and descenders collide between lines.</td>
+      </tr>
+      <tr>
+        <td><b>Chinese</b><br><span class="zh" style="font-size:19px">中文</span></td>
+        <td>Noto Sans SC</td><td>Noto Serif SC</td><td>18 px</td><td>1.80</td>
+        <td>Dense glyphs at a fixed em width. Never apply letter-spacing. Never bold by synthesising — use the real 600 weight.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="grid g3" style="margin-top:18px">
+    <div class="rule"><h4>Never build a sentence from fragments</h4><p><code>"3" + " people need a Teman"</code> breaks in every language with different word order. Every string is whole, with the number as a named placeholder.</p></div>
+    <div class="rule"><h4>Dates and times are localised too</h4><p>"Friday, 9:30 AM" is not "Jumaat, 9:30 pagi" by string swap. Use the platform date formatter per locale, including the 12/24-hour convention.</p></div>
+    <div class="rule stop"><h4>Never machine-translate safety copy</h4><p>SOS wording, consent text, the "not an emergency service" notice and the emotional-support disclaimer are translated by a human and reviewed by the NGO. These are the strings where a wrong word is a real-world harm.</p></div>
+  </div>
+</section>
+
+<!-- 04 ELDERLY AUDIT -->
+<section>
+  <div class="sec-head"><span class="sec-num">04</span><h2>What the elderly audience changed</h2></div>
+  <p class="sec-sub">Every row below is a correction to the v1 system, with the reason. The contrast numbers were computed against the rendered pixels, not estimated from the hex codes.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Decision</th><th>v1</th><th>Now</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td><b>Borders on anything interactive</b></td><td><span class="was">Neutral 200 — 1.49:1</span></td><td><span class="now">Neutral 500 — 3.78:1</span></td><td>WCAG requires 3:1 for non-text UI boundaries. At 1.49 the edge of an input field or a card is invisible to an older eye. This was a real defect in v1, not a preference.</td></tr>
+      <tr><td><b>Primary button</b></td><td><span class="was">Teal 800 — 6.14:1</span></td><td><span class="now">Teal 900 — 9.66:1</span></td><td>AA is the general floor; the primary audience has reduced contrast sensitivity, so buttons target AAA.</td></tr>
+      <tr><td><b>Links, active nav</b></td><td><span class="was">Teal 800 — 5.83:1</span></td><td><span class="now">Teal 900 — 9.18:1</span></td><td>Same reason. Teal 800 stays available for large text and icons only.</td></tr>
+      <tr><td><b>Caption / metadata text</b></td><td><span class="was">Neutral 600 — 6.22:1</span></td><td><span class="now">Neutral 700 — 8.33:1</span></td><td>Neutral 600 is retired for text entirely. Grey-on-grey metadata is where older users stop reading.</td></tr>
+      <tr><td><b>Body size</b></td><td><span class="was">17 px fixed</span></td><td><span class="now">18 px, user-set 18 / 22 / 26</span></td><td>Presbyopia is near-universal past 50. A fixed size that "looks fine" to a designer in their thirties is the wrong test.</td></tr>
+      <tr><td><b>Tap targets</b></td><td><span class="was">56 px</span></td><td><span class="now">64 px primary, 56 px floor, 12 px apart</span></td><td>Tremor and reduced fine motor control. Spacing matters as much as size — adjacent targets are what cause mis-taps, and one of these is the SOS button.</td></tr>
+      <tr><td><b>Text overflow</b></td><td><span class="was">unspecified</span></td><td><span class="now">Always wrap, never truncate</span></td><td>An ellipsis hides the words the person needed. Combined with a 26 px text size and Tamil string lengths, truncation would swallow whole labels.</td></tr>
+      <tr><td><b>Icon-only controls</b></td><td><span class="was">allowed in nav</span></td><td><span class="now">Never, anywhere</span></td><td>Icon literacy is learned, not innate. Every control carries a word — including the back arrow and the close X.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- 05 INTERACTION RULES -->
+<section>
+  <div class="sec-head"><span class="sec-num">05</span><h2>Interaction rules</h2></div>
+  <p class="sec-sub">Grouped by what actually changes with age — vision, motor control, and memory load. Each of these is checkable in review.</p>
+
+  <div class="grid g3">
+    <div class="card" style="padding:20px 22px">
+      <div class="lbl" style="color:var(--t-900)">Vision</div>
+      <ul style="padding-left:19px;color:var(--n-700);line-height:1.6;margin-top:12px;font-size:15.5px">
+        <li>Body text 18 px minimum, user-scalable to 26 px.</li>
+        <li>Never a font weight below 400. No thin or light weights anywhere.</li>
+        <li>AAA (7:1) for all body text; 3:1 minimum for every border, icon and input outline.</li>
+        <li>No placeholder-as-label. Placeholders vanish on focus and older users lose the field's purpose.</li>
+        <li>Blue–yellow discrimination declines with age. Amber never carries meaning alone — it always appears with the Sisi shape and a word.</li>
+        <li>No pure white background. Neutral 50 reduces glare.</li>
+      </ul>
+    </div>
+    <div class="card" style="padding:20px 22px">
+      <div class="lbl" style="color:var(--t-900)">Hands</div>
+      <ul style="padding-left:19px;color:var(--n-700);line-height:1.6;margin-top:12px;font-size:15.5px">
+        <li>64 px primary targets, 56 px absolute floor, 12 px clear between any two.</li>
+        <li>No gesture is ever the only route. Swipe-to-delete always has a visible button too.</li>
+        <li>No long-press, no double-tap, no drag.</li>
+        <li>Primary actions sit in the lower half of the screen, within thumb reach.</li>
+        <li>No session timeouts on any form. A person may put the phone down to find their reading glasses.</li>
+        <li>Destructive actions confirm on a full screen, never a small dialog with a tiny X.</li>
+      </ul>
+    </div>
+    <div class="card" style="padding:20px 22px">
+      <div class="lbl" style="color:var(--t-900)">Memory &amp; attention</div>
+      <ul style="padding-left:19px;color:var(--n-700);line-height:1.6;margin-top:12px;font-size:15.5px">
+        <li>One decision per screen. The request flow is seven short screens, not one long form.</li>
+        <li>Controls stay in the same place on every screen. Consistency beats efficiency here.</li>
+        <li>Progress is always visible: "Step 3 of 7", never a bare spinner.</li>
+        <li>No hamburger menu. Four flat tabs, always labelled.</li>
+        <li>Nothing auto-advances, auto-plays, or auto-dismisses. A toast that disappears was never read.</li>
+        <li>Every screen can be left without losing what was entered.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 06 TWO DOORS -->
+<section>
+  <div class="sec-head"><span class="sec-num">06</span><h2>Two doors into the same product</h2></div>
+  <p class="sec-sub">The scope has a family member creating requests on behalf of a parent, and it also has the parent using the app directly. These are different people with different capabilities, and one home screen cannot serve both. The account chooses its door at setup and can change it any time.</p>
+  <div class="grid g2">
+    <div class="card" style="padding:22px 24px">
+      <h3 style="font-size:23px;font-weight:600;margin-bottom:10px">Caregiver view — the default</h3>
+      <p style="color:var(--n-700);line-height:1.6">Three actions, the profiles they manage, a request list with states, and a calendar. This is the person who is comfortable with apps, on a commute, with limited time. Density is acceptable here.</p>
+    </div>
+    <div class="card" style="padding:22px 24px;border:2px solid var(--t-900)">
+      <h3 style="font-size:23px;font-weight:600;margin-bottom:10px">Elder view — the one that matters</h3>
+      <p style="color:var(--n-700);line-height:1.6;margin-bottom:12px">Strip to what a person alone at home actually needs. Two or three actions, no counters, no discovery, no browsing. Everything else — availability, going-there-too, community circles — is hidden, not shrunk.</p>
+      <ul style="padding-left:19px;color:var(--n-700);line-height:1.6;font-size:16px">
+        <li><b>Someone to come with me</b> — appointment or errand</li>
+        <li><b>Someone to talk to</b> — company, not therapy</li>
+        <li><b>Call my family</b> — always visible, always the same place</li>
+      </ul>
+      <p style="color:var(--n-700);line-height:1.6;margin-top:12px">Text size defaults to Large in this view, not Standard.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 07 CHECKLIST -->
+<section>
+  <div class="sec-head"><span class="sec-num">07</span><h2>Review checklist</h2></div>
+  <p class="sec-sub">Run this on every screen before it ships. Any single failure blocks it — these are the things that decide whether a 72-year-old finishes the flow or puts the phone down.</p>
+  <div class="grid g2">
+    <div class="card" style="padding:22px 24px">
+      <div class="lbl">Per screen</div>
+      <ul style="padding-left:19px;color:var(--n-700);line-height:1.75;margin-top:12px">
+        <li>Readable at 26 px text size with nothing truncated or overlapping</li>
+        <li>Correct in all four languages, including the longest string</li>
+        <li>Every control has a visible word, not just an icon</li>
+        <li>Every border and input outline reaches 3:1</li>
+        <li>All body text reaches 7:1</li>
+        <li>Exactly one primary action, in the lower half of the screen</li>
+        <li>Empty, loading and error states exist and are written in the brand voice</li>
+        <li>Keyboard focus is visible and follows a sensible order</li>
+        <li>Nothing is communicated by colour alone</li>
+      </ul>
+    </div>
+    <div class="card" style="padding:22px 24px">
+      <div class="lbl">Before the NGO pilot</div>
+      <ul style="padding-left:19px;color:var(--n-700);line-height:1.75;margin-top:12px">
+        <li>Tested on a low-end Android phone, not just a recent iPhone</li>
+        <li>Tested at the operating system's own largest font setting, on top of the in-app size</li>
+        <li>Screen reader passes in all four languages with correct <code>lang</code> attributes</li>
+        <li>Safety and consent copy translated by a human and signed off by the NGO</li>
+        <li>Watched — silently — while five people over 65 complete one request each</li>
+        <li>Every place they hesitated is written down. That list is the next sprint.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <svg width="190" height="50" viewBox="0 0 180 46" aria-label="Teman">
+      <rect x="4" y="8" width="12" height="30" rx="6" fill="#FAF9F7"/>
+      <rect x="22" y="8" width="12" height="30" rx="6" fill="#E8A13C"/>
+      <text x="46" y="34" font-family="Vollkorn,Georgia,serif" font-size="32" font-weight="700" fill="#FFFFFF">Teman</text>
+    </svg>
+    <p style="font-family:var(--serif);font-size:24px;font-weight:600;color:#fff;margin:14px 0 6px">No one should have to go alone.</p>
+    <p style="font-size:16px">Which means the app must not be the thing they face alone either.</p>
+  </div>
+</footer>
+
+<script>
+const T = {
+  en:{greet:"Good morning, Dushy",date:"Thursday, 13 August",
+      a1:"Need a Teman",a1s:"For you or someone you care for",
+      a2:"I'm available",a2s:"Tell your area when you're free",
+      a3:"Going somewhere?",a3s:"Someone may be heading there too",
+      around:"Around Brickfields today",l1:"people need a Teman",l2:"Temans free this afternoon",
+      next:"Your next Teman",card:"Hospital visit — Dad",cardm:"Hospital Kuala Lumpur · Friday, 9:30 AM",
+      look:"Still looking",langsize:"Language & text size",
+      chooselang:"Choose your language",
+      langhint:"Every language is always shown in its own writing, so you can find yours without reading this sentence.",
+      textsize:"Text size",sz1:"Standard",sz2:"Large",sz3:"Extra large",done:"Done",
+      n1:"Home",n2:"Requests",n3:"Messages",n4:"You"},
+  ms:{greet:"Selamat pagi, Dushy",date:"Khamis, 13 Ogos",
+      a1:"Perlukan Teman",a1s:"Untuk anda atau orang yang anda jaga",
+      a2:"Saya lapang",a2s:"Beritahu kawasan anda bila anda lapang",
+      a3:"Nak pergi ke mana-mana?",a3s:"Mungkin ada orang menuju ke sana juga",
+      around:"Di sekitar Brickfields hari ini",l1:"orang perlukan Teman",l2:"Teman lapang petang ini",
+      next:"Teman anda seterusnya",card:"Lawatan hospital — Ayah",cardm:"Hospital Kuala Lumpur · Jumaat, 9:30 pagi",
+      look:"Masih mencari",langsize:"Bahasa & saiz tulisan",
+      chooselang:"Pilih bahasa anda",
+      langhint:"Setiap bahasa sentiasa ditunjukkan dalam tulisannya sendiri, supaya anda boleh mencarinya tanpa membaca ayat ini.",
+      textsize:"Saiz tulisan",sz1:"Biasa",sz2:"Besar",sz3:"Sangat besar",done:"Selesai",
+      n1:"Utama",n2:"Permintaan",n3:"Mesej",n4:"Anda"},
+  ta:{greet:"காலை வணக்கம், துஷி",date:"வியாழன், ஆகஸ்ட் 13",
+      a1:"ஒரு துணை வேண்டும்",a1s:"உங்களுக்கு அல்லது நீங்கள் கவனித்துக்கொள்பவருக்கு",
+      a2:"நான் தயாராக இருக்கிறேன்",a2s:"நேரம் இருக்கும்போது உங்கள் பகுதிக்குத் தெரிவியுங்கள்",
+      a3:"எங்காவது செல்கிறீர்களா?",a3s:"அதே இடத்திற்கு வேறு யாராவது செல்லலாம்",
+      around:"இன்று பிரிக்ஃபீல்ட்ஸ் பகுதியில்",l1:"பேருக்குத் துணை தேவை",l2:"துணைகள் இன்று மதியம் தயார்",
+      next:"உங்கள் அடுத்த துணை",card:"மருத்துவமனை வருகை — அப்பா",cardm:"கோலாலம்பூர் மருத்துவமனை · வெள்ளி, காலை 9:30",
+      look:"இன்னும் தேடுகிறோம்",langsize:"மொழி & எழுத்து அளவு",
+      chooselang:"உங்கள் மொழியைத் தேர்ந்தெடுங்கள்",
+      langhint:"ஒவ்வொரு மொழியும் அதன் சொந்த எழுத்திலேயே காட்டப்படும் — இந்த வாக்கியத்தைப் படிக்காமலேயே உங்களுடையதைக் கண்டுபிடிக்கலாம்.",
+      textsize:"எழுத்து அளவு",sz1:"சாதாரணம்",sz2:"பெரியது",sz3:"மிகப் பெரியது",done:"முடிந்தது",
+      n1:"முகப்பு",n2:"கோரிக்கைகள்",n3:"செய்திகள்",n4:"நீங்கள்"},
+  zh:{greet:"早安，Dushy",date:"8月13日 星期四",
+      a1:"需要一位 Teman",a1s:"为你自己或你照顾的人",
+      a2:"我今天有空",a2s:"告诉附近的人你有空",
+      a3:"要出门吗？",a3s:"也许有人也要去那里",
+      around:"今天 Brickfields 附近",l1:"人需要陪伴",l2:"位 Teman 今天下午有空",
+      next:"你的下一次陪伴",card:"医院陪诊 — 爸爸",cardm:"吉隆坡医院 · 星期五 上午9:30",
+      look:"仍在寻找",langsize:"语言与字体大小",
+      chooselang:"选择你的语言",
+      langhint:"每种语言都以自己的文字显示，你不必读懂这句话也能找到自己的语言。",
+      textsize:"字体大小",sz1:"标准",sz2:"大",sz3:"特大",done:"完成",
+      n1:"首页",n2:"请求",n3:"消息",n4:"我的"}
+};
+const FONTS = {
+  en:{sans:'"Source Sans 3",system-ui,sans-serif',serif:'"Vollkorn",Georgia,serif',lh:1.55,bump:0},
+  ms:{sans:'"Source Sans 3",system-ui,sans-serif',serif:'"Vollkorn",Georgia,serif',lh:1.55,bump:0},
+  ta:{sans:'"Noto Sans Tamil",sans-serif',serif:'"Noto Serif Tamil",serif',lh:1.75,bump:1},
+  zh:{sans:'"Noto Sans SC",sans-serif',serif:'"Noto Serif SC",serif',lh:1.80,bump:0}
+};
+const app=document.getElementById('app'), sheet=document.getElementById('sheet');
+let lang='en', size=18;
+
+function render(){
+  const t=T[lang], f=FONTS[lang];
+  app.style.fontFamily=f.sans;
+  app.style.lineHeight=f.lh;
+  app.style.setProperty('--dserif',f.serif);
+  app.style.setProperty('--fs',(size+f.bump)+'px');
+  app.setAttribute('lang',lang);
+  app.querySelectorAll('[data-k]').forEach(el=>{ const v=t[el.dataset.k]; if(v!==undefined) el.textContent=v; });
+  document.querySelectorAll('.pnav [data-k]').forEach(el=>{ const v=t[el.dataset.k]; if(v!==undefined) el.textContent=v; });
+  const nav=document.querySelector('.pnav');
+  nav.style.fontFamily=f.sans; nav.setAttribute('lang',lang);
+  document.querySelectorAll('[data-lang]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===lang));
+  document.querySelectorAll('[data-pick]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.pick===lang));
+  document.querySelectorAll('[data-size]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.size===size));
+  document.querySelectorAll('[data-psize]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.psize===size));
+}
+document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{lang=b.dataset.lang;render();});
+document.querySelectorAll('[data-pick]').forEach(b=>b.onclick=()=>{lang=b.dataset.pick;render();});
+document.querySelectorAll('[data-size]').forEach(b=>b.onclick=()=>{size=+b.dataset.size;render();});
+document.querySelectorAll('[data-psize]').forEach(b=>b.onclick=()=>{size=+b.dataset.psize;render();});
+document.getElementById('openSheet').onclick=()=>sheet.classList.add('open');
+document.getElementById('closeSheet').onclick=()=>sheet.classList.remove('open');
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teman — Admin &amp; Public Site · Batch 3</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Vollkorn:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+ --n9:#27241D;--n8:#423D33;--n7:#504A40;--n5:#857F72;--n4:#A39E93;--n3:#B8B2A7;--n2:#D3CEC4;--n1:#E8E6E1;--n0:#FAF9F7;
+ --t9:#0A4D4A;--t8:#126D6A;--t1:#C7F5F3;--t0:#E8FCFB;
+ --a4:#E8A13C;--a3:#EDCA97;--a7:#895811;
+ --ok:#0E5814;--okf:#E3F9E5;--er:#780A0A;--ers:#911111;--erf:#FFEEEE;
+ --wa:#5E480E;--waf:#FFFAEB;--in:#334E68;--inf:#F0F4F8;
+ --sans:"Source Sans 3",system-ui,sans-serif;--serif:"Vollkorn",Georgia,serif;
+ --ez:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--n1);color:var(--n9);font:400 17px/1.55 var(--sans)}
+h1,h2,h3{font-family:var(--serif);margin:0}
+p{margin:0}
+.wrap{max-width:1400px;margin:0 auto;padding:0 24px}
+.mast{background:var(--t9);color:#fff;padding:44px 0 38px}
+.mast .eb{font:600 14px var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--a3)}
+.mast h1{font-size:40px;font-weight:700;margin:10px 0 12px}
+.mast p{max-width:66ch;color:#DCEFEE;font-size:17px}
+.flow{padding:44px 0;border-top:1px solid var(--n2)}
+.fh{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.fnum{font:600 13px var(--sans);letter-spacing:.1em;color:var(--t9);background:var(--t0);border:1px solid var(--t1);padding:6px 10px;border-radius:999px}
+.fh h2{font-size:28px;font-weight:600}
+.fsub{color:var(--n7);max-width:74ch;margin-bottom:24px}
+.strip{display:flex;gap:18px;overflow-x:auto;padding:6px 2px 22px;align-items:flex-start}
+.cap{font:600 12px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--t9);margin-bottom:3px}
+.cap i{display:block;font:400 14px var(--sans);color:var(--n7);text-transform:none;letter-spacing:0;font-style:normal;margin-top:3px;line-height:1.45}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:18px}
+.gc{background:#fff;border:1.5px solid var(--n5);border-radius:14px;padding:18px 20px}
+.gc h4{font:600 17px var(--sans);margin:0 0 4px}
+.gc p{color:var(--n7);font-size:14.5px;line-height:1.55}
+
+/* ═══ ADMIN FRAME ═══ */
+.acol{flex:0 0 auto;width:630px}
+.adm{width:630px;height:440px;background:#fff;border:1px solid var(--n5);border-radius:9px;overflow:hidden;
+ display:flex;box-shadow:0 4px 16px rgba(39,36,29,.12);margin-top:9px;font-size:12.5px;line-height:1.45}
+.side{flex:0 0 128px;background:var(--n9);color:#B8B2A7;padding:11px 0;overflow:hidden}
+.side .lg{padding:0 12px 11px;display:flex;align-items:center;gap:7px;border-bottom:1px solid #423D33;margin-bottom:8px}
+.side .lg b{color:#fff;font:700 14px var(--serif)}
+.side a{display:block;padding:6px 12px;color:#B8B2A7;text-decoration:none;font-size:11.5px}
+.side a.on{background:var(--t9);color:#fff;font-weight:600}
+.side .sec{padding:9px 12px 3px;font:700 9px var(--sans);letter-spacing:.09em;text-transform:uppercase;color:#A39E93}
+.side .who{position:absolute}
+.main{flex:1;overflow:hidden;display:flex;flex-direction:column}
+.top{flex:0 0 auto;padding:9px 14px;border-bottom:1px solid var(--n2);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.top h3{font-size:15px;font-weight:600}
+.top .rl{font:600 10px var(--sans);letter-spacing:.05em;text-transform:uppercase;background:var(--t0);color:var(--t9);border:1px solid var(--t1);padding:3px 7px;border-radius:999px}
+.body{flex:1;overflow-y:auto;overflow-x:hidden;padding:11px 14px;scrollbar-width:thin}
+.filters{display:flex;gap:6px;margin-bottom:9px;flex-wrap:wrap}
+.filters span{font:600 11px var(--sans);border:1px solid var(--n5);border-radius:6px;padding:4px 8px;background:#fff}
+.filters span.on{background:var(--t9);color:#fff;border-color:var(--t9)}
+.filters .sr{flex:1;min-width:110px;border:1px solid var(--n5);border-radius:6px;padding:4px 8px;color:var(--n5);font-size:11.5px}
+table{width:100%;border-collapse:collapse;font-size:11.5px;table-layout:auto}
+td,th{overflow-wrap:break-word}
+.ab,.tag{white-space:nowrap}
+.body{min-width:0}
+th{text-align:left;font:700 9.5px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--n7);
+ padding:6px 7px;border-bottom:1.5px solid var(--n3);background:var(--n0)}
+td{padding:7px;border-bottom:1px solid var(--n1);vertical-align:middle}
+tr:hover td{background:var(--n0)}
+.tag{display:inline-block;font:700 9.5px var(--sans);padding:2.5px 6px;border-radius:999px;white-space:nowrap}
+.tg-ok{background:var(--okf);color:var(--ok)}.tg-wa{background:var(--waf);color:var(--wa)}
+.tg-er{background:var(--erf);color:var(--er)}.tg-in{background:var(--inf);color:var(--in)}
+.tg-n{background:var(--n1);color:var(--n7)}.tg-am{background:#FBE6C6;color:var(--a7)}
+.ab{font:600 11.5px var(--sans);border-radius:6px;padding:6px 11px;border:1px solid var(--n5);background:#fff;cursor:pointer}
+.ab.pr{background:var(--t9);color:#fff;border-color:var(--t9)}
+.ab.da{background:var(--erf);color:var(--ers);border-color:#E9BDBD}
+.ab.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:11px}
+.tile{border:1px solid var(--n5);border-radius:8px;padding:9px 10px;background:#fff}
+.tile.al{border-color:#E9BDBD;background:var(--erf)}
+.tile .k{font:700 9.5px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--n7);line-height:1.3}
+.tile.al .k{color:var(--er)}
+.tile .v{font:700 23px var(--sans);color:var(--t9);line-height:1.15;margin-top:3px}
+.tile.al .v{color:var(--ers)}
+.tile .s{font-size:10.5px;color:var(--n7);margin-top:1px}
+.two{display:flex;gap:11px;min-width:0}
+.two>div{min-width:0}
+.docimg{flex:1;border:1px solid var(--n5);border-radius:7px;background:var(--n1);height:118px;display:flex;
+ align-items:center;justify-content:center;color:var(--n7);font-size:11px;text-align:center;padding:8px}
+.kvr{display:flex;justify-content:space-between;gap:10px;padding:4.5px 0;border-bottom:1px solid var(--n1);font-size:11.5px}
+.kvr:last-child{border:0}
+.kvr span{color:var(--n7)}.kvr b{font-weight:600;text-align:right}
+.tl{border-left:2px solid var(--n2);padding-left:11px;margin-left:4px}
+.tl .ev{position:relative;padding:5px 0;font-size:11.5px}
+.tl .ev::before{content:'';position:absolute;left:-16px;top:10px;width:7px;height:7px;border-radius:50%;background:var(--t9)}
+.tl .ev.al::before{background:var(--ers)}
+.tl .ev b{font-weight:600}.tl .ev i{font-style:normal;color:var(--n7);display:block;font-size:10.5px}
+.bars{display:flex;align-items:flex-end;gap:5px;height:88px;padding-top:6px}
+.bars div{flex:1;background:var(--t8);border-radius:3px 3px 0 0;position:relative}
+.bars div span{position:absolute;bottom:-15px;left:0;right:0;text-align:center;font-size:9px;color:var(--n7)}
+.hbar{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:11.5px}
+.hbar .nm{flex:0 0 90px}
+.hbar .tr{flex:1;height:14px;background:var(--n1);border-radius:3px;overflow:hidden}
+.hbar .tr i{display:block;height:100%;background:var(--ers)}
+.hbar .vv{flex:0 0 34px;text-align:right;font-weight:600}
+
+/* ═══ PUBLIC SITE ═══ */
+.pcol{flex:0 0 auto;width:352px}
+.pg{width:352px;height:560px;background:#fff;border:1px solid var(--n5);border-radius:9px;overflow:hidden;
+ box-shadow:0 4px 16px rgba(39,36,29,.12);margin-top:9px;display:flex;flex-direction:column;font-size:13px;line-height:1.55}
+.pnav{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--n2)}
+.pnav .ln{display:flex;gap:10px;font-size:11px;color:var(--n7);font-weight:600}
+.pbody{flex:1;overflow:hidden;padding:14px}
+.pbody.dk{background:var(--t9);color:#fff}
+.ph1{font-family:var(--serif);font-size:23px;font-weight:700;line-height:1.2;margin-bottom:8px}
+.ph2{font-family:var(--serif);font-size:16px;font-weight:600;line-height:1.3;margin:0 0 5px}
+.pm{color:var(--n7);font-size:12.5px;line-height:1.6}
+.pbody.dk .pm{color:#CFEAE9}
+.pcta{display:inline-block;background:var(--t9);color:#fff;border-radius:9px;padding:11px 18px;font-weight:600;font-size:13px;margin-top:10px}
+.pcta.am{background:var(--a4);color:var(--n9)}
+.pcta.gh{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.45)}
+.photo{background:linear-gradient(135deg,#3E4C59,#1F2933);border-radius:9px;height:96px;display:flex;align-items:flex-end;
+ padding:10px;color:#fff;font-size:11px;font-style:italic}
+.pcard{border:1px solid var(--n5);border-radius:10px;padding:10px 12px;margin-bottom:9px}
+.pacc{border:1px solid var(--n5);border-radius:9px;padding:10px 12px;margin-bottom:7px;font-size:12.5px;font-weight:600;
+ display:flex;justify-content:space-between;gap:8px}
+.pacc span{color:var(--t9);font-weight:700}
+footer{background:var(--t9);color:var(--t1);padding:38px 0;text-align:center;margin-top:30px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="mast"><div class="wrap">
+  <div class="eb">Teman — UI · Batch 3 of 3</div>
+  <h1>Admin platform &amp; public site</h1>
+  <p>Two surfaces with opposite problems. Admin is a dense internal tool two or three people live in daily — it should look like an internal tool, and every hour spent styling it is an hour not spent on the member app. The public site is a conversion surface a stranger reads once. Neither follows the elderly rules; different audience, different constraints.</p>
+</div></div>
+
+<div class="wrap">
+
+<!-- ADMIN POSITION -->
+<div class="flow" style="border-top:0">
+  <div class="fh"><span class="fnum">ADMIN</span><h2>Design position</h2></div>
+  <p class="fsub">Desktop-first at 1280 px. Sidebar, dense tables, sticky headers, keyboard shortcuts on the verification queue because someone will sit in it for an hour during a recruitment drive. The one thing that must be right is that consequential actions are hard to do by accident and impossible to do without a log entry.</p>
+  <div class="gal">
+    <div class="gc"><h4>Two roles, enforced server-side</h4><p><b>NGO coordinator</b> — verification review, volunteer directory, circles, read-only analytics. <b>Platform admin</b> — everything, including suspension, roles and the audit log. The boundary is enforced in the API, not by hiding buttons.</p></div>
+    <div class="gc"><h4>Nothing destructive by accident</h4><p>No bulk delete anywhere. Suspension needs a reason from a list and states exactly what the user will be shown. Every consequential action writes to <code style="font-size:12.5px">audit_log</code>, which is append-only — not even a platform admin can edit it.</p></div>
+    <div class="gc"><h4>Opening a record is itself an event</h4><p>Viewing a user detail, revealing an ID document, or inspecting a match all get logged. The NGO will eventually ask who saw what, and "we don't log that" is not an acceptable answer for this product.</p></div>
+    <div class="gc"><h4>Queues, not dashboards</h4><p>The home screen shows only counts that need a human decision, each linking to its queue. No vanity metrics, no charts nobody acts on. If a number doesn't imply an action, it belongs in analytics.</p></div>
+  </div>
+</div>
+
+<!-- ADMIN: OPERATIONS -->
+<div class="flow">
+  <div class="fh"><span class="fnum">N1–N5</span><h2>Dashboard &amp; users</h2></div>
+  <p class="fsub">N5, the volunteer directory, is the NGO's daily screen during recruitment. It exists so a coordinator can answer "who have we actually signed up in Brickfields, and are they verified" without asking you.</p>
+  <div class="strip">
+
+    <div class="acol"><div class="cap">N1 · Dashboard<i>Only counts that need a decision. Every tile links to its queue.</i></div>
+    <div class="adm">
+      <div class="side"><div class="lg"><svg width="16" height="20" viewBox="0 0 34 40"><rect x="2" y="5" width="12" height="30" rx="6" fill="#FAF9F7"/><rect x="20" y="5" width="12" height="30" rx="6" fill="#E8A13C"/></svg><b>Teman</b></div>
+        <a class="on">Dashboard</a><div class="sec">People</div><a>Users</a><a>Volunteers</a><a>Verifications</a>
+        <div class="sec">Safety</div><a>Incidents</a><a>Reports</a><a>Blocked</a>
+        <div class="sec">Community</div><a>Circles</a><a>Organisations</a><div class="sec">Platform</div><a>Analytics</a><a>Audit log</a></div>
+      <div class="main">
+        <div class="top"><h3>Today</h3><span class="rl">Platform admin</span></div>
+        <div class="body">
+          <div class="tiles">
+            <div class="tile al"><div class="k">Incidents open</div><div class="v">3</div><div class="s">1 urgent, 14 h old</div></div>
+            <div class="tile"><div class="k">Verifications waiting</div><div class="v">6</div><div class="s">oldest 19 h</div></div>
+            <div class="tile"><div class="k">Flagged requests</div><div class="v">2</div><div class="s">unreviewed</div></div>
+            <div class="tile"><div class="k">Expiring unmatched</div><div class="v">4</div><div class="s">within 48 h</div></div>
+          </div>
+          <table><thead><tr><th>Needs you</th><th>Detail</th><th>Waiting</th><th></th></tr></thead><tbody>
+            <tr><td><span class="tag tg-er">Urgent</span></td><td>Safety report — Wei Jun / session #4471</td><td>14 h</td><td><button class="ab pr">Open</button></td></tr>
+            <tr><td><span class="tag tg-wa">Review</span></td><td>Verification — Farah binti Ahmad</td><td>19 h</td><td><button class="ab">Open</button></td></tr>
+            <tr><td><span class="tag tg-wa">Review</span></td><td>Verification — duplicate MyKad hash (2 accounts)</td><td>11 h</td><td><button class="ab">Open</button></td></tr>
+            <tr><td><span class="tag tg-in">Flagged</span></td><td>Request — "urgent cash help needed"</td><td>6 h</td><td><button class="ab">Open</button></td></tr>
+            <tr><td><span class="tag tg-n">Expiring</span></td><td>Hospital visit, Brickfields — no offers</td><td>Fri 9:30</td><td><button class="ab">Open</button></td></tr>
+          </tbody></table>
+        </div></div></div></div>
+
+    <div class="acol"><div class="cap">N5 · Volunteer directory<i>The NGO's daily screen during recruitment. CSV export included.</i></div>
+    <div class="adm">
+      <div class="side"><div class="lg"><svg width="16" height="20" viewBox="0 0 34 40"><rect x="2" y="5" width="12" height="30" rx="6" fill="#FAF9F7"/><rect x="20" y="5" width="12" height="30" rx="6" fill="#E8A13C"/></svg><b>Teman</b></div>
+        <a>Dashboard</a><div class="sec">People</div><a>Users</a><a class="on">Volunteers</a><a>Verifications</a>
+        <div class="sec">Community</div><a>Circles</a><a>Organisations</a><div class="sec">Platform</div><a>Analytics</a></div>
+      <div class="main">
+        <div class="top"><h3>Volunteers · 38 in Brickfields</h3><span class="rl">NGO coordinator</span></div>
+        <div class="body">
+          <div class="filters"><span class="on">Brickfields</span><span>All tiers</span><span>Any language</span><span class="sr">Search name or phone</span><span>Export CSV</span></div>
+          <table><thead><tr><th>Name</th><th>Tier</th><th>Languages</th><th>Availability</th><th>Profile</th></tr></thead><tbody>
+            <tr><td>Kumar Rajendran</td><td><span class="tag tg-ok">Identity</span></td><td>Tamil, English, Malay</td><td>Weekly, Sat AM</td><td>100%</td></tr>
+            <tr><td>Farah binti Ahmad</td><td><span class="tag tg-wa">Pending</span></td><td>Malay, English</td><td>Thu PM</td><td>85%</td></tr>
+            <tr><td>Mei Ling Tan</td><td><span class="tag tg-ok">Identity</span></td><td>Mandarin, English</td><td>Weekends</td><td>100%</td></tr>
+            <tr><td>Ravi Chandran</td><td><span class="tag tg-ok">Identity</span></td><td>Tamil, English</td><td>None set</td><td>70%</td></tr>
+            <tr><td>Nurul Izzah</td><td><span class="tag tg-n">Basic</span></td><td>Malay</td><td>None set</td><td>45%</td></tr>
+            <tr><td>Wong Kah Meng</td><td><span class="tag tg-ok">Identity</span></td><td>Cantonese, English</td><td>Fri PM</td><td>90%</td></tr>
+            <tr><td>Siti Aminah</td><td><span class="tag tg-n">Basic</span></td><td>Malay, English</td><td>Weekly, Wed</td><td>60%</td></tr>
+          </tbody></table>
+          <p style="font-size:11px;color:var(--n7);margin-top:8px">9 volunteers have no availability set — the highest-value follow-up list for the next orientation session.</p>
+        </div></div></div></div>
+
+    <div class="acol"><div class="cap">N3 · User detail<i>Opening this writes to audit_log. The banner says so.</i></div>
+    <div class="adm">
+      <div class="side"><div class="lg"><svg width="16" height="20" viewBox="0 0 34 40"><rect x="2" y="5" width="12" height="30" rx="6" fill="#FAF9F7"/><rect x="20" y="5" width="12" height="30" rx="6" fill="#E8A13C"/></svg><b>Teman</b></div>
+        <a>Dashboard</a><div class="sec">People</div><a class="on">Users</a><a>Volunteers</a><a>Verifications</a><div class="sec">Safety</div><a>Incidents</a><a>Reports</a></div>
+      <div class="main">
+        <div class="top"><h3>Kumar Rajendran · #U-2841</h3><div><button class="ab">Restrict</button> <button class="ab da">Suspend</button></div></div>
+        <div class="body">
+          <div style="background:var(--inf);border:1px solid #D5E0EA;border-radius:6px;padding:6px 9px;font-size:11px;color:var(--in);margin-bottom:9px">You opened this record at 09:41. This has been written to the audit log.</div>
+          <div class="two">
+            <div style="flex:1">
+              <div class="kvr"><span>Verification</span><b>Identity · approved 14 Dec 2025</b></div>
+              <div class="kvr"><span>Area</span><b>Brickfields</b></div>
+              <div class="kvr"><span>Languages</span><b>Tamil, English, Malay</b></div>
+              <div class="kvr"><span>Teman Moments</span><b>12</b></div>
+              <div class="kvr"><span>Reports against</span><b>0</b></div>
+              <div class="kvr"><span>Reports filed</span><b>1 (resolved)</b></div>
+              <div class="kvr"><span>Circles</span><b>Brickfields Teman Community</b></div>
+            </div>
+            <div style="flex:1">
+              <p style="font:700 9.5px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--n7);margin-bottom:5px">Recent sessions</p>
+              <table><tbody>
+                <tr><td>15 Aug</td><td>Hospital · Siva, 72</td><td><span class="tag tg-ok">Safe</span></td></tr>
+                <tr><td>9 Aug</td><td>Groceries · Fatimah</td><td><span class="tag tg-ok">Safe</span></td></tr>
+                <tr><td>31 Jul</td><td>Coffee · Wei Jun</td><td><span class="tag tg-ok">Safe</span></td></tr>
+                <tr><td>18 Jul</td><td>Clinic · Siva, 72</td><td><span class="tag tg-ok">Safe</span></td></tr>
+              </tbody></table>
+              <p style="font-size:10.5px;color:var(--n7);margin-top:7px">Descriptors received: patient ×9, kind ×7, reliable ×6, good listener ×4</p>
+            </div>
+          </div>
+        </div></div></div>
+
+  </div>
+</div>
+
+<!-- ADMIN: VERIFICATION -->
+<div class="flow">
+  <div class="fh"><span class="fnum">N6–N9</span><h2>Verification</h2></div>
+  <p class="fsub">A volunteer who waits four days for approval has already lost interest. The queue sorts oldest first and colours the wait past 24 hours, because turnaround is the NGO coordinator's job and the screen should make that obvious.</p>
+  <div class="strip">
+
+    <div class="acol"><div class="cap">N6 · Review queue<i>Oldest first. Wait time coloured past 24 h. Duplicates pinned.</i></div>
+    <div class="adm">
+      <div class="side"><div class="lg"><svg width="16" height="20" viewBox="0 0 34 40"><rect x="2" y="5" width="12" height="30" rx="6" fill="#FAF9F7"/><rect x="20" y="5" width="12" height="30" rx="6" fill="#E8A13C"/></svg><b>Teman</b></div>
+        <a>Dashboard</a><div class="sec">People</div><a>Users</a><a>Volunteers</a><a class="on">Verifications</a><div class="sec">Safety</div><a>Incidents</a></div>
+      <div class="main">
+        <div class="top"><h3>Verification queue · 6 waiting</h3><span class="rl">NGO coordinator</span></div>
+        <div class="body">
+          <div class="filters"><span class="on">Pending</span><span>Approved</span><span>Rejected</span><span>Duplicates (1)</span></div>
+          <table><thead><tr><th>Waiting</th><th>Name</th><th>Document</th><th>Area</th><th>Flags</th><th></th></tr></thead><tbody>
+            <tr><td><span class="tag tg-er">19 h</span></td><td>Farah binti Ahmad</td><td>MyKad</td><td>Brickfields</td><td></td><td><button class="ab pr">Review</button></td></tr>
+            <tr><td><span class="tag tg-er">11 h</span></td><td>Ganesh Muthu</td><td>MyKad</td><td>Sentul</td><td><span class="tag tg-wa">Duplicate hash</span></td><td><button class="ab pr">Review</button></td></tr>
+            <tr><td><span class="tag tg-wa">7 h</span></td><td>Lee Chong Wei</td><td>MyKad</td><td>Bangsar</td><td></td><td><button class="ab">Review</button></td></tr>
+            <tr><td><span class="tag tg-n">4 h</span></td><td>Aisha Rahman</td><td>Passport</td><td>Brickfields</td><td></td><td><button class="ab">Review</button></td></tr>
+            <tr><td><span class="tag tg-n">2 h</span></td><td>Sundram Pillai</td><td>MyKad</td><td>Brickfields</td><td></td><td><button class="ab">Review</button></td></tr>
+            <tr><td><span class="tag tg-n">1 h</span></td><td>Chong Mei Fang</td><td>MyKad</td><td>Cheras</td><td></td><td><button class="ab">Review</button></td></tr>
+          </tbody></table>
+          <p style="font-size:11px;color:var(--n7);margin-top:8px">Median turnaround this week: 8 h. Target: same day.</p>
+        </div></div></div></div>
+
+    <div class="acol"><div class="cap">N7 · Review one<i>Documents side by side. Keyboard: A approve, R reject, → next. Signed URLs only.</i></div>
+    <div class="adm">
+      <div class="side"><div class="lg"><svg width="16" height="20" viewBox="0 0 34 40"><rect x="2" y="5" width="12" height="30" rx="6" fill="#FAF9F7"/><rect x="20" y="5" width="12" height="30" rx="6" fill="#E8A13C"/></svg><b>Teman</b></div>
+        <a>Dashboard</a><div class="sec">People</div><a>Users</a><a>Volunteers</a><a class="on">Verifications</a></div>
+      <div class="main">
+        <div class="top"><h3>Farah binti Ahmad · 1 of 6</h3><span style="font-size:10.5px;color:var(--n7)">A approve · R reject · → next</span></div>
+        <div class="body">
+          <div class="two" style="margin-bottom:9px">
+            <div class="docimg">MyKad — front<br><span style="font-size:9.5px;color:var(--n5)">signed URL, expires in 5 min</span></div>
+            <div class="docimg">Selfie<br><span style="font-size:9.5px;color:var(--n5)">signed URL, expires in 5 min</span></div>
+          </div>
+          <div class="two">
+            <div style="flex:1">
+              <div class="kvr"><span>Submitted name</span><b>Farah binti Ahmad</b></div>
+              <div class="kvr"><span>Area</span><b>Brickfields</b></div>
+              <div class="kvr"><span>Phone</span><b>+60 13 •••• 2290</b></div>
+              <div class="kvr"><span>Duplicate hash</span><b style="color:var(--ok)">None</b></div>
+            </div>
+            <div style="flex:1">
+              <button class="ab ok" style="width:100%;margin-bottom:6px;padding:9px">Approve identity</button>
+              <button class="ab da" style="width:100%;margin-bottom:6px;padding:9px">Reject — choose reason</button>
+              <select style="width:100%;font-size:11px;padding:6px;border:1px solid var(--n5);border-radius:6px">
+                <option>Reason…</option><option>Corner cut off</option><option>Too blurry to read</option>
+                <option>Glare over details</option><option>Selfie doesn't match</option><option>Document expired</option></select>
+            </div>
+          </div>
+          <p style="font-size:10.5px;color:var(--n7);margin-top:8px">Documents delete automatically 90 days after this decision. Only the outcome and a salted hash are kept.</p>
+        </div></div></div></div>
+
+    <div class="acol"><div class="cap">N8 · Duplicate hash<i>Usually innocent — a re-registration. Occasionally not.</i></div>
+    <div class="adm">
+      <div class="side"><div class="lg"><svg width="16" height="20" viewBox="0 0 34 40"><rect x="2" y="5" width="12" height="30" rx="6" fill="#FAF9F7"/><rect x="20" y="5" width="12" height="30" rx="6" fill="#E8A13C"/></svg><b>Teman</b></div>
+        <a>Dashboard</a><div class="sec">People</div><a>Users</a><a class="on">Verifications</a><div class="sec">Safety</div><a>Incidents</a></div>
+      <div class="main">
+        <div class="top"><h3>Same document, two accounts</h3><span class="rl">Platform admin</span></div>
+        <div class="body">
+          <div style="background:var(--waf);border:1px solid #EFE0B8;border-radius:6px;padding:7px 9px;font-size:11px;color:var(--wa);margin-bottom:9px">
+            The same MyKad hash appears on two accounts. Most often this is someone who lost access to an old number. Check before restricting either.</div>
+          <table><thead><tr><th>Account</th><th>Name</th><th>Phone</th><th>Joined</th><th>Activity</th><th></th></tr></thead><tbody>
+            <tr><td>#U-1902</td><td>Ganesh Muthu</td><td>+60 12 •••• 7741</td><td>Mar 2026</td><td>4 Moments, last active Apr</td><td><button class="ab">Open</button></td></tr>
+            <tr><td>#U-3318</td><td>Ganesh M.</td><td>+60 19 •••• 0084</td><td>Aug 2026</td><td>New, pending</td><td><button class="ab">Open</button></td></tr>
+          </tbody></table>
+          <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+            <button class="ab pr">Merge into #U-1902</button>
+            <button class="ab">Approve as separate</button>
+            <button class="ab da">Restrict both, investigate</button>
+          </div>
+          <p style="font-size:10.5px;color:var(--n7);margin-top:9px">Whichever you choose, the reason is required and written to the audit log.</p>
+        </div></div></div></div>
+
+  </div>
+</div>
+
+<!-- ADMIN: SAFETY -->
+<div class="flow">
+  <div class="fh"><span class="fnum">N10–N16</span><h2>Safety &amp; moderation</h2></div>
+  <p class="fsub">The incident queue is fed automatically by a private "did you feel safe — no" answer, which is why that question never touches a public number. The incident detail shows the full timeline in one place because a coordinator deciding whether to suspend someone should not have to assemble the story from four screens.</p>
+  <div class="strip">
+
+    <div class="acol"><div class="cap">N10 · Incident queue<i>Urgent pinned. Auto-created by a negative safety answer.</i></div>
+    <div class="adm">
+      <div class="side"><div class="lg"><svg width="16" height="20" viewBox="0 0 34 40"><rect x="2" y="5" width="12" height="30" rx="6" fill="#FAF9F7"/><rect x="20" y="5" width="12" height="30" rx="6" fill="#E8A13C"/></svg><b>Teman</b></div>
+        <a>Dashboard</a><div class="sec">Safety</div><a class="on">Incidents</a><a>Reports</a><a>Blocked</a><a>Repeat offenders</a><div class="sec">People</div><a>Users</a></div>
+      <div class="main">
+        <div class="top"><h3>Incidents · 3 open</h3><span class="rl">Platform admin</span></div>
+        <div class="body">
+          <div class="filters"><span class="on">Open</span><span>Resolved</span><span>Urgent only</span></div>
+          <table><thead><tr><th>Severity</th><th>What</th><th>Who</th><th>Source</th><th>Age</th><th></th></tr></thead><tbody>
+            <tr><td><span class="tag tg-er">Urgent</span></td><td>Asked for money during session</td><td>Wei Jun → #U-4471</td><td>Report</td><td>14 h</td><td><button class="ab pr">Open</button></td></tr>
+            <tr><td><span class="tag tg-wa">High</span></td><td>"Did not feel safe" — no report filed</td><td>Anon → #U-2255</td><td>Feedback</td><td>2 d</td><td><button class="ab">Open</button></td></tr>
+            <tr><td><span class="tag tg-n">Low</span></td><td>Session never ended, both unreachable 3 h</td><td>Session #8814</td><td>System</td><td>3 d</td><td><button class="ab">Open</button></td></tr>
+          </tbody></table>
+          <p style="font-size:11px;color:var(--n7);margin-top:9px">A negative safety answer opens a case. It never lowers a score, and the reporter is never named to the other party.</p>
+          <div class="tiles" style="grid-template-columns:repeat(3,1fr);margin-top:11px">
+            <div class="tile"><div class="k">Resolved this month</div><div class="v">7</div></div>
+            <div class="tile"><div class="k">Median time to first action</div><div class="v">4 h</div></div>
+            <div class="tile"><div class="k">Suspensions</div><div class="v">1</div></div>
+          </div>
+        </div></div></div></div>
+
+    <div class="acol"><div class="cap">N11 · Incident detail<i>Whole story on one screen. Actions require a reason.</i></div>
+    <div class="adm">
+      <div class="side"><div class="lg"><svg width="16" height="20" viewBox="0 0 34 40"><rect x="2" y="5" width="12" height="30" rx="6" fill="#FAF9F7"/><rect x="20" y="5" width="12" height="30" rx="6" fill="#E8A13C"/></svg><b>Teman</b></div>
+        <a>Dashboard</a><div class="sec">Safety</div><a class="on">Incidents</a><a>Reports</a><a>Blocked</a></div>
+      <div class="main">
+        <div class="top"><h3><span class="tag tg-er">Urgent</span> Incident #I-0093</h3><span style="font-size:10.5px;color:var(--n7)">Matching already restricted</span></div>
+        <div class="body">
+          <div class="two">
+            <div style="flex:1.05">
+              <p style="font:700 9.5px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--n7);margin-bottom:6px">Timeline</p>
+              <div class="tl">
+                <div class="ev"><b>Matched</b><i>9 Aug · request #R-2214, groceries</i></div>
+                <div class="ev"><b>Session started</b><i>10 Aug 15:04 · both confirmed</i></div>
+                <div class="ev"><b>Message</b><i>15:41 · "can you lend me RM200 until Friday"</i></div>
+                <div class="ev"><b>Session ended</b><i>16:20 · ended by requester only</i></div>
+                <div class="ev al"><b>Report filed</b><i>16:31 · asked me for money</i></div>
+                <div class="ev al"><b>Matching restricted</b><i>16:31 · automatic</i></div>
+              </div>
+            </div>
+            <div style="flex:1">
+              <div class="kvr"><span>Reported</span><b>#U-4471 · Aziz Hassan</b></div>
+              <div class="kvr"><span>Tier</span><b>Identity verified</b></div>
+              <div class="kvr"><span>Moments</span><b>6</b></div>
+              <div class="kvr"><span>Prior reports</span><b style="color:var(--er)">1 — money, Jun 2026</b></div>
+              <div style="margin-top:9px">
+                <button class="ab" style="width:100%;margin-bottom:5px">No action — record only</button>
+                <button class="ab" style="width:100%;margin-bottom:5px">Warn and require re-read of guidelines</button>
+                <button class="ab da" style="width:100%;margin-bottom:5px">Suspend account</button>
+                <button class="ab da" style="width:100%">Escalate to police liaison</button>
+              </div>
+            </div>
+          </div>
+          <p style="font-size:10.5px;color:var(--n7);margin-top:8px">Second money-related report. Every action here requires a written reason and notifies the reporter of the outcome.</p>
+        </div></div></div></div>
+
+    <div class="acol"><div class="cap">N14 · Repeat patterns<i>The pattern is the signal, not any single report.</i></div>
+    <div class="adm">
+      <div class="side"><div class="lg"><svg width="16" height="20" viewBox="0 0 34 40"><rect x="2" y="5" width="12" height="30" rx="6" fill="#FAF9F7"/><rect x="20" y="5" width="12" height="30" rx="6" fill="#E8A13C"/></svg><b>Teman</b></div>
+        <a>Dashboard</a><div class="sec">Safety</div><a>Incidents</a><a>Reports</a><a>Blocked</a><a class="on">Repeat offenders</a></div>
+      <div class="main">
+        <div class="top"><h3>More than one report, separate sessions</h3><span class="rl">Platform admin</span></div>
+        <div class="body">
+          <table><thead><tr><th>User</th><th>Reports</th><th>Categories</th><th>Sessions</th><th>Status</th><th></th></tr></thead><tbody>
+            <tr><td>Aziz Hassan #U-4471</td><td><span class="tag tg-er">2</span></td><td>Money ×2</td><td>6</td><td><span class="tag tg-wa">Restricted</span></td><td><button class="ab pr">Open</button></td></tr>
+            <tr><td>#U-2255</td><td><span class="tag tg-wa">2</span></td><td>Felt unsafe, rude</td><td>11</td><td><span class="tag tg-n">Active</span></td><td><button class="ab">Open</button></td></tr>
+          </tbody></table>
+          <p style="font-size:11px;color:var(--n7);margin-top:10px">Two reports from different people about different sessions is a far stronger signal than one detailed report. Single reports are handled in the incident queue; this screen exists only to surface the pattern.</p>
+          <p style="font-size:11px;color:var(--n7);margin-top:8px">Blocks are deliberately <b>not</b> counted here. People block for many ordinary reasons and treating a block as an accusation would be wrong.</p>
+        </div></div></div></div>
+
+    <div class="acol"><div class="cap">N15 · Flagged requests<i>Caught by keyword rules and by member reports.</i></div>
+    <div class="adm">
+      <div class="side"><div class="lg"><svg width="16" height="20" viewBox="0 0 34 40"><rect x="2" y="5" width="12" height="30" rx="6" fill="#FAF9F7"/><rect x="20" y="5" width="12" height="30" rx="6" fill="#E8A13C"/></svg><b>Teman</b></div>
+        <a>Dashboard</a><div class="sec">Safety</div><a>Incidents</a><a class="on">Reports</a><a>Blocked</a></div>
+      <div class="main">
+        <div class="top"><h3>Flagged requests · 2</h3><span class="rl">Platform admin</span></div>
+        <div class="body">
+          <table><thead><tr><th>Request</th><th>Why flagged</th><th>By</th><th></th></tr></thead><tbody>
+            <tr><td>"Urgent cash help needed"<br><span style="color:var(--n7);font-size:10.5px">Everyday assistance · Sentul</span></td><td><span class="tag tg-er">Money keyword</span></td><td>Automatic</td><td><button class="ab da">Remove</button> <button class="ab">Keep</button></td></tr>
+            <tr><td>"Looking for a nice lady to have dinner"<br><span style="color:var(--n7);font-size:10.5px">Social companionship · Bangsar</span></td><td><span class="tag tg-er">Dating</span></td><td>2 members</td><td><button class="ab da">Remove</button> <button class="ab">Keep</button></td></tr>
+          </tbody></table>
+          <p style="font-size:11px;color:var(--n7);margin-top:10px">Removing notifies the author with the specific guideline it breached and offers a rewrite. A removal with no explanation teaches nothing and reads as arbitrary.</p>
+          <p style="font-size:11px;color:var(--n7);margin-top:7px">Keyword rules run in all four languages and are maintained on the content screen, not in code.</p>
+        </div></div></div></div>
+
+  </div>
+</div>
+
+<!-- ADMIN: ANALYTICS -->
+<div class="flow">
+  <div class="fh"><span class="fnum">N17–N22</span><h2>Content, analytics &amp; audit</h2></div>
+  <p class="fsub">N21 — unmet demand by area — is arguably the most operationally useful screen in the whole platform. It's what tells the NGO where to recruit next, which is the question they actually need answered.</p>
+  <div class="strip">
+
+    <div class="acol"><div class="cap">N20 · Analytics<i>Teman Moments is the headline. No revenue, no engagement time.</i></div>
+    <div class="adm">
+      <div class="side"><div class="lg"><svg width="16" height="20" viewBox="0 0 34 40"><rect x="2" y="5" width="12" height="30" rx="6" fill="#FAF9F7"/><rect x="20" y="5" width="12" height="30" rx="6" fill="#E8A13C"/></svg><b>Teman</b></div>
+        <a>Dashboard</a><div class="sec">Community</div><a>Circles</a><a>Organisations</a><div class="sec">Platform</div><a class="on">Analytics</a><a>Unmet demand</a><a>Audit log</a></div>
+      <div class="main">
+        <div class="top"><h3>Brickfields · last 90 days</h3><span class="rl">NGO coordinator</span></div>
+        <div class="body">
+          <div class="tiles">
+            <div class="tile" style="border-color:var(--a4);background:#FEF8EF"><div class="k">Teman Moments</div><div class="v">147</div><div class="s">+22 vs last month</div></div>
+            <div class="tile"><div class="k">Match rate</div><div class="v">81%</div><div class="s">of published requests</div></div>
+            <div class="tile"><div class="k">Median time to match</div><div class="v">6 h</div><div class="s">was 11 h in June</div></div>
+            <div class="tile"><div class="k">Active Temans</div><div class="v">31</div><div class="s">of 38 registered</div></div>
+          </div>
+          <p style="font:700 9.5px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--n7);margin:4px 0 2px">Teman Moments per week</p>
+          <div class="bars">
+            <div style="height:32%"><span>W1</span></div><div style="height:41%"><span>W2</span></div>
+            <div style="height:38%"><span>W3</span></div><div style="height:55%"><span>W4</span></div>
+            <div style="height:62%"><span>W5</span></div><div style="height:58%"><span>W6</span></div>
+            <div style="height:74%"><span>W7</span></div><div style="height:81%"><span>W8</span></div>
+            <div style="height:88%"><span>W9</span></div><div style="height:100%"><span>W10</span></div>
+          </div>
+          <p style="font-size:10.5px;color:var(--n7);margin-top:20px">Also tracked: repeat companions (18), recurring arrangements (5), family-managed requests (44%), unfulfilled requests (19%), safety incident rate (0.7% of sessions), 90-day retention (68%).</p>
+        </div></div></div></div>
+
+    <div class="acol"><div class="cap">N21 · Unmet demand ★<i>The screen that answers "where do we recruit next".</i></div>
+    <div class="adm">
+      <div class="side"><div class="lg"><svg width="16" height="20" viewBox="0 0 34 40"><rect x="2" y="5" width="12" height="30" rx="6" fill="#FAF9F7"/><rect x="20" y="5" width="12" height="30" rx="6" fill="#E8A13C"/></svg><b>Teman</b></div>
+        <a>Dashboard</a><div class="sec">Platform</div><a>Analytics</a><a class="on">Unmet demand</a><a>Audit log</a></div>
+      <div class="main">
+        <div class="top"><h3>Requests that found nobody · last 60 days</h3><span class="rl">NGO coordinator</span></div>
+        <div class="body">
+          <p style="font:700 9.5px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--n7);margin-bottom:5px">By area — % of requests unmatched</p>
+          <div class="hbar"><span class="nm">Sentul</span><span class="tr"><i style="width:64%"></i></span><span class="vv">64%</span></div>
+          <div class="hbar"><span class="nm">Cheras</span><span class="tr"><i style="width:47%"></i></span><span class="vv">47%</span></div>
+          <div class="hbar"><span class="nm">Kepong</span><span class="tr"><i style="width:38%"></i></span><span class="vv">38%</span></div>
+          <div class="hbar"><span class="nm">Bangsar</span><span class="tr"><i style="width:22%"></i></span><span class="vv">22%</span></div>
+          <div class="hbar"><span class="nm">Brickfields</span><span class="tr"><i style="width:19%"></i></span><span class="vv">19%</span></div>
+          <p style="font:700 9.5px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--n7);margin:12px 0 5px">Why they went unmatched</p>
+          <table><tbody>
+            <tr><td>No Temans free at that time</td><td style="text-align:right;font-weight:600">41%</td></tr>
+            <tr><td>No Temans within the distance</td><td style="text-align:right;font-weight:600">28%</td></tr>
+            <tr><td>Language not available</td><td style="text-align:right;font-weight:600">17%</td></tr>
+            <tr><td>Verified-only, none verified nearby</td><td style="text-align:right;font-weight:600">9%</td></tr>
+            <tr><td>Accessibility need unmet</td><td style="text-align:right;font-weight:600">5%</td></tr>
+          </tbody></table>
+          <p style="font-size:11px;color:var(--n7);margin-top:9px"><b>Sentul is the next recruitment target</b> — 64% unmatched, and 17% of failures are language, mostly Tamil.</p>
+        </div></div></div></div>
+
+    <div class="acol"><div class="cap">N19 · Translations<i>Four columns, missing values highlighted. How the human pass gets done.</i></div>
+    <div class="adm">
+      <div class="side"><div class="lg"><svg width="16" height="20" viewBox="0 0 34 40"><rect x="2" y="5" width="12" height="30" rx="6" fill="#FAF9F7"/><rect x="20" y="5" width="12" height="30" rx="6" fill="#E8A13C"/></svg><b>Teman</b></div>
+        <a>Dashboard</a><div class="sec">Content</div><a>Categories</a><a class="on">Translations</a><a>Guidelines</a><div class="sec">Platform</div><a>Analytics</a></div>
+      <div class="main">
+        <div class="top"><h3>Translations · 12 missing</h3><span class="rl">Platform admin</span></div>
+        <div class="body">
+          <div class="filters"><span class="on">Missing only</span><span>Safety strings</span><span>All</span><span class="sr">Search key</span></div>
+          <table><thead><tr><th>Key</th><th>English</th><th>MS</th><th>TA</th><th>ZH</th></tr></thead><tbody>
+            <tr><td>request.expired.title</td><td>No one could make Friday</td><td><span class="tag tg-ok">✓</span></td><td><span class="tag tg-er">missing</span></td><td><span class="tag tg-ok">✓</span></td></tr>
+            <tr><td>safety.not_emergency</td><td>Teman is not an emergency service</td><td><span class="tag tg-ok">✓</span></td><td><span class="tag tg-ok">✓</span></td><td><span class="tag tg-er">missing</span></td></tr>
+            <tr><td>verify.retention</td><td>Deleted 90 days after review</td><td><span class="tag tg-ok">✓</span></td><td><span class="tag tg-er">missing</span></td><td><span class="tag tg-er">missing</span></td></tr>
+            <tr><td>feedback.private_note</td><td>Kumar never sees these answers</td><td><span class="tag tg-er">missing</span></td><td><span class="tag tg-ok">✓</span></td><td><span class="tag tg-ok">✓</span></td></tr>
+          </tbody></table>
+          <div style="background:var(--erf);border:1px solid #F0C4C4;border-radius:6px;padding:7px 9px;font-size:11px;color:var(--er);margin-top:10px">
+            <b>3 of the 12 missing are safety strings.</b> These are translated by a human and signed off by the NGO — never machine-translated. A wrong word in an emergency notice is a real-world harm.</div>
+        </div></div></div></div>
+
+    <div class="acol"><div class="cap">N22 · Audit log<i>Append-only. Not even a platform admin can edit it.</i></div>
+    <div class="adm">
+      <div class="side"><div class="lg"><svg width="16" height="20" viewBox="0 0 34 40"><rect x="2" y="5" width="12" height="30" rx="6" fill="#FAF9F7"/><rect x="20" y="5" width="12" height="30" rx="6" fill="#E8A13C"/></svg><b>Teman</b></div>
+        <a>Dashboard</a><div class="sec">Platform</div><a>Analytics</a><a>Unmet demand</a><a class="on">Audit log</a><a>Admin users</a></div>
+      <div class="main">
+        <div class="top"><h3>Audit log</h3><span style="font-size:10.5px;color:var(--n7)">Append-only · export CSV</span></div>
+        <div class="body">
+          <div class="filters"><span class="on">All</span><span>ID reveals</span><span>Verification</span><span>Moderation</span><span class="sr">Actor or subject</span></div>
+          <table><thead><tr><th>When</th><th>Actor</th><th>Action</th><th>Subject</th></tr></thead><tbody>
+            <tr><td>09:41</td><td>admin@ngo</td><td><span class="tag tg-in">view_user</span></td><td>#U-2841 Kumar</td></tr>
+            <tr><td>09:38</td><td>admin@ngo</td><td><span class="tag tg-am">reveal_document</span></td><td>Verification #V-0912</td></tr>
+            <tr><td>09:12</td><td>admin@ngo</td><td><span class="tag tg-ok">approve_verification</span></td><td>#U-3301 Aisha</td></tr>
+            <tr><td>08:57</td><td>system</td><td><span class="tag tg-er">restrict_matching</span></td><td>#U-4471 — safety report</td></tr>
+            <tr><td>08:40</td><td>dushy@teman</td><td><span class="tag tg-am">reveal_location</span></td><td>Request #R-2290</td></tr>
+            <tr><td>Yesterday</td><td>admin@teman</td><td><span class="tag tg-er">suspend_account</span></td><td>#U-1188 — repeat money reports</td></tr>
+          </tbody></table>
+          <p style="font-size:11px;color:var(--n7);margin-top:10px">Every ID document view, every exact-address reveal, every moderation decision. Members can request their own audit trail under PDPA, and this is what answers that request.</p>
+        </div></div></div></div>
+
+  </div>
+</div>
+
+<!-- PUBLIC SITE -->
+<div class="flow">
+  <div class="fh"><span class="fnum">PUBLIC</span><h2>Public site — 12 pages</h2></div>
+  <p class="fsub">One goal per page, no competing calls to action. Real photography of Malaysian neighbourhoods — a hospital corridor, a wet market, a bus stop — never stock images of smiling seniors being helped, which read as a charity brochure and break the dignity principle before a single word is read. Write P4 and P6 first: they're the links the NGO will actually send people.</p>
+  <div class="strip">
+
+    <div class="pcol"><div class="cap">P1 · Home<i>Hero is the exchange itself. Sisi completes on scroll — the one animation.</i></div>
+    <div class="pg"><div class="pnav"><svg width="72" height="20" viewBox="0 0 180 46"><rect x="4" y="8" width="12" height="30" rx="6" fill="#0A4D4A"/><rect x="22" y="8" width="12" height="30" rx="6" fill="#E8A13C"/><text x="46" y="34" font-family="Vollkorn,Georgia,serif" font-size="32" font-weight="700" fill="#0A4D4A">Teman</text></svg>
+      <span class="ln">How it works · Safety · 🌐 EN</span></div>
+      <div class="pbody dk">
+        <div style="text-align:center;padding:14px 0 6px"><svg width="88" height="60" viewBox="0 0 100 72"><rect x="20" y="14" width="24" height="46" rx="12" fill="#FAF9F7"/><rect x="56" y="14" width="24" height="46" rx="12" fill="#E8A13C"/></svg></div>
+        <p class="ph1" style="text-align:center;color:#fff">I need someone.<br><span style="color:var(--a3)">I can be there.</span></p>
+        <p class="pm" style="text-align:center">Teman connects people who need someone beside them with neighbours who have a few hours to give. Always free.</p>
+        <div style="text-align:center;margin-top:12px"><span class="pcta am">Find a Teman</span> <span class="pcta gh">Become a Teman</span></div>
+        <div class="photo" style="margin-top:14px">A hospital corridor in Kuala Lumpur — real, not stock</div>
+      </div></div></div>
+
+    <div class="pcol"><div class="cap">P4 · For volunteers ★<i>The NGO's recruitment link. Write this page first.</i></div>
+    <div class="pg"><div class="pnav"><svg width="72" height="20" viewBox="0 0 180 46"><rect x="4" y="8" width="12" height="30" rx="6" fill="#0A4D4A"/><rect x="22" y="8" width="12" height="30" rx="6" fill="#E8A13C"/><text x="46" y="34" font-family="Vollkorn,Georgia,serif" font-size="32" font-weight="700" fill="#0A4D4A">Teman</text></svg><span class="ln">🌐 EN</span></div>
+      <div class="pbody">
+        <p class="ph1">Two free hours is enough.</p>
+        <p class="pm">You don't need training, a car, or medical knowledge. You need to be willing to sit with someone.</p>
+        <div class="pcard" style="margin-top:12px"><p class="ph2">What you'd actually do</p><p class="pm">Meet someone at a hospital entrance. Sit with them while they wait. Help find the right counter. Walk back out with them. Most of it is two to three hours.</p></div>
+        <div class="pcard"><p class="ph2">What you wouldn't do</p><p class="pm">No medical care. No medication. No money, ever — in either direction. No commitment beyond the day you said yes to.</p></div>
+        <div class="pcard"><p class="ph2">Before you start</p><p class="pm">Phone number, a photo, and a MyKad check reviewed by a person. About ten minutes.</p></div>
+        <span class="pcta">Become a Teman</span>
+      </div></div></div>
+
+    <div class="pcol"><div class="cap">P5 · For families<i>Answers the real question: is my father safe with a stranger.</i></div>
+    <div class="pg"><div class="pnav"><svg width="72" height="20" viewBox="0 0 180 46"><rect x="4" y="8" width="12" height="30" rx="6" fill="#0A4D4A"/><rect x="22" y="8" width="12" height="30" rx="6" fill="#E8A13C"/><text x="46" y="34" font-family="Vollkorn,Georgia,serif" font-size="32" font-weight="700" fill="#0A4D4A">Teman</text></svg><span class="ln">🌐 EN</span></div>
+      <div class="pbody">
+        <p class="ph1">You can't take the day off. Someone nearby can.</p>
+        <p class="pm">Set up a profile for your parent — they never need the app or even a smartphone. You create the request and you get every update.</p>
+        <div class="pcard" style="margin-top:12px"><p class="ph2">Is a stranger safe?</p><p class="pm">Every Teman is identity-checked against a MyKad by a person. You see their record before you accept, and you always choose. Your parent's address stays hidden until you both agree.</p></div>
+        <div class="pcard"><p class="ph2">You'll know what's happening</p><p class="pm">A message when they meet, when the session starts, and when it ends safely. A trusted contact can get the same updates.</p></div>
+        <div class="pcard"><p class="ph2">Language matters</p><p class="pm">If your father is most comfortable in Tamil, we look for a Tamil speaker first. It's one of the strongest things we match on.</p></div>
+        <span class="pcta">Create a profile for a parent</span>
+      </div></div></div>
+
+    <div class="pcol"><div class="cap">P6 · For organisations ★<i>Write this second. Contact goes to a real person.</i></div>
+    <div class="pg"><div class="pnav"><svg width="72" height="20" viewBox="0 0 180 46"><rect x="4" y="8" width="12" height="30" rx="6" fill="#0A4D4A"/><rect x="22" y="8" width="12" height="30" rx="6" fill="#E8A13C"/><text x="46" y="34" font-family="Vollkorn,Georgia,serif" font-size="32" font-weight="700" fill="#0A4D4A">Teman</text></svg><span class="ln">🌐 EN</span></div>
+      <div class="pbody">
+        <p class="ph1">You already have the volunteers. This gives them a way to be found.</p>
+        <p class="pm">NGOs, resident associations, universities and senior-care organisations can run a verified circle on Teman. It costs nothing.</p>
+        <div class="pcard" style="margin-top:12px"><p class="ph2">What you get</p><p class="pm">A verified profile, a coordinator account, a directory of your volunteers with verification status, and a screen showing which areas have requests going unanswered.</p></div>
+        <div class="pcard"><p class="ph2">What you'd do</p><p class="pm">Review identity checks for your own members — usually a few minutes each — and run orientation sessions. Nothing else is required of you.</p></div>
+        <div class="pcard"><p class="ph2">Where the data lives</p><p class="pm">On servers we control, in line with the PDPA. We'll walk your legal contact through it.</p></div>
+        <span class="pcta">Talk to us</span>
+      </div></div></div>
+
+    <div class="pcol"><div class="cap">P7 · Safety<i>Long, plain, unmarketed. Reading slightly legal here builds trust.</i></div>
+    <div class="pg"><div class="pnav"><svg width="72" height="20" viewBox="0 0 180 46"><rect x="4" y="8" width="12" height="30" rx="6" fill="#0A4D4A"/><rect x="22" y="8" width="12" height="30" rx="6" fill="#E8A13C"/><text x="46" y="34" font-family="Vollkorn,Georgia,serif" font-size="32" font-weight="700" fill="#0A4D4A">Teman</text></svg><span class="ln">🌐 EN</span></div>
+      <div class="pbody">
+        <p class="ph1">How safety works</p>
+        <div style="background:var(--erf);border:1px solid #F0C4C4;border-radius:9px;padding:10px 12px;font-size:12.5px;color:var(--er);margin:10px 0"><b>Teman is not an emergency service.</b> If someone is in danger or needs medical help now, call <b>999</b>.</div>
+        <div class="pcard"><p class="ph2">Identity</p><p class="pm">MyKad or passport, checked against a selfie by a person. Documents are deleted 90 days after review; we keep the outcome, never the number.</p></div>
+        <div class="pcard"><p class="ph2">Before you meet</p><p class="pm">Both people must accept. Only the general area is shown until then. A trusted contact can be told where and when.</p></div>
+        <div class="pcard"><p class="ph2">If something goes wrong</p><p class="pm">A safety button during every session, and reports read by a person. A serious report stops matching immediately, before anyone reviews it.</p></div>
+      </div></div></div>
+
+    <div class="pcol"><div class="cap">P9 · FAQ<i>Leads with the uncomfortable questions. Avoiding them reads as evasion.</i></div>
+    <div class="pg"><div class="pnav"><svg width="72" height="20" viewBox="0 0 180 46"><rect x="4" y="8" width="12" height="30" rx="6" fill="#0A4D4A"/><rect x="22" y="8" width="12" height="30" rx="6" fill="#E8A13C"/><text x="46" y="34" font-family="Vollkorn,Georgia,serif" font-size="32" font-weight="700" fill="#0A4D4A">Teman</text></svg><span class="ln">🌐 EN</span></div>
+      <div class="pbody">
+        <p class="ph1">Questions people actually ask</p>
+        <div style="margin-top:12px">
+          <div class="pacc">Is it really free? What's the catch?<span>+</span></div>
+          <div class="pacc">Who are these people, really?<span>+</span></div>
+          <div class="pacc">What happens if something goes wrong?<span>+</span></div>
+          <div class="pacc">What do you do with my MyKad photo?<span>+</span></div>
+          <div class="pacc">Can I choose a woman for my mother?<span>+</span></div>
+          <div class="pacc">What if nobody comes?<span>+</span></div>
+          <div class="pacc">My father doesn't have a smartphone.<span>+</span></div>
+          <div class="pacc">Is this a dating app?<span>+</span></div>
+        </div>
+        <p class="pm" style="margin-top:11px">Nothing here is answered with "we take safety seriously". Every answer names what actually happens.</p>
+      </div></div></div>
+
+    <div class="pcol"><div class="cap">P2 · How it works<i>Both journeys side by side. Real screenshots, never browser-chrome mockups.</i></div>
+    <div class="pg"><div class="pnav"><svg width="72" height="20" viewBox="0 0 180 46"><rect x="4" y="8" width="12" height="30" rx="6" fill="#0A4D4A"/><rect x="22" y="8" width="12" height="30" rx="6" fill="#E8A13C"/><text x="46" y="34" font-family="Vollkorn,Georgia,serif" font-size="32" font-weight="700" fill="#0A4D4A">Teman</text></svg><span class="ln">🌐 EN</span></div>
+      <div class="pbody">
+        <p class="ph1">How it works</p>
+        <div style="display:flex;gap:11px;margin-top:12px">
+          <div style="flex:1">
+            <p class="ph2" style="color:var(--t9)">If you need someone</p>
+            <p class="pm" style="font-size:11.5px">1 · Say what you need and when<br>2 · Nearby Temans see it<br>3 · Someone offers — you see their record<br>4 · You accept, and details unlock</p>
+          </div>
+          <div style="flex:1">
+            <p class="ph2" style="color:var(--a7)">If you can help</p>
+            <p class="pm" style="font-size:11.5px">1 · Say when you're free<br>2 · See requests near you<br>3 · Offer if it suits<br>4 · They accept, and you meet</p>
+          </div>
+        </div>
+        <div class="photo" style="margin-top:12px;background:linear-gradient(135deg,#0A4D4A,#126D6A)">The actual match screen, not a mockup</div>
+        <p class="pm" style="margin-top:10px">The whole point is to get you off the app and into the same room as quickly as possible.</p>
+      </div></div></div>
+
+    <div class="pcol"><div class="cap">P10 · Privacy<i>Plain language first, formal text below. PDPA.</i></div>
+    <div class="pg"><div class="pnav"><svg width="72" height="20" viewBox="0 0 180 46"><rect x="4" y="8" width="12" height="30" rx="6" fill="#0A4D4A"/><rect x="22" y="8" width="12" height="30" rx="6" fill="#E8A13C"/><text x="46" y="34" font-family="Vollkorn,Georgia,serif" font-size="32" font-weight="700" fill="#0A4D4A">Teman</text></svg><span class="ln">🌐 EN</span></div>
+      <div class="pbody">
+        <p class="ph1">Privacy, in plain words</p>
+        <p class="pm">The formal policy is below. This is what it means.</p>
+        <div class="pcard" style="margin-top:11px"><p class="ph2">Your ID</p><p class="pm">Reviewed by one person, deleted after 90 days. We never store the number itself, only a scrambled version used to spot duplicates.</p></div>
+        <div class="pcard"><p class="ph2">Your address</p><p class="pm">Hidden until you and a Teman both accept. Every time it's revealed, we record who saw it — and you can ask us for that list.</p></div>
+        <div class="pcard"><p class="ph2">Your location</p><p class="pm">Only while a session is running, only if you turn it on, and only while the app is open. We can't track you in the background and we won't pretend otherwise.</p></div>
+        <div class="pcard"><p class="ph2">Deleting your account</p><p class="pm">Your profile goes. Safety records stay, without your name, because they protect other people.</p></div>
+      </div></div></div>
+
+  </div>
+  <p class="fsub" style="margin-top:12px;max-width:74ch"><b>Remaining four pages</b> follow the same structure: <b>P3 For people who need a Teman</b> — problem-aware, real situations in their own words, and what Teman is not. <b>P8 About</b> — the narrative from the brand kit, no founder-hero framing. <b>P11 Terms</b> — including the liability position and the not-an-emergency-service statement. <b>P12 Contact</b> — a real route to a person with a stated response time, because visible contact information is itself a trust signal.</p>
+</div>
+
+</div>
+
+<footer><div class="wrap">
+  <svg width="176" height="46" viewBox="0 0 180 46" aria-label="Teman"><rect x="4" y="8" width="12" height="30" rx="6" fill="#FAF9F7"/><rect x="22" y="8" width="12" height="30" rx="6" fill="#E8A13C"/><text x="46" y="34" font-family="Vollkorn,Georgia,serif" font-size="32" font-weight="700" fill="#FFFFFF">Teman</text></svg>
+  <p style="font-family:var(--serif);font-size:22px;font-weight:600;color:#fff;margin:12px 0 6px">All three batches complete</p>
+  <p style="font-size:15px">28 components · 70 member screens · 22 admin screens · 12 public pages</p>
+</div></footer>
+</body>
+</html>

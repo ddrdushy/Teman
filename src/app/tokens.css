@@ -1,0 +1,139 @@
+/* ═══════════════════════════════════════════════════════════════
+   Teman — design tokens · brand kit v1.1
+   Every value here is traceable to TEMAN_BRAND_KIT.md. If a hex code
+   appears anywhere else in the codebase, that's the bug.
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Neutral: Warm Grey · ~75% of every screen ───────────────── */
+  --n-900: #27241D;   /* all body text                    14.71:1 */
+  --n-800: #423D33;
+  --n-700: #504A40;   /* captions, metadata                8.33:1 */
+  --n-600: #625D52;   /* RETIRED for text (6.22:1 < AAA)          */
+  --n-500: #857F72;   /* every interactive border          3.78:1 */
+  --n-400: #A39E93;   /* disabled states only                     */
+  --n-300: #B8B2A7;   /* Sisi waiting outline                     */
+  --n-200: #D3CEC4;   /* decorative dividers inside a card only   */
+  --n-100: #E8E6E1;
+  --n-050: #FAF9F7;   /* every app background — never pure white  */
+
+  /* ── Primary: Teal · dependability · ~20% ────────────────────── */
+  --t-900: #0A4D4A;   /* default button + deep surfaces    9.66:1 */
+  --t-800: #126D6A;   /* large text and icons only                */
+  --t-700: #1B8380;
+  --t-600: #269C98;
+  --t-500: #32B3AF;
+  --t-300: #6BD1CE;
+  --t-100: #C7F5F3;
+  --t-050: #E8FCFB;
+
+  /* ── Signature: Amber · CONNECTION ONLY · under 5% ───────────── */
+  /* A person has answered. Never a warning, never decoration,
+     never a background field, never a gradient.                   */
+  --a-700: #895811;   /* the only amber approved for text on light */
+  --a-600: #AD6F17;
+  --a-500: #CF8318;   /* FAILS on light (2.89:1) — shapes only     */
+  --a-400: #E8A13C;   /* Sisi fill, Accept button, verified badge  */
+  --a-300: #EDCA97;   /* amber text on deep panels         6.21:1 */
+  --a-200: #EFDEC5;
+
+  /* ── Semantic · a separate system, deliberately off the palette ─ */
+  /* If amber also meant "warning", a match notification and a
+     failed verification would look alike.                         */
+  --ok-text: #0E5814;  --ok-fill: #E3F9E5;
+  --err-text: #780A0A; --err-strong: #911111; --err-fill: #FFEEEE;
+  --warn-text: #5E480E; --warn-fill: #FFFAEB;
+  --info-text: #334E68; --info-fill: #F0F4F8;
+
+  /* ── Typography ──────────────────────────────────────────────── */
+  --serif: "Vollkorn", "Noto Serif", Georgia, serif;
+  --sans:  "Source Sans 3", "Noto Sans", system-ui, sans-serif;
+
+  --fs-body: 18px;    /* overridden per account: 18 / 22 / 26      */
+  --lh-body: 1.55;
+  --fs-bump: 0px;     /* Tamil takes +1px                          */
+
+  /* ── Spacing · 4px base, nothing off-scale ───────────────────── */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 20px; --s-6: 24px; --s-8: 32px; --s-10: 40px; --s-14: 56px;
+
+  /* ── Shape ───────────────────────────────────────────────────── */
+  --r-card: 14px; --r-btn: 12px; --r-pill: 999px;
+
+  /* ── Targets · above the 44px floor; the audience has unsteady hands ── */
+  --tap-primary: 64px;
+  --tap-min: 56px;
+  --tap-gap: 12px;
+
+  /* ── Motion · feedback only, never decoration ────────────────── */
+  --ease: cubic-bezier(.22, .61, .36, 1);   /* never linear */
+  --dur-fast: 140ms;
+  --dur-base: 200ms;
+
+  --shadow-1: 0 1px 2px rgba(39,36,29,.06), 0 2px 8px rgba(39,36,29,.05);
+  --shadow-2: 0 8px 28px rgba(10,77,74,.16);
+}
+
+/* ═══ Per-script typography ═══════════════════════════════════════
+   Vollkorn covers neither Tamil nor Chinese. Leaving the fallback to
+   the OS breaks the serif voice on two of four languages.
+   ═══════════════════════════════════════════════════════════════ */
+
+html[lang="ta"] {
+  --serif: "Noto Serif Tamil", serif;
+  --sans:  "Noto Sans Tamil", sans-serif;
+  --lh-body: 1.75;    /* conjuncts stack above and below the baseline */
+  --fs-bump: 1px;
+}
+
+html[lang="zh"] {
+  --serif: "Noto Serif SC", serif;
+  --sans:  "Noto Sans SC", sans-serif;
+  --lh-body: 1.80;    /* dense glyphs at a fixed em width */
+}
+
+/* Uppercase and letter-spacing are Latin-only devices. Tamil has no
+   letter case; CJK letter-spacing is simply wrong. */
+html[lang="ta"] .label,
+html[lang="zh"] .label,
+html[lang="ta"] .eyebrow,
+html[lang="zh"] .eyebrow {
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* ═══ Base ═══ */
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--n-050);
+  color: var(--n-900);
+  font-family: var(--sans);
+  font-size: calc(var(--fs-body) + var(--fs-bump));
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Text wraps. It never truncates — an ellipsis hides the words the
+   person needed, and at 26px with a Tamil string it eats whole labels. */
+h1, h2, h3, h4, p, li, button, a, label, td, th {
+  overflow-wrap: break-word;
+  text-overflow: clip;
+}
+
+:focus-visible {
+  outline: 3px solid var(--a-400);
+  outline-offset: 3px;
+}
+/* amber-on-teal is the default ring; flip it on amber surfaces */
+.on-amber :focus-visible { outline-color: var(--t-900); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

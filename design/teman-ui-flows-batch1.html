@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teman — Screens &amp; Flows · Batch 1</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Vollkorn:wght@600;700&family=Noto+Sans+Tamil:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+ --n9:#27241D;--n8:#423D33;--n7:#504A40;--n5:#857F72;--n4:#A39E93;--n3:#B8B2A7;--n2:#D3CEC4;--n1:#E8E6E1;--n0:#FAF9F7;
+ --t9:#0A4D4A;--t8:#126D6A;--t1:#C7F5F3;--t0:#E8FCFB;
+ --a4:#E8A13C;--a3:#EDCA97;--a7:#895811;
+ --ok:#0E5814;--okf:#E3F9E5;--er:#780A0A;--ers:#911111;--erf:#FFEEEE;
+ --wa:#5E480E;--waf:#FFFAEB;--in:#334E68;--inf:#F0F4F8;
+ --sans:"Source Sans 3",system-ui,sans-serif;--serif:"Vollkorn",Georgia,serif;
+ --rc:14px;--rb:12px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--n1);color:var(--n9);font:400 17px/1.55 var(--sans)}
+h1,h2,h3{font-family:var(--serif);margin:0}
+p{margin:0}
+.wrap{max-width:1340px;margin:0 auto;padding:0 24px}
+.mast{background:var(--t9);color:#fff;padding:44px 0 38px}
+.mast .eb{font:600 14px var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--a3)}
+.mast h1{font-size:40px;font-weight:700;margin:10px 0 12px}
+.mast p{max-width:62ch;color:#DCEFEE;font-size:17px}
+.bar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--n5);padding:12px 0}
+.bar .wrap{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bar b{font:600 13px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--n7);margin-right:2px}
+.bar button{font:600 15px var(--sans);padding:9px 14px;min-height:44px;border-radius:10px;border:1.5px solid var(--n5);background:#fff;cursor:pointer}
+.bar button[aria-pressed=true]{background:var(--t9);color:#fff;border-color:var(--t9)}
+.bar button:focus-visible{outline:3px solid var(--a4);outline-offset:2px}
+
+.flow{padding:44px 0;border-top:1px solid var(--n2)}
+.fh{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.fnum{font:600 13px var(--sans);letter-spacing:.1em;color:var(--t9);background:var(--t0);border:1px solid var(--t1);padding:6px 10px;border-radius:999px}
+.fh h2{font-size:28px;font-weight:600}
+.fsub{color:var(--n7);max-width:70ch;margin-bottom:24px}
+.strip{display:flex;gap:16px;overflow-x:auto;padding:6px 2px 22px;align-items:flex-start}
+.col{flex:0 0 auto;width:298px}
+.cap{font:600 12px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--t9);margin-bottom:3px}
+.cap i{display:block;font:400 14px var(--sans);color:var(--n7);text-transform:none;letter-spacing:0;font-style:normal;margin-top:3px;line-height:1.45}
+.arrow{flex:0 0 auto;align-self:center;color:var(--n5);font-size:22px;padding:0 2px;margin-top:120px}
+
+.ph{width:298px;height:612px;background:var(--n0);border:8px solid var(--n9);border-radius:34px;overflow:hidden;
+ box-shadow:0 8px 24px rgba(10,77,74,.15);display:flex;flex-direction:column;margin-top:9px}
+.st{height:22px;flex:0 0 22px;display:flex;align-items:center;justify-content:space-between;padding:0 15px;font:600 11px var(--sans);color:var(--n7)}
+.sc{flex:1;overflow-y:auto;overflow-x:hidden;padding:4px 15px 14px;font-size:var(--fs,16px);line-height:1.5;scrollbar-width:thin}
+.sc.teal{background:var(--t9);color:#fff}
+.sc.teal .mut{color:var(--t1)}
+.nav{flex:0 0 52px;border-top:1px solid var(--n5);background:#fff;display:flex;align-items:stretch}
+.nav div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font:600 10px var(--sans);color:var(--n7)}
+.nav div.on{color:var(--t9)}
+.nav .d{width:19px;height:19px;border-radius:6px;background:var(--n3)}
+.nav div.on .d{background:var(--t9)}
+
+/* in-phone type */
+.h1{font-family:var(--serif);font-size:1.42em;font-weight:600;line-height:1.28;margin:10px 0 4px}
+.h2{font-family:var(--serif);font-size:1.14em;font-weight:600;line-height:1.3;margin:0 0 3px}
+.mut{color:var(--n7);font-size:.86em;line-height:1.45}
+.lb{font:600 .72em var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--n7);margin:0 0 8px}
+.sp{height:10px}.sp2{height:16px}
+
+/* controls */
+.btn{display:block;width:100%;border:0;border-radius:var(--rb);font:600 .98em var(--sans);
+ padding:.82em;min-height:56px;cursor:pointer;text-align:center;margin-bottom:9px;line-height:1.3}
+.p{background:var(--t9);color:#fff}
+.cn{background:var(--a4);color:var(--n9)}
+.g{background:#fff;color:var(--n9);border:1.5px solid var(--n5)}
+.gl{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.42)}
+.dg{background:var(--erf);color:var(--ers);border:1.5px solid #F0C4C4;font-weight:700}
+.big{display:flex;align-items:center;gap:11px;width:100%;text-align:left;border:0;border-radius:var(--rb);
+ padding:.85em;min-height:62px;margin-bottom:10px;cursor:pointer;font:600 1em var(--sans);line-height:1.3}
+.big.p{background:var(--t9);color:#fff}
+.big.g{background:#fff;color:var(--n9);border:1.5px solid var(--n5)}
+.big small{display:block;font:400 .78em/1.4 var(--sans);margin-top:3px}
+.big.p small{color:#CFEAE9}.big.g small{color:var(--n7)}
+
+.fld{margin-bottom:12px}
+.fld .l{font:600 .74em var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--n7);margin-bottom:5px}
+.fld .i{min-height:52px;border:1.5px solid var(--n5);border-radius:var(--rb);background:#fff;
+ display:flex;align-items:center;padding:11px 13px;font-size:.95em;color:var(--n9);
+ overflow-wrap:anywhere;min-width:0}
+.fld .i.ph{color:var(--n5);align-items:flex-start;display:block;padding-top:14px}
+.fld .i.foc{border:2.5px solid var(--t9);box-shadow:0 0 0 3px rgba(232,161,60,.4)}
+.fld .hint{font-size:.78em;color:var(--n7);margin-top:5px;line-height:1.45}
+.fld .err{font-size:.8em;color:var(--er);margin-top:5px;font-weight:600}
+
+.otp{display:flex;gap:7px;margin:6px 0 4px}
+.otp span{flex:1;height:54px;border:1.5px solid var(--n5);border-radius:10px;background:#fff;
+ display:flex;align-items:center;justify-content:center;font:700 1.2em var(--sans)}
+.otp span.f{border:2.5px solid var(--t9)}
+
+.rc{border:1.5px solid var(--n5);border-radius:var(--rb);padding:.72em .8em;margin-bottom:8px;
+ min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:9px;background:#fff}
+.rc.sel{border:2.5px solid var(--t9);background:var(--t0)}
+.rc b{font-weight:600;font-size:.95em;display:block;line-height:1.3}
+.rc i{font-style:normal;font-size:.8em;color:var(--n7);display:block;margin-top:2px;line-height:1.4}
+.rc .tk{color:var(--t9);font-weight:700;font-size:1.05em}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid2 .rc{min-width:0}
+.rc b,.rc i{overflow-wrap:anywhere;min-width:0}
+.grid2 .rc{flex-direction:column;align-items:flex-start;justify-content:center;text-align:left;min-height:74px}
+
+.card{background:#fff;border:1.5px solid var(--n5);border-radius:var(--rc);padding:.75em .85em;margin-bottom:10px}
+.card.rq{border-left:4px solid var(--a4)}
+.card.warn{background:var(--waf);border-color:#EFE0B8}
+.row{display:flex;align-items:baseline;gap:9px;padding:6px 0;border-bottom:1px solid var(--n1);font-size:.9em}
+.row:last-child{border:0}
+.row .n{font-weight:700;color:var(--t9);font-size:1.08em;min-width:1.1em}
+.kv{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:6px 0;font-size:.87em;border-bottom:1px solid rgba(255,255,255,.12);flex-wrap:wrap}
+.kv:last-child{border:0}
+.kv span:first-child{color:var(--t1);white-space:nowrap;min-width:0;overflow-wrap:anywhere}
+.kv b{min-width:0;overflow-wrap:anywhere}
+.kv b{color:#fff;text-align:right;font-weight:600}
+.panel{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:var(--rc);padding:.75em .85em;margin-top:12px}
+
+.pill{display:inline-flex;align-items:center;gap:5px;font:600 .76em var(--sans);padding:5px 10px;border-radius:999px;margin-top:8px}
+.pl{background:var(--waf);color:var(--wa)}
+.pm{background:var(--okf);color:var(--ok)}
+.pv{background:var(--a4);color:var(--n9);font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.chip{font:600 .76em var(--sans);padding:6px 11px;border-radius:999px;border:1.5px solid var(--n5);background:#fff}
+.chip.on{background:var(--t0);border:2px solid var(--t9);color:var(--t9)}
+.chip.dk{background:rgba(237,202,151,.16);border:1px solid rgba(237,202,151,.34);color:#EFDEC5}
+
+.note{border-radius:11px;padding:.68em .8em;font-size:.82em;line-height:1.5;margin-top:11px}
+.note.i{background:var(--inf);border:1px solid #D5E0EA;color:var(--in)}
+.note.w{background:var(--waf);border:1px solid #EFE0B8;color:var(--wa)}
+.note.e{background:var(--erf);border:1px solid #F0C4C4;color:var(--er)}
+.step{display:flex;align-items:center;gap:7px;margin:8px 0 12px;font:600 .78em var(--sans);color:var(--n7)}
+.step .tr{flex:1;height:5px;border-radius:3px;background:var(--n2);overflow:hidden}
+.step .tr i{display:block;height:100%;background:var(--t9)}
+.ctr{text-align:center}
+.tm{font-family:var(--serif);font-size:2.05em;font-weight:600;line-height:1.1}
+.ldr{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--n1)}
+.ldr:last-child{border:0}
+.ldr .dot{flex:0 0 26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+ font:700 .72em var(--sans);border:2px solid var(--n4);color:var(--n5);background:#fff;margin-top:1px}
+.ldr.done .dot{background:var(--t9);border-color:var(--t9);color:#fff}
+.ldr.now .dot{border-color:var(--t9);color:var(--t9);border-width:3px}
+.ldr b{font-size:.92em;font-weight:600;display:block;line-height:1.3}
+.ldr i{font-style:normal;font-size:.79em;color:var(--n7);display:block;margin-top:2px;line-height:1.4}
+.frame{border:2.5px dashed var(--n4);border-radius:10px;height:118px;display:flex;align-items:center;
+ justify-content:center;color:var(--n5);font-size:.8em;background:#fff;margin:8px 0;text-align:center;padding:8px}
+.msg{max-width:82%;padding:.6em .75em;border-radius:13px;font-size:.86em;margin-bottom:7px;line-height:1.45}
+.msg.them{background:#fff;border:1.5px solid var(--n5)}
+.msg.me{background:var(--t9);color:#fff;margin-left:auto}
+footer{background:var(--t9);color:var(--t1);padding:38px 0;text-align:center;margin-top:30px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="mast"><div class="wrap">
+  <div class="eb">Teman — UI · Batch 1 of 3</div>
+  <h1>Screens, in flow order</h1>
+  <p>The complete demo path: entry, verification, creating a request, availability, discovery through to a match, the session and its safety layer, and feedback. 41 screens, each built from the brand kit v1.1 tokens and the elderly rules. Batch 2 covers profiles, care recipients, relationships and community; batch 3 covers admin and the public site.</p>
+</div></div>
+
+<div class="bar"><div class="wrap">
+  <b>Text size</b>
+  <button data-fs="16" aria-pressed="true">Standard</button>
+  <button data-fs="19" aria-pressed="false">Large</button>
+  <button data-fs="22" aria-pressed="false">Extra large</button>
+  <span style="flex:1"></span>
+  <span style="font-size:15px;color:var(--n7)">Screens shown in English. Language switching is proven in <em>teman-elderly-multilingual.html</em>.</span>
+</div></div>
+
+<div class="wrap">
+
+<!-- ══ FLOW 1 ══ -->
+<div class="flow" style="border-top:0">
+  <div class="fh"><span class="fnum">FLOW 1</span><h2>Entry &amp; account creation</h2></div>
+  <p class="fsub">Language before account, always. Every step resumable — a force-quit loses nothing. The last screen is a Peak moment, not a checkmark: Sisi completes for the first time in the user's experience of the product.</p>
+  <div class="strip">
+
+    <div class="col"><div class="cap">A1 · Language picker<i>First screen. Fixed order forever — people scan for a shape. No flags.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="ctr" style="padding:14px 0 4px"><svg width="76" height="30" viewBox="0 0 180 46"><rect x="4" y="8" width="12" height="30" rx="6" fill="#0A4D4A"/><rect x="22" y="8" width="12" height="30" rx="6" fill="none" stroke="#A39E93" stroke-width="2" stroke-dasharray="4 4"/><text x="46" y="34" font-family="Vollkorn,Georgia,serif" font-size="32" font-weight="700" fill="#0A4D4A">Teman</text></svg></div>
+      <div class="sp"></div>
+      <div class="rc sel"><span><b>English</b><i>English</i></span><span class="tk">✓</span></div>
+      <div class="rc"><span><b>Bahasa Melayu</b><i>Malay</i></span></div>
+      <div class="rc"><span><b style="font-family:'Noto Sans Tamil',sans-serif">தமிழ்</b><i>Tamil</i></span></div>
+      <div class="rc"><span><b>中文</b><i>Chinese</i></span></div>
+      <div class="sp"></div><button class="btn p">Continue</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">A2 · Welcome<i>Three lines, one CTA. Language switch stays reachable.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div style="display:flex;justify-content:flex-end"><button class="chip" style="margin-top:6px">🌐 English</button></div>
+      <div class="ctr" style="padding:22px 0 8px"><svg width="98" height="66" viewBox="0 0 100 72"><rect x="20" y="14" width="24" height="46" rx="12" fill="#0A4D4A"/><rect x="56" y="14" width="24" height="46" rx="12" fill="#E8A13C"/></svg></div>
+      <p class="h1 ctr">No one should have to go alone.</p>
+      <div class="sp"></div>
+      <p class="mut">Sometimes you can get to the hospital. What you can't do is walk in with nobody waiting for you.</p><div class="sp"></div>
+      <p class="mut">Teman connects people who need someone beside them with neighbours who have time to spare.</p><div class="sp"></div>
+      <p class="mut"><b style="color:var(--n9)">Always free.</b> No payments, ever.</p>
+      <div class="sp2"></div><button class="btn p">Get started</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">A3 · Phone number<i>+60 visible, not hidden inside the field.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="step"><span>Step 1 of 4</span><span class="tr"><i style="width:25%"></i></span></div>
+      <p class="h1">What's your phone number?</p>
+      <p class="mut">We'll send you a 6-digit code. Your number is never shown to other members.</p>
+      <div class="sp2"></div>
+      <div class="fld"><div class="l">Phone number</div>
+        <div style="display:flex;gap:8px"><div class="i" style="flex:0 0 68px;justify-content:center;background:var(--n1)">+60</div><div class="i foc" style="flex:1">12 345 6789</div></div>
+      </div>
+      <div class="sp"></div><button class="btn p">Send me a code</button>
+      <p class="mut ctr" style="font-size:.78em">Already have an account? Same number, same button.</p>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">A4 · Enter code<i>Error state shown. Input is never wiped.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="step"><span>Step 2 of 4</span><span class="tr"><i style="width:50%"></i></span></div>
+      <p class="h1">Enter the code</p>
+      <p class="mut">Sent to +60 12 345 6789. <a href="#" style="color:var(--t9);font-weight:600">Change number</a></p>
+      <div class="otp"><span>4</span><span>8</span><span>2</span><span>1</span><span class="f">0</span><span></span></div>
+      <p class="err" style="color:var(--er);font-weight:600;font-size:.82em">That code doesn't match. Check and try again — we've kept what you typed.</p>
+      <div class="sp2"></div><button class="btn p">Confirm</button>
+      <button class="btn g">Send a new code (0:22)</button>
+      <div class="note i">The code lasts 10 minutes. Take your time.</div>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">A5 · Your name<i>One field. Framed as what others will see.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="step"><span>Step 3 of 4</span><span class="tr"><i style="width:75%"></i></span></div>
+      <p class="h1">What should we call you?</p>
+      <p class="mut">This is the name other members will see.</p>
+      <div class="sp2"></div>
+      <div class="fld"><div class="l">Your name</div><div class="i foc">Dushy</div>
+        <div class="hint">A first name is enough. You can change this later.</div></div>
+      <div class="sp2"></div><button class="btn p">Continue</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">A6 · Your area<i>A searchable list, never a map pin — pins need fine motor control.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="step"><span>Step 4 of 4</span><span class="tr"><i style="width:100%"></i></span></div>
+      <p class="h1">Which area are you in?</p>
+      <p class="mut">We use this to find people near you. Your exact address is never asked for here.</p>
+      <div class="sp"></div>
+      <div class="fld"><div class="i foc">Brick</div></div>
+      <div class="rc sel"><span><b>Brickfields</b><i>Kuala Lumpur</i></span><span class="tk">✓</span></div>
+      <div class="rc"><span><b>Bangsar</b><i>Kuala Lumpur</i></span></div>
+      <div class="rc"><span><b>Mid Valley</b><i>Kuala Lumpur</i></span></div>
+      <div class="sp"></div><button class="btn p">Continue</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">A7 · You're in ★<i>Peak moment. Sisi completes. Then the intent fork.</i></div>
+    <div class="ph"><div class="st" style="color:#95E4E2"><span>9:41</span><span>▮▮</span></div><div class="sc teal">
+      <div class="ctr" style="padding:26px 0 6px"><svg width="106" height="72" viewBox="0 0 100 72"><rect x="20" y="14" width="24" height="46" rx="12" fill="#FAF9F7"/><rect x="56" y="14" width="24" height="46" rx="12" fill="#E8A13C"/></svg></div>
+      <p class="h1 ctr" style="color:#fff">You're part of Brickfields now.</p>
+      <p class="mut ctr">38 people here have already joined.</p>
+      <div class="sp2"></div>
+      <p class="lb" style="color:var(--t1)">What brings you here?</p>
+      <button class="btn gl" style="text-align:left;padding:1em .85em"><b style="font-size:1.02em">I want to help someone</b><br><span style="font-weight:400;font-size:.82em;color:#CFEAE9">Give a few hours when you have them</span></button>
+      <button class="btn gl" style="text-align:left;padding:1em .85em"><b style="font-size:1.02em">I need someone with me</b><br><span style="font-weight:400;font-size:.82em;color:#CFEAE9">For yourself or someone you care for</span></button>
+      <p class="mut ctr" style="font-size:.78em">You can do both. Change any time.</p>
+    </div></div></div>
+
+  </div>
+</div>
+
+<!-- ══ FLOW 2 ══ -->
+<div class="flow">
+  <div class="fh"><span class="fnum">FLOW 2</span><h2>Verification</h2></div>
+  <p class="fsub">The highest-drop-off sequence in the app. Explain before asking, accept a gallery upload, never block on a client-side quality check, and make rejection a route rather than a wall.</p>
+  <div class="strip">
+
+    <div class="col"><div class="cap">D1 · Verification ladder<i>A ladder, not four cards — the point is progression. Each locked rung states what it unlocks.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Building trust</p>
+      <p class="mut">Members meet strangers in real life. Each step you take makes that safer for everyone.</p><div class="sp2"></div>
+      <div class="card">
+        <div class="ldr done"><span class="dot">✓</span><span><b>Phone &amp; email</b><i>Done — you can browse and offer help</i></span></div>
+        <div class="ldr now"><span class="dot">2</span><span><b>Identity</b><i>MyKad or passport. Unlocks hospital and welfare visits, and requests marked "verified only"</i></span></div>
+        <div class="ldr"><span class="dot">3</span><span><b>Community verified</b><i>Through an NGO, university or resident association</i></span></div>
+        <div class="ldr"><span class="dot">4</span><span><b>Enhanced</b><i>Additional checks. Optional.</i></span></div>
+      </div>
+      <button class="btn p">Verify my identity</button>
+      <button class="btn g">Maybe later</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">D2 · Why we ask<i>Explain first, camera second. This screen is what stops the drop-off.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Before you upload</p><div class="sp"></div>
+      <div class="card"><p class="h2">What it's for</p><p class="mut">To confirm you are who you say you are, before you sit beside someone's parent.</p></div>
+      <div class="card"><p class="h2">Who sees it</p><p class="mut">One reviewer. Never another member. Never shown on your profile.</p></div>
+      <div class="card"><p class="h2">How long we keep it</p><p class="mut">Deleted 90 days after review. We keep only that you were verified — never your ID number.</p></div>
+      <div class="sp"></div><button class="btn p">I understand — continue</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">D3 · Capture ID<i>Camera and gallery weighted equally. Many have already photographed their MyKad.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Your MyKad</p>
+      <p class="mut">Front side. All four corners visible, no glare.</p>
+      <div class="frame">Place the card inside this frame</div>
+      <button class="btn p">Take a photo</button>
+      <button class="btn g">Choose from my gallery</button>
+      <div class="sp"></div>
+      <div class="rc"><span><b>Using a passport instead?</b><i>Foreign nationals</i></span><span class="tk">›</span></div>
+      <div class="note i">Not sure if it's clear enough? Send it anyway — a person checks every one.</div>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">D4 · Selfie<i>Explains why before opening the camera.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Now a photo of you</p>
+      <p class="mut">This confirms the ID belongs to you. It isn't your profile picture and other members never see it.</p>
+      <div class="frame" style="height:150px;border-radius:80px">Look at the camera</div>
+      <button class="btn p">Take the photo</button>
+      <button class="btn g">Back</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">D5 · Under review<i>Names who reviews it and how long. No vague "soon".</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="ctr" style="padding:26px 0 8px"><svg width="86" height="60" viewBox="0 0 100 72"><rect x="20" y="14" width="24" height="46" rx="12" fill="#0A4D4A"/><rect x="56" y="14" width="24" height="46" rx="12" fill="none" stroke="#B8B2A7" stroke-width="2.5" stroke-dasharray="5 5"/></svg></div>
+      <p class="h1 ctr">Sent for review</p>
+      <p class="mut ctr">A coordinator at Pertubuhan Warga Emas KL checks this by hand, usually within a day.</p>
+      <div class="sp2"></div>
+      <div class="card"><div class="row"><span style="color:var(--ok);font-weight:700">✓</span><span>Phone &amp; email verified</span></div>
+        <div class="row"><span style="color:var(--wa);font-weight:700">◷</span><span>Identity — under review</span></div></div>
+      <p class="mut">You can finish your profile and set your availability while you wait.</p>
+      <div class="sp"></div><button class="btn p">Finish my profile</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">D6 · Not accepted<i>Reason, retry, and a route to a human. Never a dead end.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">We couldn't read your MyKad</p>
+      <div class="note e" style="font-size:.86em"><b>What happened:</b> the bottom-right corner was cut off, so the reviewer couldn't confirm the details.</div>
+      <div class="sp"></div>
+      <p class="mut"><b style="color:var(--n9)">This happens often.</b> Nothing is wrong with your account and you can try as many times as you need.</p>
+      <div class="sp2"></div>
+      <button class="btn p">Take another photo</button>
+      <button class="btn g">Choose a different photo</button>
+      <button class="btn g">I think this is a mistake — contact someone</button>
+    </div></div></div>
+
+  </div>
+</div>
+
+<!-- ══ FLOW 3 ══ -->
+<div class="flow">
+  <div class="fh"><span class="fnum">FLOW 3</span><h2>Creating a request</h2></div>
+  <p class="fsub">Seven steps, one decision each, autosaved. The Continue button sits in the same place on every step so a returning user builds muscle memory. Step 1 is a grid rather than a dropdown — the categories <em>are</em> the product and a dropdown hides them.</p>
+  <div class="strip">
+
+    <div class="col"><div class="cap">B1 · Home<i>Entry point. Exactly one loud action. No amber — nothing is connected yet.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Good morning, Dushy</p><p class="mut">Thursday, 13 August</p><div class="sp"></div>
+      <button class="big p"><svg width="22" height="27" viewBox="0 0 34 40" style="flex:0 0 22px"><rect x="2" y="5" width="12" height="30" rx="6" fill="#fff"/><rect x="20" y="5" width="12" height="30" rx="6" fill="none" stroke="#95E4E2" stroke-width="2" stroke-dasharray="4 4"/></svg><span>Need a Teman<small>For you or someone you care for</small></span></button>
+      <button class="big g"><svg width="22" height="27" viewBox="0 0 34 40" style="flex:0 0 22px"><rect x="2" y="5" width="12" height="30" rx="6" fill="#0A4D4A"/><circle cx="26" cy="20" r="5" fill="#857F72"/></svg><span>I'm available<small>Tell your area when you're free</small></span></button>
+      <button class="big g"><svg width="22" height="27" viewBox="0 0 34 40" style="flex:0 0 22px"><rect x="2" y="5" width="12" height="30" rx="6" fill="#0A4D4A"/><path d="M20 20h11m0 0-4-4m4 4-4 4" stroke="#857F72" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg><span>Going somewhere?<small>Someone may be heading there too</small></span></button>
+      <div class="card"><p class="lb">Around Brickfields today</p>
+        <div class="row"><span class="n">3</span><span>people need a Teman</span></div>
+        <div class="row"><span class="n">4</span><span>Temans free this afternoon</span></div></div>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">E1 · What do you need<i>Grid, not dropdown. Categories are the product.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="step"><span>Step 1 of 7</span><span class="tr"><i style="width:14%"></i></span></div>
+      <p class="h1">What do you need?</p><div class="sp"></div>
+      <div class="grid2">
+        <div class="rc sel"><b>Hospital or clinic</b><i>Appointments, follow-ups</i></div>
+        <div class="rc"><b>Everyday errands</b><i>Bank, groceries, forms</i></div>
+        <div class="rc"><b>Company for a while</b><i>Sitting, walking, talking</i></div>
+        <div class="rc"><b>Someone to talk to</b><i>Coffee and conversation</i></div>
+        <div class="rc"><b>Check in on someone</b><i>A visit while you're away</i></div>
+        <div class="rc"><b>Help with a phone</b><i>Apps, forms, video calls</i></div>
+      </div>
+      <div class="sp"></div><button class="btn p">Continue</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">E2 · Who is this for<i>The screen that makes family-managed requests work.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="step"><span>Step 2 of 7</span><span class="tr"><i style="width:28%"></i></span></div>
+      <p class="h1">Who is this for?</p><div class="sp"></div>
+      <div class="rc"><span><b>Me</b><i>Dushy</i></span></div>
+      <div class="rc sel"><span><b>Dad — Siva</b><i>72 · Tamil · walks slowly</i></span><span class="tk">✓</span></div>
+      <div class="rc"><span><b>Mum — Kamala</b><i>68 · Tamil</i></span></div>
+      <div class="rc"><span><b>+ Someone else</b><i>Add a person you care for</i></span></div>
+      <div class="note i">Dad doesn't need the app. You'll get every update and can message his Teman.</div>
+      <div class="sp"></div><button class="btn p">Continue</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">E3 · Where<i>Approximate now; exact address later, and it says so.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="step"><span>Step 3 of 7</span><span class="tr"><i style="width:42%"></i></span></div>
+      <p class="h1">Where does Dad need to go?</p><div class="sp"></div>
+      <div class="fld"><div class="l">Destination</div><div class="i foc">Hospital Kuala Lumpur</div></div>
+      <div class="rc sel"><span><b>Hospital Kuala Lumpur</b><i>Jalan Pahang · 4.2 km away</i></span><span class="tk">✓</span></div>
+      <div class="rc"><span><b>HKL — Clinic Block</b><i>Jalan Pahang</i></span></div>
+      <div class="note i">Only the general area is shown while you're looking. The exact meeting address is shared once you and a Teman both agree.</div>
+      <div class="sp"></div><button class="btn p">Continue</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">E4 · When<i>Four plain options before any calendar appears.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="step"><span>Step 4 of 7</span><span class="tr"><i style="width:57%"></i></span></div>
+      <p class="h1">When is it?</p><div class="sp"></div>
+      <div class="rc"><span><b>Today</b></span></div>
+      <div class="rc"><span><b>Tomorrow</b></span></div>
+      <div class="rc sel"><span><b>Pick a date</b><i>Friday, 15 August</i></span><span class="tk">✓</span></div>
+      <div class="rc"><span><b>I'm flexible</b><i>Any day that suits someone</i></span></div>
+      <div class="sp"></div>
+      <div class="fld"><div class="l">What time?</div><div class="i">9:30 AM</div></div>
+      <div class="fld"><div class="l">Roughly how long? <span style="text-transform:none;letter-spacing:0;font-weight:400">(optional)</span></div><div class="i">About 3 hours</div></div>
+      <button class="btn p">Continue</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">E5 · What kind of help<i>Prompts are category-specific — a hospital visit needs different information than coffee.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="step"><span>Step 5 of 7</span><span class="tr"><i style="width:71%"></i></span></div>
+      <p class="h1">What would help most?</p>
+      <p class="mut">A few words is enough. Temans read this before offering.</p><div class="sp"></div>
+      <div class="fld"><div class="i foc" style="min-height:104px;align-items:flex-start;padding-top:11px;line-height:1.5;font-size:.9em">Dad has a follow-up with the cardiology clinic. He just needs someone to sit with him and help find the right counter.</div></div>
+      <p class="lb">Anything a Teman should know?</p>
+      <div class="chips">
+        <span class="chip on">Walks slowly</span><span class="chip on">Needs rests</span>
+        <span class="chip">Wheelchair</span><span class="chip">Hearing</span><span class="chip">Vision</span><span class="chip">No stairs</span>
+      </div>
+      <div class="sp"></div><button class="btn p">Continue</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">E6 · Preferences<i>All optional, and marked as such. Never asterisks on required fields.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="step"><span>Step 6 of 7</span><span class="tr"><i style="width:85%"></i></span></div>
+      <p class="h1">Any preferences?</p><p class="mut">All optional. Fewer preferences usually means finding someone sooner.</p><div class="sp"></div>
+      <p class="lb">Language</p><div class="chips"><span class="chip on">Tamil</span><span class="chip on">English</span><span class="chip">Malay</span><span class="chip">Mandarin</span></div>
+      <div class="sp"></div>
+      <p class="lb">Gender</p><div class="chips"><span class="chip on">Any</span><span class="chip">Women only</span><span class="chip">Men only</span></div>
+      <div class="sp"></div>
+      <p class="lb">Other</p><div class="chips"><span class="chip on">Verified Temans only</span><span class="chip">Must be able to drive</span></div>
+      <div class="sp"></div><button class="btn p">Continue</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">E9 · Review<i>Everything on one screen, every line editable in place.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="step"><span>Step 7 of 7</span><span class="tr"><i style="width:100%"></i></span></div>
+      <p class="h1">Does this look right?</p><div class="sp"></div>
+      <div class="card">
+        <div class="row"><span style="color:var(--n7);min-width:78px">For</span><span><b>Dad — Siva</b></span></div>
+        <div class="row"><span style="color:var(--n7);min-width:78px">Where</span><span>Hospital Kuala Lumpur</span></div>
+        <div class="row"><span style="color:var(--n7);min-width:78px">When</span><span>Friday 15 Aug, 9:30 AM · ~3 h</span></div>
+        <div class="row"><span style="color:var(--n7);min-width:78px">Help</span><span>Sit with him, find the counter</span></div>
+        <div class="row"><span style="color:var(--n7);min-width:78px">Notes</span><span>Walks slowly · needs rests</span></div>
+        <div class="row"><span style="color:var(--n7);min-width:78px">Prefers</span><span>Tamil or English · verified</span></div>
+      </div>
+      <p class="lb">Who can see this?</p>
+      <div class="rc sel"><span><b>Temans near Brickfields</b><i>The widest reach</i></span><span class="tk">✓</span></div>
+      <div class="rc"><span><b>Only Dad's trusted Temans</b><i>3 people</i></span></div>
+      <button class="btn p">Publish request</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">E11 · Published ★<i>Sisi waiting. The promise here is kept by a background job.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="ctr" style="padding:24px 0 6px"><svg width="98" height="68" viewBox="0 0 100 72"><rect x="20" y="14" width="24" height="46" rx="12" fill="#0A4D4A"/><rect x="56" y="14" width="24" height="46" rx="12" fill="none" stroke="#B8B2A7" stroke-width="2.5" stroke-dasharray="5 5"/></svg></div>
+      <p class="h1 ctr">We're looking for someone</p>
+      <p class="mut ctr">Asking Temans near Brickfields who speak Tamil or English and are free on Friday morning.</p>
+      <div class="sp2"></div>
+      <div class="note i"><b>If no one can make Friday, we'll tell you by Thursday evening</b> — and suggest what else you can try. You won't be left guessing on the morning.</div>
+      <div class="sp"></div>
+      <button class="btn g">Ask Dad's trusted Temans first</button>
+      <button class="btn g">View this request</button>
+    </div></div></div>
+
+  </div>
+</div>
+
+<!-- ══ FLOW 4 ══ -->
+<div class="flow">
+  <div class="fh"><span class="fnum">FLOW 4</span><h2>Availability</h2></div>
+  <p class="fsub">The volunteer's side. Radius is three named choices, not a slider — sliders and unsteady hands don't mix. The review step reflects the setting back in plain words, because "5000 m" means nothing and "about 5 km of Brickfields" does.</p>
+  <div class="strip">
+
+    <div class="col"><div class="cap">F1a · When<i>Two real cases first, calendar third.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="step"><span>Step 1 of 4</span><span class="tr"><i style="width:25%"></i></span></div>
+      <p class="h1">When are you free?</p><div class="sp"></div>
+      <div class="rc sel"><span><b>Today</b><i>Thursday, 13 August</i></span><span class="tk">✓</span></div>
+      <div class="rc"><span><b>This weekend</b><i>Sat 15 &amp; Sun 16</i></span></div>
+      <div class="rc"><span><b>Pick a date</b></span></div>
+      <div class="sp"></div>
+      <p class="lb">What time?</p>
+      <div style="display:flex;gap:9px"><div class="fld" style="flex:1"><div class="l">From</div><div class="i">2:00 PM</div></div>
+        <div class="fld" style="flex:1"><div class="l">Until</div><div class="i">6:00 PM</div></div></div>
+      <button class="btn p">Continue</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">F1b · Where<i>Three named distances. No slider.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="step"><span>Step 2 of 4</span><span class="tr"><i style="width:50%"></i></span></div>
+      <p class="h1">How far can you go?</p><div class="sp"></div>
+      <div class="fld"><div class="l">Starting from</div><div class="i">Brickfields</div></div>
+      <div class="rc"><span><b>Walking distance</b><i>About 1 km</i></span></div>
+      <div class="rc sel"><span><b>Around my area</b><i>About 5 km</i></span><span class="tk">✓</span></div>
+      <div class="rc"><span><b>Anywhere in the city</b><i>I can travel</i></span></div>
+      <div class="sp"></div><button class="btn p">Continue</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">F1c · What kind of help<i>Same taxonomy as requests, so matching is exact.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="step"><span>Step 3 of 4</span><span class="tr"><i style="width:75%"></i></span></div>
+      <p class="h1">What can you help with?</p>
+      <p class="mut">Pick as many as you like.</p><div class="sp"></div>
+      <div class="chips" style="gap:8px">
+        <span class="chip on">Hospital or clinic</span><span class="chip on">Groceries</span>
+        <span class="chip on">Walking together</span><span class="chip on">Conversation</span>
+        <span class="chip">Bank &amp; forms</span><span class="chip">Phone help</span>
+        <span class="chip">Check-in visits</span><span class="chip">Government offices</span>
+      </div>
+      <div class="sp2"></div>
+      <p class="lb">Getting around</p>
+      <div class="chips"><span class="chip on">I have a car</span><span class="chip">Public transport</span><span class="chip">Meet at the place</span></div>
+      <div class="sp"></div><button class="btn p">Continue</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">F2 · Review<i>Reflect the setting back in words, not numbers.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="step"><span>Step 4 of 4</span><span class="tr"><i style="width:100%"></i></span></div>
+      <p class="h1">Here's what you're saying</p><div class="sp"></div>
+      <div class="card" style="border-left:4px solid var(--t9)">
+        <p class="h2">Free today, 2 PM – 6 PM</p>
+        <p class="mut">You'll hear about requests within about 5 km of Brickfields — hospital visits, groceries, walking together and conversation. You have a car.</p>
+      </div>
+      <div class="rc"><span><b>Repeat every Thursday</b><i>Until you turn it off</i></span><span style="color:var(--n5)">○</span></div>
+      <div class="sp"></div><button class="btn p">Save my availability</button>
+      <div class="note i">Nobody can contact you directly. You'll see requests and choose whether to offer.</div>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">F3 · Your availability<i>List with an immediate match count.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">When you're free</p><div class="sp"></div>
+      <div class="card" style="border-left:4px solid var(--t9)"><p class="h2">Today · 2 PM – 6 PM</p><p class="mut">Around Brickfields · 4 kinds of help</p><span class="pill pm">2 requests match</span></div>
+      <div class="card" style="border-left:4px solid var(--n3)"><p class="h2">Saturday · 9 AM – 1 PM</p><p class="mut">Around Brickfields · repeats weekly</p><span class="pill pl">No requests yet</span></div>
+      <div class="sp"></div><button class="btn p">Add another time</button>
+    </div></div></div>
+
+  </div>
+</div>
+
+<!-- ══ FLOW 5 ══ -->
+<div class="flow">
+  <div class="fh"><span class="fnum">FLOW 5</span><h2>Discovery → offer → match</h2></div>
+  <p class="fsub">Two sides of one exchange. Accessibility needs sit above the offer button, always — a volunteer who accepts and then discovers a wheelchair they can't accommodate is a failed meeting and a lost volunteer. The match screen is the peak of the whole product, and the first place amber appears.</p>
+  <div class="strip">
+
+    <div class="col"><div class="cap">G1 · Nearby requests<i>Volunteer side. Ranked by same destination, then trust, then distance.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">People near you</p><p class="mut">Matching your Thursday afternoon</p><div class="sp"></div>
+      <div class="card rq"><p class="h2">Hospital visit</p><p class="mut">Hospital Kuala Lumpur · Fri 9:30 AM<br>4.2 km · Tamil or English</p><span class="pill pl">Someone's father, 72</span></div>
+      <div class="card rq"><p class="h2">Help with groceries</p><p class="mut">Brickfields market · Today 3 PM<br>0.8 km · Any language</p></div>
+      <div class="card rq"><p class="h2">Coffee and a talk</p><p class="mut">Near KL Sentral · Today, flexible<br>1.1 km · English</p></div>
+      <button class="btn g">Change what I see</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">G3 · Request detail<i>Accessibility needs ABOVE the offer button. Non-negotiable.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Hospital visit</p>
+      <p class="mut">Friday 15 August, 9:30 AM · about 3 hours</p><div class="sp"></div>
+      <div class="card"><div class="row"><span style="color:var(--n7);min-width:74px">Where</span><span>Hospital Kuala Lumpur<br><i style="font-style:normal;color:var(--n7);font-size:.9em">4.2 km from you</i></span></div>
+        <div class="row"><span style="color:var(--n7);min-width:74px">For</span><span>A father, 72 · Tamil</span></div></div>
+      <p class="mut">"Dad has a follow-up with the cardiology clinic. He just needs someone to sit with him and help find the right counter."</p>
+      <div class="note w"><b>Before you offer:</b> he walks slowly and needs to rest along the way.</div>
+      <div class="sp"></div>
+      <button class="btn p">I can be there</button>
+      <button class="btn g">Not this one</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">G4 · Make the offer<i>Optional message. Requester sees trust facts, not a pitch.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Offer to be there</p>
+      <p class="mut">Friday 15 August, 9:30 AM at Hospital Kuala Lumpur.</p><div class="sp2"></div>
+      <div class="fld"><div class="l">Say something? <span style="text-transform:none;letter-spacing:0;font-weight:400">(optional)</span></div>
+        <div class="i foc" style="min-height:88px;align-items:flex-start;padding-top:11px;font-size:.9em;line-height:1.5">I go to HKL often and speak Tamil. Happy to walk at his pace.</div></div>
+      <div class="note i">They'll see your name, photo, area, languages, verification and the words other members have used about you.</div>
+      <div class="sp"></div><button class="btn p">Send my offer</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">G8 · Someone answered ★★<i>The peak. Deep teal, Sisi completes, amber's first appearance. One CTA.</i></div>
+    <div class="ph"><div class="st" style="color:#95E4E2"><span>9:41</span><span>▮▮</span></div><div class="sc teal">
+      <div class="ctr" style="padding:18px 0 4px"><svg width="96" height="66" viewBox="0 0 100 72"><rect x="20" y="14" width="24" height="46" rx="12" fill="#FAF9F7"/><rect x="56" y="14" width="24" height="46" rx="12" fill="#E8A13C"/></svg></div>
+      <p class="h1 ctr" style="color:#fff">Kumar can be there.</p>
+      <p class="mut ctr" style="font-size:.85em">"I go to HKL often and speak Tamil. Happy to walk at his pace."</p>
+      <div class="panel">
+        <div style="margin-bottom:9px"><span class="pill pv" style="margin:0">✓ Identity verified</span></div>
+        <div class="kv"><span>Teman Moments</span><b>12 completed</b></div>
+        <div class="kv"><span>Member since</span><b>Dec 2025</b></div>
+        <div class="kv"><span>Speaks</span><b>Tamil, English</b></div>
+        <div class="kv"><span>Lives around</span><b>Brickfields</b></div>
+        <div class="chips"><span class="chip dk">Patient</span><span class="chip dk">Kind</span><span class="chip dk">Reliable</span></div>
+      </div>
+      <p class="mut" style="font-size:.76em;margin:10px 0">Dad's address and phone stay hidden until you both accept.</p>
+      <button class="btn cn">Accept Kumar</button>
+      <button class="btn gl">See his full profile</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">H1 · Matched<i>Both accepted. Details unlock here, and the reveal is logged.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="ctr" style="padding:18px 0 4px"><svg width="88" height="62" viewBox="0 0 100 72"><rect x="20" y="14" width="24" height="46" rx="12" fill="#0A4D4A"/><rect x="56" y="14" width="24" height="46" rx="12" fill="#E8A13C"/></svg></div>
+      <p class="h1 ctr">Dad has a Teman for Friday</p>
+      <div class="card"><div class="row"><span style="color:var(--n7);min-width:74px">Who</span><span><b>Kumar</b> · Tamil, English</span></div>
+        <div class="row"><span style="color:var(--n7);min-width:74px">When</span><span>Friday 15 Aug, 9:30 AM</span></div>
+        <div class="row"><span style="color:var(--n7);min-width:74px">Where</span><span>HKL main entrance, Jalan Pahang</span></div>
+        <div class="row"><span style="color:var(--n7);min-width:74px">Phone</span><span>+60 12 •••• 4471</span></div></div>
+      <button class="btn p">Message Kumar</button>
+      <button class="btn g">Confirm the meeting point</button>
+      <div class="note i">We'll remind you both on Thursday, and again an hour before.</div>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">H5 · Messages<i>Scoped to the request. Not a general inbox.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div style="border-bottom:1px solid var(--n2);padding-bottom:8px;margin-bottom:10px"><p class="h2">Kumar</p><p class="mut" style="font-size:.8em">Hospital visit · Friday 9:30 AM</p></div>
+      <div class="msg them">Hello. I'll wait at the main entrance from 9:20.</div>
+      <div class="msg me">Thank you Kumar. Dad wears a blue cap, he's quite short.</div>
+      <div class="msg them">Noted. Does he need a wheelchair inside?</div>
+      <div class="msg me">No, but slowly is better. He'll tell you when he needs to sit.</div>
+      <div class="chips" style="margin-top:10px"><span class="chip">On my way</span><span class="chip">I'm here</span><span class="chip">Running late</span></div>
+      <div class="fld" style="margin-top:9px"><div class="i ph">Write a message</div></div>
+    </div></div></div>
+
+  </div>
+</div>
+
+<!-- ══ FLOW 6 ══ -->
+<div class="flow">
+  <div class="fh"><span class="fnum">FLOW 6</span><h2>Session &amp; safety</h2></div>
+  <p class="fsub">Ships before any real-world meeting, including a supervised one. Safety help carries its own red, sits 20 px clear of everything else, and is never mistaken for a normal action. Live location is stated honestly as foreground-only, because a PWA cannot track in the background and implying otherwise would be a lie about someone's safety.</p>
+  <div class="strip">
+
+    <div class="col"><div class="cap">I1 · Before you meet<i>Two hours before. Checklist plus trusted-contact share.</i></div>
+    <div class="ph"><div class="st"><span>7:30</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Dad meets Kumar in 2 hours</p><div class="sp"></div>
+      <div class="card"><div class="row"><span style="color:var(--n7);min-width:70px">Where</span><span>HKL main entrance</span></div>
+        <div class="row"><span style="color:var(--n7);min-width:70px">When</span><span>9:30 AM</span></div>
+        <div class="row"><span style="color:var(--n7);min-width:70px">Look for</span><span>Kumar, grey shirt, glasses</span></div></div>
+      <p class="lb">Before it starts</p>
+      <div class="rc sel"><span><b>Meena has been told</b><i>Dad's trusted contact</i></span><span class="tk">✓</span></div>
+      <div class="rc sel"><span><b>You'll get updates</b><i>Start, arrival, and when it ends</i></span><span class="tk">✓</span></div>
+      <div class="sp"></div><button class="btn p">Message Kumar</button>
+      <button class="btn g">Something's changed — cancel</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">I3 · Start together<i>Both confirm. Neither side can start alone.</i></div>
+    <div class="ph"><div class="st"><span>9:28</span><span>▮▮</span></div><div class="sc">
+      <div class="ctr" style="padding:22px 0 6px"><svg width="92" height="64" viewBox="0 0 100 72"><rect x="20" y="14" width="24" height="46" rx="12" fill="#0A4D4A"/><rect x="56" y="14" width="24" height="46" rx="12" fill="#E8A13C"/></svg></div>
+      <p class="h1 ctr">Kumar has arrived</p>
+      <p class="mut ctr">At the main entrance, just now.</p>
+      <div class="sp2"></div>
+      <div class="note i">Starting lets Meena and you know they're together. It also starts the safety features.</div>
+      <div class="sp"></div>
+      <button class="btn p">Start the Teman session</button>
+      <button class="btn g">They haven't met yet</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">I4 · Session live<i>Safety help in its own red, 20 px clear of the other two actions.</i></div>
+    <div class="ph"><div class="st"><span>10:12</span><span>▮▮</span></div><div class="sc">
+      <div class="ctr" style="padding:14px 0 2px"><svg width="80" height="56" viewBox="0 0 100 72"><rect x="20" y="14" width="24" height="46" rx="12" fill="#0A4D4A"/><rect x="56" y="14" width="24" height="46" rx="12" fill="#E8A13C"/><rect x="38" y="30" width="24" height="8" rx="4" fill="#126D6A"/></svg></div>
+      <p class="lb ctr" style="margin-bottom:2px">Together since</p>
+      <p class="tm ctr" style="color:var(--t9)">9:34 AM</p>
+      <p class="mut ctr" style="font-size:.82em">Dad and Kumar · Hospital Kuala Lumpur</p>
+      <div class="card" style="margin-top:12px"><p class="lb">Who has been told</p>
+        <div class="row"><span style="color:var(--ok);font-weight:700">✓</span><span>You</span></div>
+        <div class="row"><span style="color:var(--ok);font-weight:700">✓</span><span>Meena — trusted contact</span></div>
+        <div class="row"><span style="color:var(--n4);font-weight:700">○</span><span>Live location — off · <a href="#" style="color:var(--t9);font-weight:600">Turn on</a></span></div></div>
+      <button class="btn p">Message Kumar</button>
+      <button class="btn g">End this session</button>
+      <div style="height:8px"></div>
+      <button class="btn dg">Safety help</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">I6 · Safety sheet<i>Four large options. Emergency services first and unambiguous.</i></div>
+    <div class="ph"><div class="st"><span>10:14</span><span>▮▮</span></div><div class="sc" style="background:#fff">
+      <p class="h1">Safety help</p>
+      <p class="mut">Choose what you need. Nothing here tells Kumar you opened this.</p><div class="sp2"></div>
+      <button class="btn" style="background:var(--ers);color:#fff;font-weight:700;text-align:left;padding-left:1em">Call 999 now<br><span style="font-weight:400;font-size:.8em;opacity:.9">Police, ambulance, fire</span></button>
+      <button class="btn g" style="text-align:left;padding-left:1em"><b>Alert Meena</b><br><span style="font-weight:400;font-size:.82em;color:var(--n7)">Sends her a message and the location</span></button>
+      <button class="btn g" style="text-align:left;padding-left:1em"><b>Share location now</b><br><span style="font-weight:400;font-size:.82em;color:var(--n7)">With you and Meena</span></button>
+      <button class="btn g" style="text-align:left;padding-left:1em"><b>Report what's happening</b><br><span style="font-weight:400;font-size:.82em;color:var(--n7)">Reviewed by a person, quickly</span></button>
+      <button class="btn g">Close</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">I8 · Ended<i>Both confirm. Trusted contacts told it ended safely.</i></div>
+    <div class="ph"><div class="st"><span>12:41</span><span>▮▮</span></div><div class="sc">
+      <div class="ctr" style="padding:22px 0 6px"><svg width="86" height="60" viewBox="0 0 100 72"><rect x="20" y="14" width="24" height="46" rx="12" fill="#0A4D4A"/><rect x="56" y="14" width="24" height="46" rx="12" fill="#E8A13C"/><rect x="38" y="30" width="24" height="8" rx="4" fill="#126D6A"/></svg></div>
+      <p class="h1 ctr">The session has ended</p>
+      <p class="mut ctr">3 hours 7 minutes at Hospital Kuala Lumpur.</p>
+      <div class="sp2"></div>
+      <div class="card"><div class="row"><span style="color:var(--ok);font-weight:700">✓</span><span>Meena has been told it ended safely</span></div></div>
+      <div class="sp"></div><button class="btn p">Tell us how it went</button>
+      <button class="btn g">Later</button>
+    </div></div></div>
+
+  </div>
+</div>
+
+<!-- ══ FLOW 7 ══ -->
+<div class="flow">
+  <div class="fh"><span class="fnum">FLOW 7</span><h2>Feedback &amp; the honest failure</h2></div>
+  <p class="fsub">Descriptors are public; the safety questions are not, and a "no" opens a case rather than lowering a number. The last two screens are the unmatched path — the state every product hides. Showing it honestly is what an NGO will judge you on.</p>
+  <div class="strip">
+
+    <div class="col"><div class="cap">J1 · How was it<i>Words, never stars. Multi-select, nothing required.</i></div>
+    <div class="ph"><div class="st"><span>12:44</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">How was Kumar?</p>
+      <p class="mut">Pick any words that fit. Other members will see these.</p><div class="sp2"></div>
+      <div class="chips" style="gap:8px">
+        <span class="chip on">Kind</span><span class="chip on">Patient</span><span class="chip">Reliable</span>
+        <span class="chip on">Good listener</span><span class="chip">Helpful</span><span class="chip">Respectful</span>
+      </div>
+      <div class="sp2"></div>
+      <div class="fld"><div class="l">Anything else? <span style="text-transform:none;letter-spacing:0;font-weight:400">(optional)</span></div>
+        <div class="i ph" style="min-height:76px;align-items:flex-start;padding-top:11px">Only you and Kumar see this</div></div>
+      <button class="btn p">Continue</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">J2 · Private questions<i>Marked private. A "no" opens a case, never a score.</i></div>
+    <div class="ph"><div class="st"><span>12:45</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Two private questions</p>
+      <div class="note i">Kumar never sees these answers, and they never appear on anyone's profile.</div>
+      <div class="sp2"></div>
+      <p class="lb">Did Dad feel safe?</p>
+      <div style="display:flex;gap:9px;margin-bottom:14px"><button class="btn" style="flex:1;margin:0;background:var(--t0);border:2.5px solid var(--t9);color:var(--t9)">Yes</button><button class="btn g" style="flex:1;margin:0">No</button></div>
+      <p class="lb">Would you ask Kumar again?</p>
+      <div style="display:flex;gap:9px"><button class="btn" style="flex:1;margin:0;background:var(--t0);border:2.5px solid var(--t9);color:var(--t9)">Yes</button><button class="btn g" style="flex:1;margin:0">No</button></div>
+      <div class="sp2"></div><button class="btn p">Send</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">J3 · Teman Moment ★<i>Sisi complete. The only badge the product gives.</i></div>
+    <div class="ph"><div class="st" style="color:#95E4E2"><span>12:46</span><span>▮▮</span></div><div class="sc teal">
+      <div class="ctr" style="padding:34px 0 8px"><svg width="112" height="78" viewBox="0 0 100 72"><rect x="20" y="14" width="24" height="46" rx="12" fill="#EDCA97"/><rect x="56" y="14" width="24" height="46" rx="12" fill="#EDCA97"/><rect x="38" y="30" width="24" height="8" rx="4" fill="#EDCA97"/></svg></div>
+      <p class="h1 ctr" style="color:#fff">That was a Teman Moment.</p>
+      <p class="mut ctr">Dad didn't go alone on Friday. Thank you for arranging it.</p>
+      <div class="sp2"></div>
+      <div class="panel"><div class="kv"><span>Dad's Teman Moments</span><b>4</b></div><div class="kv"><span>Kumar's</span><b>13</b></div></div>
+      <div class="sp2"></div>
+      <button class="btn cn">Add Kumar to Dad's Temans</button>
+      <button class="btn gl">Ask Kumar every month?</button>
+      <button class="btn gl">Done</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">E14 · No one could come<i>Sent Thursday evening, before the appointment — not on the morning.</i></div>
+    <div class="ph"><div class="st"><span>18:02</span><span>▮▮</span></div><div class="sc">
+      <div class="ctr" style="padding:20px 0 6px"><svg width="82" height="58" viewBox="0 0 100 72"><rect x="20" y="14" width="24" height="46" rx="12" fill="#D3CEC4"/><rect x="56" y="14" width="24" height="46" rx="12" fill="none" stroke="#B8B2A7" stroke-width="2.5" stroke-dasharray="5 5"/></svg></div>
+      <p class="h1 ctr">No one could make Friday</p>
+      <div class="card warn"><p class="mut" style="color:var(--wa)">Only 4 Temans are active around Brickfields at the moment, and none are free on Friday morning. We're sorry — we know this isn't what you needed.</p></div>
+      <div class="sp"></div>
+      <p class="lb">What you could try</p>
+      <button class="btn g" style="text-align:left;padding-left:1em"><b>Try a different time</b><br><span style="font-weight:400;font-size:.82em;color:var(--n7)">Friday afternoon has 2 people free</span></button>
+      <button class="btn g" style="text-align:left;padding-left:1em"><b>Community centres nearby</b><br><span style="font-weight:400;font-size:.82em;color:var(--n7)">3 in Brickfields offer escort help</span></button>
+      <button class="btn g">Keep looking anyway</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">B5 · Notifications<i>The unglamorous surface. Sisi carries state at 24 px; no counters, no streaks.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Notifications</p><div class="sp"></div>
+      <div class="card" style="display:flex;gap:10px;align-items:flex-start">
+        <svg width="24" height="24" viewBox="0 0 92 92" style="flex:0 0 24px;margin-top:2px"><rect width="92" height="92" rx="21" fill="#0A4D4A"/><rect x="24" y="24" width="17" height="44" rx="8.5" fill="#FAF9F7"/><rect x="51" y="24" width="17" height="44" rx="8.5" fill="#E8A13C"/></svg>
+        <div><p style="font-weight:600;font-size:.92em;line-height:1.35">Kumar has arrived at the meeting point.</p><p class="mut" style="font-size:.79em;margin-top:2px">Hospital Kuala Lumpur · just now</p></div></div>
+      <div class="card" style="display:flex;gap:10px;align-items:flex-start">
+        <svg width="24" height="24" viewBox="0 0 92 92" style="flex:0 0 24px;margin-top:2px"><rect width="92" height="92" rx="21" fill="#E8E6E1"/><rect x="24" y="24" width="17" height="44" rx="8.5" fill="#857F72"/><rect x="51" y="24" width="17" height="44" rx="8.5" fill="none" stroke="#857F72" stroke-width="4" stroke-dasharray="7 7"/></svg>
+        <div><p style="font-weight:600;font-size:.92em;line-height:1.35">Your Friday request is still looking.</p><p class="mut" style="font-size:.79em;margin-top:2px">We'll keep asking until Thursday evening</p></div></div>
+      <div class="card" style="display:flex;gap:10px;align-items:flex-start">
+        <svg width="24" height="24" viewBox="0 0 92 92" style="flex:0 0 24px;margin-top:2px"><rect width="92" height="92" rx="21" fill="#0A4D4A"/><rect x="24" y="24" width="17" height="44" rx="8.5" fill="#EDCA97"/><rect x="51" y="24" width="17" height="44" rx="8.5" fill="#EDCA97"/></svg>
+        <div><p style="font-weight:600;font-size:.92em;line-height:1.35">The Teman session ended safely.</p><p class="mut" style="font-size:.79em;margin-top:2px">Yesterday, 12:41 PM</p></div></div>
+    </div></div></div>
+
+  </div>
+</div>
+
+</div>
+
+<footer><div class="wrap">
+  <svg width="176" height="46" viewBox="0 0 180 46" aria-label="Teman"><rect x="4" y="8" width="12" height="30" rx="6" fill="#FAF9F7"/><rect x="22" y="8" width="12" height="30" rx="6" fill="#E8A13C"/><text x="46" y="34" font-family="Vollkorn,Georgia,serif" font-size="32" font-weight="700" fill="#FFFFFF">Teman</text></svg>
+  <p style="font-family:var(--serif);font-size:22px;font-weight:600;color:#fff;margin:12px 0 6px">Batch 1 of 3 — the demo path, end to end</p>
+  <p style="font-size:15px">Next: profiles, care recipients, relationships and community · then admin and the public site.</p>
+</div></footer>
+
+<script>
+document.querySelectorAll('[data-fs]').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.sc').forEach(s=>s.style.setProperty('--fs',b.dataset.fs+'px'));
+  document.querySelectorAll('[data-fs]').forEach(x=>x.setAttribute('aria-pressed',x===b));
+});
+</script>
+</body>
+</html>

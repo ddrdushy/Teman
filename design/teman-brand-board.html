@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teman — Brand & UI System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Vollkorn:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* ── Neutral: Warm Grey (the majority of every screen) ── */
+  --n-900:#27241D; --n-800:#423D33; --n-700:#504A40; --n-600:#625D52;
+  --n-500:#857F72; --n-400:#A39E93; --n-300:#B8B2A7; --n-200:#D3CEC4;
+  --n-100:#E8E6E1; --n-050:#FAF9F7;
+
+  /* ── Primary: Teal (dependable, calm, culturally neutral) ── */
+  --t-900:#0A4D4A; --t-800:#126D6A; --t-700:#1B8380; --t-600:#269C98;
+  --t-500:#32B3AF; --t-300:#6BD1CE; --t-200:#95E4E2; --t-100:#C7F5F3; --t-050:#E8FCFB;
+
+  /* ── Signature: Amber — CONNECTION ONLY ── */
+  --a-700:#895811; --a-600:#AD6F17; --a-500:#CF8318; --a-400:#E8A13C; --a-300:#EDCA97;
+
+  /* ── Semantic: a separate, deliberate decision ── */
+  --ok-text:#0E5814;   --ok-fill:#E3F9E5;
+  --err-text:#780A0A;  --err-fill:#FFEEEE;  --err-strong:#911111;
+  --warn-text:#7C5E10; --warn-fill:#FFFAEB;
+  --info-text:#334E68; --info-fill:#F0F4F8;
+
+  --r-card:14px; --r-btn:12px; --r-pill:999px;
+  --sh-1:0 1px 2px rgba(39,36,29,.06), 0 2px 8px rgba(39,36,29,.05);
+  --sh-2:0 8px 28px rgba(10,77,74,.16);
+  --sans:"Source Sans 3",system-ui,"Noto Sans",sans-serif;
+  --serif:"Vollkorn",Georgia,serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--n-100);color:var(--n-900);font:400 17px/1.55 var(--sans)}
+h1,h2,h3,h4{font-family:var(--serif);margin:0;letter-spacing:-.005em}
+p{margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+/* ── page header ── */
+.masthead{background:var(--t-900);color:#fff;padding:56px 0 48px}
+.masthead .eyebrow{font:600 15px/1.4 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--a-300)}
+.masthead h1{font-size:52px;line-height:1.1;font-weight:700;margin:14px 0 10px}
+.masthead .tag{font-family:var(--serif);font-style:italic;font-size:22px;color:var(--t-100)}
+.masthead .lede{margin-top:20px;max-width:56ch;color:#DCEFEE;font-size:18px}
+
+section{padding:52px 0;border-top:1px solid var(--n-200)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px;flex-wrap:wrap}
+.sec-num{font:600 14px/1 var(--sans);letter-spacing:.1em;color:var(--t-700);background:var(--t-050);border:1px solid var(--t-100);padding:7px 10px;border-radius:var(--r-pill)}
+.sec-head h2{font-size:31px;font-weight:600}
+.sec-sub{color:var(--n-600);max-width:64ch;margin-bottom:28px;font-size:17px}
+
+.card{background:#fff;border:1px solid var(--n-200);border-radius:var(--r-card);box-shadow:var(--sh-1)}
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:860px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+.lbl{font:600 14px/1.3 var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--n-600)}
+
+/* ── personality table ── */
+.trait{padding:20px 22px}
+.trait h4{font-size:22px;font-weight:600;margin-bottom:12px}
+.trait .row{display:flex;gap:10px;align-items:flex-start;padding:7px 0;font-size:16px}
+.trait .row b{flex:0 0 118px;font:600 14px/1.5 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--n-500)}
+.sounds{color:var(--t-800);font-weight:600}
+.never{color:var(--n-500);text-decoration:line-through;text-decoration-color:var(--n-300)}
+
+/* ── swatches ── */
+.scale{display:flex;border-radius:10px;overflow:hidden;border:1px solid var(--n-200)}
+.scale div{flex:1;height:56px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;font:600 11px var(--sans)}
+.role{padding:20px 22px}
+.role .why{color:var(--n-600);font-size:16px;margin:10px 0 14px}
+.usage{display:inline-block;font:600 13px var(--sans);letter-spacing:.05em;text-transform:uppercase;padding:5px 10px;border-radius:var(--r-pill);background:var(--n-100);color:var(--n-700)}
+
+table{width:100%;border-collapse:collapse;font-size:16px}
+th{text-align:left;font:600 13px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--n-600);padding:11px 14px;border-bottom:2px solid var(--n-200);white-space:nowrap}
+td{padding:12px 14px;border-bottom:1px solid var(--n-100);vertical-align:middle}
+.tbl-wrap{overflow-x:auto;background:#fff;border:1px solid var(--n-200);border-radius:var(--r-card)}
+.pass{color:var(--ok-text);background:var(--ok-fill);font:600 13px var(--sans);padding:4px 9px;border-radius:var(--r-pill);white-space:nowrap}
+.cond{color:var(--warn-text);background:var(--warn-fill);font:600 13px var(--sans);padding:4px 9px;border-radius:var(--r-pill);white-space:nowrap}
+.no{color:var(--err-text);background:var(--err-fill);font:600 13px var(--sans);padding:4px 9px;border-radius:var(--r-pill);white-space:nowrap}
+.chip{display:inline-block;width:22px;height:22px;border-radius:6px;vertical-align:-5px;margin-right:8px;border:1px solid rgba(39,36,29,.14)}
+code{font:600 15px ui-monospace,Menlo,monospace;background:var(--n-100);padding:2px 6px;border-radius:5px}
+
+/* ── SISI motif ── */
+.sisi-demo{padding:26px 22px;text-align:center}
+.sisi-demo h4{font-size:19px;font-weight:600;margin-bottom:4px}
+.sisi-demo p{color:var(--n-600);font-size:15px;margin-top:6px}
+.sisi-stage{background:var(--n-050);border-radius:12px;padding:22px 0;margin-bottom:14px;border:1px solid var(--n-100)}
+.sisi-stage.dark{background:var(--t-900);border-color:var(--t-800)}
+
+/* ── phone screens ── */
+.phones{display:flex;gap:26px;overflow-x:auto;padding:6px 2px 22px}
+.phone-col{flex:0 0 auto;width:322px}
+.phone-cap{font:600 14px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--t-900);margin-bottom:10px}
+.phone-cap span{display:block;text-transform:none;letter-spacing:0;font-weight:400;color:var(--n-600);font-size:15px;margin-top:3px}
+.phone{width:322px;height:660px;background:var(--n-050);border:9px solid var(--n-900);border-radius:38px;overflow:hidden;box-shadow:var(--sh-2);position:relative;display:flex;flex-direction:column}
+.status{height:26px;flex:0 0 26px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font:600 12px var(--sans);color:var(--n-600)}
+.screen{flex:1;overflow-y:auto;padding:6px 18px 22px}
+.screen.teal{background:var(--t-900);color:#fff}
+.navbar{flex:0 0 60px;border-top:1px solid var(--n-200);background:#fff;display:flex;align-items:center;justify-content:space-around;padding-bottom:2px}
+.nav-i{display:flex;flex-direction:column;align-items:center;gap:3px;font:600 12px var(--sans);color:var(--n-500);min-width:52px}
+.nav-i.on{color:var(--t-800)}
+.nav-dot{width:22px;height:22px;border-radius:7px;background:var(--n-200)}
+.nav-i.on .nav-dot{background:var(--t-800)}
+
+.greet{font-family:var(--serif);font-size:26px;font-weight:600;margin:12px 0 2px}
+.greet+p{color:var(--n-600);font-size:15px;margin-bottom:16px}
+
+.big-act{display:flex;align-items:center;gap:14px;width:100%;text-align:left;border:0;cursor:pointer;
+  background:var(--t-800);color:#fff;padding:18px 18px;border-radius:var(--r-btn);
+  font:600 19px/1.2 var(--sans);margin-bottom:10px;min-height:64px;box-shadow:var(--sh-1);
+  transition:background .15s ease, transform .1s ease}
+.big-act small{display:block;font:400 14px/1.35 var(--sans);color:#CFEAE9;margin-top:3px}
+.big-act:hover{background:var(--t-900)}
+.big-act:active{transform:scale(.985)}
+.big-act:focus-visible{outline:3px solid var(--a-400);outline-offset:3px}
+.big-act.ghost{background:#fff;color:var(--n-900);border:1.5px solid var(--n-200)}
+.big-act.ghost small{color:var(--n-600)}
+.big-act.ghost:hover{background:var(--n-050);border-color:var(--t-300)}
+
+.around{background:#fff;border:1px solid var(--n-200);border-radius:var(--r-card);padding:14px 16px;margin:20px 0 14px}
+.around .lbl{font-size:12px;margin-bottom:10px}
+.around .line{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:16px;border-bottom:1px solid var(--n-100)}
+.around .line:last-child{border:0}
+.around .n{font:700 18px var(--sans);color:var(--t-800);min-width:20px}
+
+.rq{background:#fff;border:1px solid var(--n-200);border-left:4px solid var(--a-400);border-radius:var(--r-card);padding:15px 16px;margin-bottom:12px}
+.rq h5{font-family:var(--serif);font-size:19px;font-weight:600;margin:0 0 3px}
+.rq .meta{color:var(--n-600);font-size:15px}
+.status-pill{display:inline-flex;align-items:center;gap:6px;font:600 13px var(--sans);padding:5px 11px;border-radius:var(--r-pill);margin-top:11px;letter-spacing:.02em}
+.sp-look{background:var(--warn-fill);color:var(--warn-text)}
+.sp-match{background:var(--ok-fill);color:var(--ok-text)}
+.sp-live{background:var(--t-050);color:var(--t-900)}
+
+.h-scr{font-family:var(--serif);font-size:23px;font-weight:600;line-height:1.25;margin:16px 0 6px}
+.sub-scr{color:var(--n-600);font-size:15.5px;line-height:1.5}
+.screen.teal .sub-scr{color:var(--t-100)}
+.screen.teal .h-scr{color:#fff}
+
+.trust{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:var(--r-card);padding:15px 16px;margin-top:16px}
+.trust .t-row{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:7px 0;font-size:15px;border-bottom:1px solid rgba(255,255,255,.1)}
+.trust .t-row span:first-child{flex:0 0 auto;white-space:nowrap}
+.trust .t-row:last-child{border:0}
+.trust .t-row span:first-child{color:var(--t-100)}
+.trust .t-row b{font-weight:600;color:#fff;text-align:right}
+.badge-v{display:inline-flex;align-items:center;gap:6px;background:var(--a-400);color:var(--n-900);font:700 13px var(--sans);padding:5px 11px;border-radius:var(--r-pill)}
+.words{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.word{font:600 13.5px var(--sans);padding:6px 12px;border-radius:var(--r-pill);background:rgba(237,202,151,.16);color:#EFDEC5;border:1px solid rgba(237,202,151,.34)}
+
+.cta{display:block;width:100%;border:0;cursor:pointer;border-radius:var(--r-btn);
+  font:600 18px var(--sans);padding:17px;min-height:56px;transition:background .15s,transform .1s}
+.cta-amber{background:var(--a-400);color:var(--n-900)}
+.cta-amber:hover{background:var(--a-500);color:#fff}
+.cta-amber:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.cta-teal{background:var(--t-800);color:#fff}
+.cta-teal:hover{background:var(--t-900)}
+.cta-ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.4);margin-top:9px}
+.cta-ghost:hover{background:rgba(255,255,255,.09)}
+.cta-line{background:#fff;color:var(--n-800);border:1.5px solid var(--n-200);margin-top:9px}
+.cta-line:hover{background:var(--n-050)}
+.cta:active{transform:scale(.985)}
+.cta:disabled{background:var(--n-200);color:var(--n-500);cursor:not-allowed;transform:none}
+
+.sos{width:100%;border:0;cursor:pointer;background:var(--err-fill);color:var(--err-strong);
+  border:1.5px solid #F5C6C6;border-radius:var(--r-btn);font:700 17px var(--sans);padding:16px;min-height:56px;margin-top:10px}
+.sos:hover{background:var(--err-strong);color:#fff;border-color:var(--err-strong)}
+
+.note{background:var(--info-fill);border:1px solid #D5E0EA;border-radius:11px;padding:13px 15px;font-size:15px;color:var(--info-text);margin-top:14px;line-height:1.5}
+.empty{text-align:center;padding:26px 14px;background:#fff;border:1px dashed var(--n-300);border-radius:var(--r-card)}
+.empty h5{font-family:var(--serif);font-size:19px;font-weight:600;margin:14px 0 6px}
+.empty p{color:var(--n-600);font-size:15px;line-height:1.5}
+
+.timer{font-family:var(--serif);font-size:40px;font-weight:600;letter-spacing:-.01em}
+
+/* ── components row ── */
+.comp{padding:20px 22px}
+.comp h4{font-size:18px;font-weight:600;margin-bottom:4px}
+.comp .cnote{color:var(--n-600);font-size:15px;margin-bottom:16px}
+.state-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.demo-btn{font:600 16px var(--sans);padding:13px 20px;border-radius:var(--r-btn);border:0;min-height:48px;cursor:pointer}
+.st-lbl{font:600 12px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--n-500);display:block;margin-bottom:5px}
+
+.rule{padding:18px 20px;border-left:4px solid var(--t-700);background:#fff;border-radius:0 var(--r-card) var(--r-card) 0;border-top:1px solid var(--n-200);border-right:1px solid var(--n-200);border-bottom:1px solid var(--n-200)}
+.rule.stop{border-left-color:var(--err-strong)}
+.rule h4{font-size:17px;font-weight:600;margin-bottom:5px}
+.rule p{color:var(--n-600);font-size:15.5px;line-height:1.5}
+
+footer{background:var(--t-900);color:var(--t-100);padding:44px 0;text-align:center}
+footer .m{font-family:var(--serif);font-size:26px;font-weight:600;color:#fff;margin:14px 0 8px}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Brand &amp; UI System — v1</div>
+    <h1>Teman</h1>
+    <div class="tag">No one should have to go alone.</div>
+    <p class="lede">The design foundation for a free, community companionship platform. Every colour, type and component decision below traces back to one of five product principles — human first, free companionship, dignity, safety before growth, simple enough for elderly users.</p>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- 01 STRATEGY -->
+<section>
+  <div class="sec-head"><span class="sec-num">01</span><h2>Brand strategy</h2></div>
+  <p class="sec-sub">Decided once, checked against constantly. If a future feature can't be justified against these, it doesn't ship.</p>
+  <div class="grid g2">
+    <div class="card role">
+      <div class="lbl">Purpose</div>
+      <p style="font-family:var(--serif);font-size:21px;line-height:1.4;margin-top:10px">Teman exists so that no one in a neighbourhood has to face an appointment, an errand or an afternoon alone when someone nearby has time to spare.</p>
+    </div>
+    <div class="card role">
+      <div class="lbl">Essence — 2 words</div>
+      <p style="font-family:var(--serif);font-size:34px;font-weight:700;color:var(--t-800);margin:12px 0 10px">Quiet Presence</p>
+      <p class="why">Not "care", not "help", not "service". Presence is the thing being offered, and quiet is how it should feel — a platform that gets people together and then gets out of the way.</p>
+    </div>
+  </div>
+
+  <div class="grid g2" style="margin-top:18px">
+    <div class="card role">
+      <div class="lbl">Differentiator</div>
+      <p class="why" style="margin-bottom:0">Every comparable product sells a task being completed. Teman's unit of value is a person being <em>beside</em> someone — unpaid, unrated, unranked.</p>
+    </div>
+    <div class="card role">
+      <div class="lbl">Narrative</div>
+      <p class="why" style="margin-bottom:0">Loneliness in a city is rarely a logistics problem. People can usually get to the hospital; what they can't do is walk in without anyone waiting for them to come out. Meanwhile the same neighbourhood is full of people with two free hours and no obvious way to give them away. Teman is the shortest possible bridge between those two facts — and its success is measured by how quickly people leave the app to meet in real life.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 PERSONALITY -->
+<section>
+  <div class="sec-head"><span class="sec-num">02</span><h2>Personality</h2></div>
+  <p class="sec-sub">Four traits, each defined from both sides. The "never sounds like" column is the useful half — it's what settles arguments about button copy, error messages and notification tone later.</p>
+  <div class="grid g2">
+    <div class="card trait">
+      <h4>Warm</h4>
+      <div class="row"><b>Sounds like</b><span class="sounds">neighbourly, unhurried, kind</span></div>
+      <div class="row"><b>Never like</b><span class="never">sentimental, pitying, saccharine</span></div>
+    </div>
+    <div class="card trait">
+      <h4>Dignified</h4>
+      <div class="row"><b>Sounds like</b><span class="sounds">respectful, equal, plain</span></div>
+      <div class="row"><b>Never like</b><span class="never">charitable, patronising, clinical</span></div>
+    </div>
+    <div class="card trait">
+      <h4>Dependable</h4>
+      <div class="row"><b>Sounds like</b><span class="sounds">clear, specific, steady</span></div>
+      <div class="row"><b>Never like</b><span class="never">vague, over-promising, breezy</span></div>
+    </div>
+    <div class="card trait">
+      <h4>Quiet</h4>
+      <div class="row"><b>Sounds like</b><span class="sounds">calm, brief, unshowy</span></div>
+      <div class="row"><b>Never like</b><span class="never">urgent, gamified, attention-seeking</span></div>
+    </div>
+  </div>
+  <div class="grid g2" style="margin-top:18px">
+    <div class="rule"><h4>Say "Find a Teman"</h4><p>Never "request a volunteer" or "get assistance". The person asking is a neighbour, not a case.</p></div>
+    <div class="rule stop"><h4>Never celebrate a streak</h4><p>No badges for volume, no leaderboards, no "you're on fire". Kindness is not a score — Section 20 of the scope makes this a product rule, so it's a brand rule too.</p></div>
+  </div>
+</section>
+
+<!-- 03 SISI -->
+<section>
+  <div class="sec-head"><span class="sec-num">03</span><h2>Sisi — the signature motif</h2></div>
+  <p class="sec-sub"><em>Di sisi</em> is Malay for "by your side". Sisi is two presence forms standing together: you, solid — and the space beside you. That space is dashed and empty when no one has answered yet, and fills with amber the moment someone does. It is the logo, the request state, the notification icon and the completion badge, all one shape. The brand mark literally completes itself at the moment the product works.</p>
+
+  <div class="grid g4">
+    <div class="card sisi-demo">
+      <div class="sisi-stage">
+        <svg width="100" height="72" viewBox="0 0 100 72" aria-hidden="true">
+          <rect x="20" y="14" width="24" height="46" rx="12" fill="#0A4D4A"/>
+          <rect x="56" y="14" width="24" height="46" rx="12" fill="none" stroke="#B8B2A7" stroke-width="2.5" stroke-dasharray="5 5"/>
+        </svg>
+      </div>
+      <h4>Waiting</h4><p>Request published, no one yet.</p>
+    </div>
+    <div class="card sisi-demo">
+      <div class="sisi-stage">
+        <svg width="100" height="72" viewBox="0 0 100 72" aria-hidden="true">
+          <rect x="20" y="14" width="24" height="46" rx="12" fill="#0A4D4A"/>
+          <rect x="56" y="14" width="24" height="46" rx="12" fill="#E8A13C"/>
+        </svg>
+      </div>
+      <h4>Someone answered</h4><p>Amber's first appearance in a flow.</p>
+    </div>
+    <div class="card sisi-demo">
+      <div class="sisi-stage">
+        <svg width="100" height="72" viewBox="0 0 100 72" aria-hidden="true">
+          <rect x="20" y="14" width="24" height="46" rx="12" fill="#0A4D4A"/>
+          <rect x="56" y="14" width="24" height="46" rx="12" fill="#E8A13C"/>
+          <rect x="38" y="30" width="24" height="8" rx="4" fill="#126D6A"/>
+        </svg>
+      </div>
+      <h4>Together</h4><p>Session live — the two are joined.</p>
+    </div>
+    <div class="card sisi-demo">
+      <div class="sisi-stage dark">
+        <svg width="100" height="72" viewBox="0 0 100 72" aria-hidden="true">
+          <rect x="20" y="14" width="24" height="46" rx="12" fill="#EDCA97"/>
+          <rect x="56" y="14" width="24" height="46" rx="12" fill="#EDCA97"/>
+          <rect x="38" y="30" width="24" height="8" rx="4" fill="#EDCA97"/>
+        </svg>
+      </div>
+      <h4>Teman Moment</h4><p>Completed. The only badge the product gives.</p>
+    </div>
+  </div>
+
+  <div class="grid g3" style="margin-top:18px">
+    <div class="card sisi-demo">
+      <div class="sisi-stage dark" style="padding:26px 0">
+        <svg width="92" height="92" viewBox="0 0 92 92" aria-hidden="true">
+          <rect width="92" height="92" rx="21" fill="#0A4D4A"/>
+          <rect x="24" y="24" width="17" height="44" rx="8.5" fill="#FAF9F7"/>
+          <rect x="51" y="24" width="17" height="44" rx="8.5" fill="#E8A13C"/>
+        </svg>
+      </div>
+      <h4>App icon</h4><p>Always the answered state — an invitation, not a vacancy. Minimum 24&nbsp;px.</p>
+    </div>
+    <div class="card sisi-demo">
+      <div class="sisi-stage" style="padding:30px 0">
+        <svg width="180" height="46" viewBox="0 0 180 46" aria-hidden="true">
+          <rect x="4" y="8" width="12" height="30" rx="6" fill="#0A4D4A"/>
+          <rect x="22" y="8" width="12" height="30" rx="6" fill="#E8A13C"/>
+          <text x="46" y="34" font-family="Vollkorn,Georgia,serif" font-size="32" font-weight="700" fill="#0A4D4A">Teman</text>
+        </svg>
+      </div>
+      <h4>Primary lockup</h4><p>Mark + wordmark, top-left by default. Clear space = one bar width on all sides.</p>
+    </div>
+    <div class="card sisi-demo">
+      <div class="sisi-stage" style="padding:30px 0">
+        <svg width="180" height="46" viewBox="0 0 180 46" aria-hidden="true">
+          <rect x="4" y="8" width="12" height="30" rx="6" fill="#0A4D4A"/>
+          <rect x="22" y="8" width="12" height="30" rx="6" fill="none" stroke="#A39E93" stroke-width="2" stroke-dasharray="4 4"/>
+          <text x="46" y="34" font-family="Vollkorn,Georgia,serif" font-size="32" font-weight="700" fill="#0A4D4A">Teman</text>
+        </svg>
+      </div>
+      <h4>Waiting lockup — restricted</h4><p>Splash and empty states only. Never on partner or NGO co-branded material.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 COLOR -->
+<section>
+  <div class="sec-head"><span class="sec-num">04</span><h2>Colour</h2></div>
+  <p class="sec-sub">Two directions were rejected deliberately. Clinical blue reads as a hospital system and makes the product feel medical, which Section 5 explicitly says it is not. Charity orange reads as "you are receiving aid" and breaks the dignity principle outright. Teal is calm and dependable without either association, and carries no religious coding — which matters on a platform serving Malay, Chinese and Indian communities in one feed.</p>
+
+  <div class="grid g3">
+    <div class="card role">
+      <div class="lbl">Primary — Teal</div>
+      <div class="scale" style="margin:12px 0">
+        <div style="background:#0A4D4A;color:#fff">900</div><div style="background:#126D6A;color:#fff">800</div>
+        <div style="background:#1B8380;color:#fff">700</div><div style="background:#269C98;color:#fff">600</div>
+        <div style="background:#32B3AF;color:#27241D">500</div><div style="background:#6BD1CE;color:#27241D">300</div>
+        <div style="background:#C7F5F3;color:#27241D">100</div><div style="background:#E8FCFB;color:#27241D">50</div>
+      </div>
+      <p class="why">Dependability. Every primary action, active nav state, and the deep panels behind moments that matter. <code>800</code> is the default button, <code>900</code> its hover and every full-bleed surface.</p>
+      <span class="usage">Roughly 20% of a screen</span>
+    </div>
+
+    <div class="card role">
+      <div class="lbl">Neutral — Warm Grey</div>
+      <div class="scale" style="margin:12px 0">
+        <div style="background:#27241D;color:#fff">900</div><div style="background:#504A40;color:#fff">700</div>
+        <div style="background:#625D52;color:#fff">600</div><div style="background:#857F72;color:#fff">500</div>
+        <div style="background:#B8B2A7;color:#27241D">300</div><div style="background:#D3CEC4;color:#27241D">200</div>
+        <div style="background:#E8E6E1;color:#27241D">100</div><div style="background:#FAF9F7;color:#27241D">50</div>
+      </div>
+      <p class="why">Warm undertone, never cold grey — the app should feel like paper, not a dashboard. <code>50</code> is every app background, <code>900</code> all body text, <code>200</code> all borders.</p>
+      <span class="usage">Roughly 75% of a screen</span>
+    </div>
+
+    <div class="card role">
+      <div class="lbl">Signature — Amber</div>
+      <div class="scale" style="margin:12px 0">
+        <div style="background:#895811;color:#fff">700</div><div style="background:#AD6F17;color:#fff">600</div>
+        <div style="background:#CF8318;color:#fff">500</div><div style="background:#E8A13C;color:#27241D">400</div>
+        <div style="background:#EDCA97;color:#27241D">300</div>
+      </div>
+      <p class="why"><strong>Connection only.</strong> Amber marks that a human being has answered — a match, a live session, a completed Teman Moment. It appears nowhere else, so when it appears it means something. Never a warning, never decoration, never a background field.</p>
+      <span class="usage">Under 5% — one moment per screen</span>
+    </div>
+  </div>
+
+  <h3 style="font-size:21px;font-weight:600;margin:34px 0 6px">Semantic colours — a separate decision</h3>
+  <p class="sec-sub">Deliberately kept off the brand palette. Amber is the reason: if amber also meant "warning", a match notification and a failed verification would look alike. Semantic colour is a small independent system.</p>
+  <div class="grid g4">
+    <div class="card role" style="padding:16px 18px"><div class="lbl">Success / Completed</div><p class="why" style="margin:8px 0 10px">Session ended safely, verification passed.</p><span class="pass"><span class="chip" style="background:#0E5814"></span>#0E5814 on #E3F9E5</span></div>
+    <div class="card role" style="padding:16px 18px"><div class="lbl">Error / Safety</div><p class="why" style="margin:8px 0 10px">SOS, reports, blocked accounts. Deepest weight in the system.</p><span class="no"><span class="chip" style="background:#911111"></span>#780A0A on #FFEEEE</span></div>
+    <div class="card role" style="padding:16px 18px"><div class="lbl">Waiting / Attention</div><p class="why" style="margin:8px 0 10px">Still looking, verification pending. Olive-yellow, kept far from amber.</p><span class="cond"><span class="chip" style="background:#7C5E10"></span>#7C5E10 on #FFFAEB</span></div>
+    <div class="card role" style="padding:16px 18px"><div class="lbl">Information</div><p class="why" style="margin:8px 0 10px">Privacy notes, safety guidance, "what happens next".</p><span class="pass" style="background:#F0F4F8;color:#334E68"><span class="chip" style="background:#334E68"></span>#334E68 on #F0F4F8</span></div>
+  </div>
+
+  <h3 style="font-size:21px;font-weight:600;margin:34px 0 6px">Approved combinations</h3>
+  <p class="sec-sub">Computed, not estimated. Elderly users are the primary audience, so body text targets AAA where reachable rather than settling at AA.</p>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Foreground</th><th>Background</th><th>Ratio</th><th>Verdict</th><th>Approved for</th></tr></thead>
+    <tbody>
+      <tr><td><span class="chip" style="background:#27241D"></span>Neutral 900</td><td>Neutral 50</td><td>14.71</td><td><span class="pass">AAA</span></td><td>All body text, headings</td></tr>
+      <tr><td><span class="chip" style="background:#504A40"></span>Neutral 700</td><td>Neutral 50</td><td>8.33</td><td><span class="pass">AAA</span></td><td>Secondary text</td></tr>
+      <tr><td><span class="chip" style="background:#625D52"></span>Neutral 600</td><td>Neutral 50</td><td>6.22</td><td><span class="pass">AA</span></td><td>Captions, metadata</td></tr>
+      <tr><td><span class="chip" style="background:#857F72"></span>Neutral 500</td><td>Neutral 50</td><td>3.78</td><td><span class="cond">Large only</span></td><td>Disabled states — never body text</td></tr>
+      <tr><td><span class="chip" style="background:#FFFFFF"></span>White</td><td>Teal 800</td><td>6.14</td><td><span class="pass">AA</span></td><td>Primary button label</td></tr>
+      <tr><td><span class="chip" style="background:#FFFFFF"></span>White</td><td>Teal 900</td><td>9.66</td><td><span class="pass">AAA</span></td><td>All deep-panel text</td></tr>
+      <tr><td><span class="chip" style="background:#126D6A"></span>Teal 800</td><td>Neutral 50</td><td>5.83</td><td><span class="pass">AA</span></td><td>Links, active nav, numerals</td></tr>
+      <tr><td><span class="chip" style="background:#27241D"></span>Neutral 900</td><td>Amber 400</td><td>7.07</td><td><span class="pass">AAA</span></td><td>Accept button, verified badge</td></tr>
+      <tr><td><span class="chip" style="background:#EDCA97"></span>Amber 300</td><td>Teal 900</td><td>6.21</td><td><span class="pass">AA</span></td><td>Amber text on deep panels</td></tr>
+      <tr><td><span class="chip" style="background:#E8A13C"></span>Amber 400</td><td>Teal 900</td><td>4.41</td><td><span class="cond">Shapes only</span></td><td>Sisi fill, icons — never text</td></tr>
+      <tr><td><span class="chip" style="background:#CF8318"></span>Amber 500</td><td>Neutral 50</td><td>2.89</td><td><span class="no">Fails</span></td><td>Never. Use Amber 700 for amber text on light.</td></tr>
+      <tr><td><span class="chip" style="background:#895811"></span>Amber 700</td><td>Neutral 50</td><td>5.76</td><td><span class="pass">AA</span></td><td>Amber text on light backgrounds</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- 05 TYPE -->
+<section>
+  <div class="sec-head"><span class="sec-num">05</span><h2>Typography</h2></div>
+  <p class="sec-sub">Vollkorn for anything a person is being addressed by — names, requests, moments. It's a sturdy low-contrast humanist serif built for reading, not a fashion serif, so it stays legible at 72 and reads as a handwritten neighbourhood note rather than a software product. Source Sans 3 carries every functional surface: labels, buttons, forms, metadata. Both are open-source, which matters for a platform with no revenue, and both sit alongside Noto for Tamil and Chinese without a visual break.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Role</th><th>Face / weight</th><th>Size</th><th>Leading</th><th>Used for</th></tr></thead>
+    <tbody>
+      <tr><td><span style="font-family:var(--serif);font-size:30px;font-weight:700">Display</span></td><td>Vollkorn 700</td><td>34 px</td><td>1.20</td><td>One hero moment per flow only</td></tr>
+      <tr><td><span style="font-family:var(--serif);font-size:24px;font-weight:600">Headline</span></td><td>Vollkorn 600</td><td>25 px</td><td>1.25</td><td>Screen titles, a Teman's name</td></tr>
+      <tr><td><span style="font-family:var(--serif);font-size:19px;font-weight:600">Card title</span></td><td>Vollkorn 600</td><td>19 px</td><td>1.30</td><td>Request cards, profile cards</td></tr>
+      <tr><td><span style="font-weight:600;font-size:20px">Subhead</span></td><td>Source Sans 600</td><td>20 px</td><td>1.35</td><td>Section headers within a screen</td></tr>
+      <tr><td><span style="font-size:17px">Body</span></td><td>Source Sans 400</td><td><strong>17 px</strong></td><td>1.55</td><td>All reading text. 17 not 16 — the audience is older.</td></tr>
+      <tr><td><span style="font-weight:600;font-size:18px">Button</span></td><td>Source Sans 600</td><td>18 px</td><td>1.20</td><td>Every tappable label</td></tr>
+      <tr><td><span style="font:600 14px/1.3 var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--n-600)">Label</span></td><td>Source Sans 600 · +0.07em</td><td>14 px</td><td>1.30</td><td>Field labels, section eyebrows</td></tr>
+      <tr><td><span style="font-size:15px;color:var(--n-600)">Caption</span></td><td>Source Sans 400</td><td>15 px</td><td>1.45</td><td>Metadata, timestamps. Floor for any text.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="grid g3" style="margin-top:18px">
+    <div class="rule"><h4>Measure: 30–40 characters</h4><p>Mobile body copy never runs edge to edge. Minimum 18&nbsp;px side padding on every screen.</p></div>
+    <div class="rule"><h4>Two levels, not six</h4><p>Headline and body. A caption is the practical third. Desktop H1–H6 ladders don't survive a phone.</p></div>
+    <div class="rule"><h4>Never below 15&nbsp;px — one exception</h4><p>No smaller text for legal copy, timestamps or disclaimers; if it doesn't fit at 15, cut words. The single exception is the bottom navigation label at 12&nbsp;px, which is always paired with an icon and never carries information on its own.</p></div>
+  </div>
+</section>
+
+<!-- 06 SCREENS -->
+<section>
+  <div class="sec-head"><span class="sec-num">06</span><h2>The system on real screens</h2></div>
+  <p class="sec-sub">Four screens from the hospital journey in Section 50 of the scope — Dushy arranging a Teman for his father. Note where amber appears and where it stays absent.</p>
+
+  <div class="phones">
+
+    <!-- HOME -->
+    <div class="phone-col">
+      <div class="phone-cap">Home <span>Three actions, one decision. Amber appears nowhere — nothing is connected yet.</span></div>
+      <div class="phone">
+        <div class="status"><span>9:41</span><span>▮▮▮</span></div>
+        <div class="screen">
+          <p class="greet">Good morning, Dushy</p>
+          <p>Thursday, 13 August</p>
+
+          <button class="big-act">
+            <svg width="26" height="30" viewBox="0 0 34 40" aria-hidden="true"><rect x="2" y="5" width="12" height="30" rx="6" fill="#fff"/><rect x="20" y="5" width="12" height="30" rx="6" fill="none" stroke="#95E4E2" stroke-width="2" stroke-dasharray="4 4"/></svg>
+            <span>Need a Teman<small>For you or someone you care for</small></span>
+          </button>
+
+          <button class="big-act ghost">
+            <svg width="26" height="30" viewBox="0 0 34 40" aria-hidden="true"><rect x="2" y="5" width="12" height="30" rx="6" fill="#126D6A"/><circle cx="26" cy="20" r="5" fill="#B8B2A7"/></svg>
+            <span>I'm available<small>Tell your area when you're free</small></span>
+          </button>
+
+          <button class="big-act ghost">
+            <svg width="26" height="30" viewBox="0 0 34 40" aria-hidden="true"><rect x="2" y="5" width="12" height="30" rx="6" fill="#126D6A"/><path d="M20 20h11m0 0-4-4m4 4-4 4" stroke="#B8B2A7" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+            <span>Going somewhere?<small>Someone may be heading there too</small></span>
+          </button>
+
+          <div class="around">
+            <div class="lbl">Around Brickfields today</div>
+            <div class="line"><span class="n">3</span><span>people need a Teman</span></div>
+            <div class="line"><span class="n">4</span><span>Temans free this afternoon</span></div>
+            <div class="line"><span class="n">1</span><span>hospital visit matches your Friday</span></div>
+          </div>
+
+          <div class="lbl" style="margin:18px 0 9px">Your next Teman</div>
+          <div class="rq" style="border-left-color:var(--n-200)">
+            <h5>Hospital visit — Dad</h5>
+            <p class="meta">Hospital Kuala Lumpur · Friday, 9:30 AM</p>
+            <span class="status-pill sp-look">◷ Still looking</span>
+          </div>
+        </div>
+        <div class="navbar">
+          <div class="nav-i on"><div class="nav-dot"></div>Home</div>
+          <div class="nav-i"><div class="nav-dot"></div>Requests</div>
+          <div class="nav-i"><div class="nav-dot"></div>Messages</div>
+          <div class="nav-i"><div class="nav-dot"></div>You</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEARCHING -->
+    <div class="phone-col">
+      <div class="phone-cap">Looking <span>The honest waiting state. Sisi sits unfilled and the app says exactly what happens if no one comes.</span></div>
+      <div class="phone">
+        <div class="status"><span>9:41</span><span>▮▮▮</span></div>
+        <div class="screen">
+          <div style="text-align:center;padding:26px 0 6px">
+            <svg width="118" height="80" viewBox="0 0 100 72" aria-hidden="true">
+              <rect x="20" y="14" width="24" height="46" rx="12" fill="#0A4D4A"/>
+              <rect x="56" y="14" width="24" height="46" rx="12" fill="none" stroke="#B8B2A7" stroke-width="2.5" stroke-dasharray="5 5"/>
+            </svg>
+          </div>
+          <h3 class="h-scr" style="text-align:center">Looking for someone near Brickfields</h3>
+          <p class="sub-scr" style="text-align:center">Asked 6 Temans so far. Most requests find someone within a day.</p>
+
+          <div class="rq" style="margin-top:22px">
+            <h5>Hospital visit</h5>
+            <p class="meta">Hospital Kuala Lumpur<br>Friday, 9:30 AM · about 3 hours</p>
+            <p class="meta" style="margin-top:9px;color:var(--n-700)">For Dad — Siva, 72 · Tamil preferred · walks slowly, needs rests</p>
+            <span class="status-pill sp-look">◷ Still looking</span>
+          </div>
+
+          <div class="note"><strong>If no one answers by Thursday evening</strong>, we'll tell you and suggest what else you can try. You won't be left guessing on the morning.</div>
+
+          <button class="cta cta-line" style="margin-top:16px">Ask Dad's trusted Temans first</button>
+          <button class="cta cta-line">Edit this request</button>
+        </div>
+        <div class="navbar">
+          <div class="nav-i"><div class="nav-dot"></div>Home</div>
+          <div class="nav-i on"><div class="nav-dot"></div>Requests</div>
+          <div class="nav-i"><div class="nav-dot"></div>Messages</div>
+          <div class="nav-i"><div class="nav-dot"></div>You</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MATCHED -->
+    <div class="phone-col">
+      <div class="phone-cap">Someone answered <span>The Peak moment. Deep teal, one amber CTA, trust facts — no star rating anywhere.</span></div>
+      <div class="phone">
+        <div class="status" style="color:#95E4E2"><span>9:41</span><span>▮▮▮</span></div>
+        <div class="screen teal">
+          <div style="text-align:center;padding:24px 0 4px">
+            <svg width="118" height="80" viewBox="0 0 100 72" aria-hidden="true">
+              <rect x="20" y="14" width="24" height="46" rx="12" fill="#FAF9F7"/>
+              <rect x="56" y="14" width="24" height="46" rx="12" fill="#E8A13C"/>
+            </svg>
+          </div>
+          <h3 class="h-scr" style="text-align:center;font-size:26px">Kumar can be there.</h3>
+          <p class="sub-scr" style="text-align:center">He's offered to accompany Dad on Friday morning.</p>
+
+          <div class="trust">
+            <div style="margin-bottom:12px"><span class="badge-v">✓ Identity verified</span></div>
+            <div class="t-row"><span>Teman Moments</span><b>12 completed</b></div>
+            <div class="t-row"><span>Member since</span><b>December 2025</b></div>
+            <div class="t-row"><span>Speaks</span><b>Tamil, English, Malay</b></div>
+            <div class="t-row"><span>Lives around</span><b>Brickfields</b></div>
+            <div class="t-row"><span>Getting there</span><b>Own car, can drive</b></div>
+            <div class="words">
+              <span class="word">Patient</span><span class="word">Kind</span>
+              <span class="word">Reliable</span><span class="word">Good listener</span>
+            </div>
+          </div>
+
+          <p class="sub-scr" style="margin:16px 0 14px;font-size:14.5px">Dad's exact address and phone number stay hidden until you both accept.</p>
+
+          <button class="cta cta-amber">Accept Kumar</button>
+          <button class="cta cta-ghost">See Kumar's full profile</button>
+          <button class="cta cta-ghost">Not this time</button>
+        </div>
+        <div class="navbar">
+          <div class="nav-i"><div class="nav-dot"></div>Home</div>
+          <div class="nav-i on"><div class="nav-dot"></div>Requests</div>
+          <div class="nav-i"><div class="nav-dot"></div>Messages</div>
+          <div class="nav-i"><div class="nav-dot"></div>You</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIVE SESSION -->
+    <div class="phone-col">
+      <div class="phone-cap">Session live <span>Safety is a distinct colour and always thumb-reachable. Never amber, never teal.</span></div>
+      <div class="phone">
+        <div class="status"><span>10:12</span><span>▮▮▮</span></div>
+        <div class="screen">
+          <div style="text-align:center;padding:20px 0 2px">
+            <svg width="104" height="72" viewBox="0 0 100 72" aria-hidden="true">
+              <rect x="20" y="14" width="24" height="46" rx="12" fill="#0A4D4A"/>
+              <rect x="56" y="14" width="24" height="46" rx="12" fill="#E8A13C"/>
+              <rect x="38" y="30" width="24" height="8" rx="4" fill="#126D6A"/>
+            </svg>
+          </div>
+          <p style="text-align:center" class="lbl">Together since</p>
+          <p class="timer" style="text-align:center;color:var(--t-900);margin:2px 0 4px">10:04 AM</p>
+          <p style="text-align:center;color:var(--n-600);font-size:15px">Dad and Kumar · Hospital Kuala Lumpur</p>
+
+          <div class="around" style="margin-top:20px">
+            <div class="lbl" style="font-size:12px;margin-bottom:10px">Who has been told</div>
+            <div class="line"><span style="color:var(--ok-text);font-weight:700">✓</span><span>You — as Dad's caregiver</span></div>
+            <div class="line"><span style="color:var(--ok-text);font-weight:700">✓</span><span>Meena — Dad's trusted contact</span></div>
+            <div class="line"><span style="color:var(--n-400);font-weight:700">○</span><span>Live location — off. <a href="#" style="color:var(--t-800);font-weight:600">Turn on</a></span></div>
+          </div>
+
+          <button class="cta cta-teal" style="margin-top:16px">Message Kumar</button>
+          <button class="cta cta-line">End this Teman session</button>
+          <button class="sos">Safety help</button>
+          <div class="note" style="font-size:14.5px">Teman is not an emergency service. In a real emergency call <strong>999</strong> first.</div>
+        </div>
+        <div class="navbar">
+          <div class="nav-i"><div class="nav-dot"></div>Home</div>
+          <div class="nav-i on"><div class="nav-dot"></div>Requests</div>
+          <div class="nav-i"><div class="nav-dot"></div>Messages</div>
+          <div class="nav-i"><div class="nav-dot"></div>You</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 07 COMPONENTS -->
+<section>
+  <div class="sec-head"><span class="sec-num">07</span><h2>Components &amp; states</h2></div>
+  <p class="sec-sub">Every tap target is at least 56&nbsp;px tall — above the 44&nbsp;px floor, because the primary audience includes people with unsteady hands. Focus rings are visible and never removed.</p>
+
+  <div class="grid g2">
+    <div class="card comp">
+      <h4>Primary action</h4>
+      <p class="cnote">Teal. One per screen. The label says what happens, not "Submit".</p>
+      <div class="state-row">
+        <div><span class="st-lbl">Default</span><button class="demo-btn" style="background:#126D6A;color:#fff">Publish request</button></div>
+        <div><span class="st-lbl">Hover</span><button class="demo-btn" style="background:#0A4D4A;color:#fff">Publish request</button></div>
+        <div><span class="st-lbl">Focus</span><button class="demo-btn" style="background:#126D6A;color:#fff;outline:3px solid #E8A13C;outline-offset:3px">Publish request</button></div>
+        <div><span class="st-lbl">Disabled</span><button class="demo-btn" style="background:#D3CEC4;color:#857F72" disabled>Publish request</button></div>
+      </div>
+    </div>
+
+    <div class="card comp">
+      <h4>Connection action</h4>
+      <p class="cnote">Amber. Only ever on accepting or completing a person — never on a generic form.</p>
+      <div class="state-row">
+        <div><span class="st-lbl">Default</span><button class="demo-btn" style="background:#E8A13C;color:#27241D">Accept Kumar</button></div>
+        <div><span class="st-lbl">Hover</span><button class="demo-btn" style="background:#CF8318;color:#fff">Accept Kumar</button></div>
+        <div><span class="st-lbl">Focus</span><button class="demo-btn" style="background:#E8A13C;color:#27241D;outline:3px solid #0A4D4A;outline-offset:3px">Accept Kumar</button></div>
+        <div><span class="st-lbl">Pressed</span><button class="demo-btn" style="background:#AD6F17;color:#fff;transform:scale(.97)">Accept Kumar</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid g3" style="margin-top:18px">
+    <div class="card comp">
+      <h4>Empty state</h4>
+      <p class="cnote">An invitation, never a blank screen.</p>
+      <div class="empty">
+        <svg width="76" height="54" viewBox="0 0 100 72" aria-hidden="true">
+          <rect x="20" y="14" width="24" height="46" rx="12" fill="#D3CEC4"/>
+          <rect x="56" y="14" width="24" height="46" rx="12" fill="none" stroke="#B8B2A7" stroke-width="2.5" stroke-dasharray="5 5"/>
+        </svg>
+        <h5>No requests yet</h5>
+        <p>When you or someone you care for needs company, this is where it will live.</p>
+        <button class="cta cta-teal" style="margin-top:14px;font-size:16px;padding:14px">Create your first request</button>
+      </div>
+    </div>
+
+    <div class="card comp">
+      <h4>Unmatched — the honest one</h4>
+      <p class="cnote">The state most products hide. Teman names it and offers a route out.</p>
+      <div style="background:var(--warn-fill);border:1px solid #F0E2BC;border-radius:var(--r-card);padding:16px">
+        <p style="font-family:var(--serif);font-size:19px;font-weight:600;margin-bottom:7px">No one could make Friday</p>
+        <p style="font-size:15.5px;color:var(--warn-text);line-height:1.5">Only 4 Temans are active in Brickfields right now, and none are free that morning. We're sorry.</p>
+        <button class="cta cta-line" style="font-size:16px;padding:13px">Try a different time</button>
+        <button class="cta cta-line" style="font-size:16px;padding:13px">See community centres nearby</button>
+      </div>
+    </div>
+
+    <div class="card comp">
+      <h4>Notification</h4>
+      <p class="cnote">Helpful, never engagement-bait. Sisi carries the state at 24&nbsp;px.</p>
+      <div style="background:#fff;border:1px solid var(--n-200);border-radius:var(--r-card);padding:14px;display:flex;gap:12px;align-items:flex-start;box-shadow:var(--sh-1)">
+        <svg width="26" height="26" viewBox="0 0 92 92" style="flex:0 0 26px;margin-top:2px" aria-hidden="true"><rect width="92" height="92" rx="21" fill="#0A4D4A"/><rect x="24" y="24" width="17" height="44" rx="8.5" fill="#FAF9F7"/><rect x="51" y="24" width="17" height="44" rx="8.5" fill="#E8A13C"/></svg>
+        <div>
+          <p style="font-weight:600;font-size:16px">Kumar has arrived at the meeting point.</p>
+          <p style="color:var(--n-600);font-size:14.5px;margin-top:3px">Hospital Kuala Lumpur · just now</p>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--n-200);border-radius:var(--r-card);padding:14px;display:flex;gap:12px;align-items:flex-start;margin-top:10px;box-shadow:var(--sh-1)">
+        <svg width="26" height="26" viewBox="0 0 92 92" style="flex:0 0 26px;margin-top:2px" aria-hidden="true"><rect width="92" height="92" rx="21" fill="#E8E6E1"/><rect x="24" y="24" width="17" height="44" rx="8.5" fill="#857F72"/><rect x="51" y="24" width="17" height="44" rx="8.5" fill="none" stroke="#857F72" stroke-width="4" stroke-dasharray="7 7"/></svg>
+        <div>
+          <p style="font-weight:600;font-size:16px">Your Friday request is still looking.</p>
+          <p style="color:var(--n-600);font-size:14.5px;margin-top:3px">We'll keep asking until Thursday evening.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 RULES -->
+<section>
+  <div class="sec-head"><span class="sec-num">08</span><h2>The rules that keep it Teman</h2></div>
+  <p class="sec-sub">A design system holds under deadline pressure only if the prohibitions are specific. These are the ones that matter.</p>
+  <div class="grid g2">
+    <div class="rule stop"><h4>Amber never means anything but connection</h4><p>Not a warning, not a highlight, not a decorative gradient, not an empty-state illustration. The instant amber appears somewhere without a person attached, it stops meaning anything.</p></div>
+    <div class="rule stop"><h4>No star ratings, ever</h4><p>Trust is shown as verification status, count of completed Teman Moments, tenure, and descriptive words. A 4.6★ turns a neighbour into a gig worker.</p></div>
+    <div class="rule stop"><h4>Safety colour is never reused</h4><p>Deep red belongs to SOS, reports and blocks alone. It never marks a delete button, a form error, or an overdue item.</p></div>
+    <div class="rule stop"><h4>No countdown timers or scarcity</h4><p>"3 Temans left!" is conversion psychology aimed at people who are already anxious. Nothing in this product should create urgency it didn't find.</p></div>
+    <div class="rule"><h4>Two people on screen means Sisi is present</h4><p>Any surface showing a match, a session or a completion carries the motif. Consistency is what turns a shape into a mark.</p></div>
+    <div class="rule"><h4>Everything is written to be read aloud</h4><p>A caregiver will read these screens to a parent. If a sentence sounds strange spoken, it's wrong — and it has to survive translation into Malay, Tamil and Mandarin without losing warmth.</p></div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <svg width="200" height="52" viewBox="0 0 180 46" aria-label="Teman">
+      <rect x="4" y="8" width="12" height="30" rx="6" fill="#FAF9F7"/>
+      <rect x="22" y="8" width="12" height="30" rx="6" fill="#E8A13C"/>
+      <text x="46" y="34" font-family="Vollkorn,Georgia,serif" font-size="32" font-weight="700" fill="#FFFFFF">Teman</text>
+    </svg>
+    <p class="m">No one should have to go alone.</p>
+    <p style="font-size:16px">I need someone. &nbsp;·&nbsp; I can be there.</p>
+  </div>
+</footer>
+
+</body>
+</html>

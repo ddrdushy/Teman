@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teman — Components &amp; Screens · Batch 2</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Vollkorn:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+ --n9:#27241D;--n8:#423D33;--n7:#504A40;--n5:#857F72;--n4:#A39E93;--n3:#B8B2A7;--n2:#D3CEC4;--n1:#E8E6E1;--n0:#FAF9F7;
+ --t9:#0A4D4A;--t8:#126D6A;--t1:#C7F5F3;--t0:#E8FCFB;
+ --a4:#E8A13C;--a3:#EDCA97;--a7:#895811;
+ --ok:#0E5814;--okf:#E3F9E5;--er:#780A0A;--ers:#911111;--erf:#FFEEEE;
+ --wa:#5E480E;--waf:#FFFAEB;--in:#334E68;--inf:#F0F4F8;
+ --sans:"Source Sans 3",system-ui,sans-serif;--serif:"Vollkorn",Georgia,serif;
+ --rc:14px;--rb:12px;
+ --ez:cubic-bezier(.22,.61,.36,1);   /* ease-out — never linear */
+ --fast:140ms; --base:200ms;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--n1);color:var(--n9);font:400 17px/1.55 var(--sans)}
+h1,h2,h3{font-family:var(--serif);margin:0}
+p{margin:0}
+.wrap{max-width:1340px;margin:0 auto;padding:0 24px}
+.mast{background:var(--t9);color:#fff;padding:44px 0 38px}
+.mast .eb{font:600 14px var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--a3)}
+.mast h1{font-size:40px;font-weight:700;margin:10px 0 12px}
+.mast p{max-width:64ch;color:#DCEFEE;font-size:17px}
+.bar{position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid var(--n5);padding:12px 0}
+.bar .wrap{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bar b{font:600 13px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--n7)}
+.bar button{font:600 15px var(--sans);padding:9px 14px;min-height:44px;border-radius:10px;border:1.5px solid var(--n5);background:#fff;cursor:pointer;transition:background var(--fast) var(--ez)}
+.bar button[aria-pressed=true]{background:var(--t9);color:#fff;border-color:var(--t9)}
+.bar button:focus-visible{outline:3px solid var(--a4);outline-offset:2px}
+
+.flow{padding:44px 0;border-top:1px solid var(--n2)}
+.fh{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.fnum{font:600 13px var(--sans);letter-spacing:.1em;color:var(--t9);background:var(--t0);border:1px solid var(--t1);padding:6px 10px;border-radius:999px}
+.fh h2{font-size:28px;font-weight:600}
+.fsub{color:var(--n7);max-width:72ch;margin-bottom:24px}
+.strip{display:flex;gap:16px;overflow-x:auto;padding:6px 2px 22px;align-items:flex-start}
+.col{flex:0 0 auto;width:298px}
+.cap{font:600 12px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--t9);margin-bottom:3px}
+.cap i{display:block;font:400 14px var(--sans);color:var(--n7);text-transform:none;letter-spacing:0;font-style:normal;margin-top:3px;line-height:1.45}
+.arrow{flex:0 0 auto;align-self:center;color:var(--n5);font-size:22px;margin-top:120px}
+.ph{width:298px;height:612px;background:var(--n0);border:8px solid var(--n9);border-radius:34px;overflow:hidden;
+ box-shadow:0 8px 24px rgba(10,77,74,.15);display:flex;flex-direction:column;margin-top:9px;position:relative}
+.st{height:22px;flex:0 0 22px;display:flex;align-items:center;justify-content:space-between;padding:0 15px;font:600 11px var(--sans);color:var(--n7)}
+.sc{flex:1;overflow-y:auto;overflow-x:hidden;padding:4px 15px 14px;font-size:var(--fs,16px);line-height:1.5;scrollbar-width:thin}
+.sc.teal{background:var(--t9);color:#fff}.sc.teal .mut{color:var(--t1)}
+.nav{flex:0 0 52px;border-top:1px solid var(--n5);background:#fff;display:flex}
+.nav div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font:600 10px var(--sans);color:var(--n7)}
+.nav div.on{color:var(--t9)}
+.nav .d{width:19px;height:19px;border-radius:6px;background:var(--n3)}
+.nav div.on .d{background:var(--t9)}
+
+.h1{font-family:var(--serif);font-size:1.42em;font-weight:600;line-height:1.28;margin:10px 0 4px}
+.h2{font-family:var(--serif);font-size:1.12em;font-weight:600;line-height:1.3;margin:0 0 3px}
+.mut{color:var(--n7);font-size:.86em;line-height:1.45}
+.lb{font:600 .72em var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--n7);margin:0 0 8px}
+.sp{height:10px}.sp2{height:16px}.ctr{text-align:center}
+
+.btn{display:block;width:100%;border:0;border-radius:var(--rb);font:600 .98em var(--sans);
+ padding:.82em;min-height:56px;cursor:pointer;text-align:center;margin-bottom:9px;line-height:1.3;
+ transition:background var(--fast) var(--ez),transform var(--fast) var(--ez)}
+.btn:active{transform:scale(.98)}
+.p{background:var(--t9);color:#fff}.p:hover{background:#073735}
+.cn{background:var(--a4);color:var(--n9)}.cn:hover{background:#CF8318;color:#fff}
+.g{background:#fff;color:var(--n9);border:1.5px solid var(--n5)}.g:hover{background:var(--n0);border-color:var(--t9)}
+.gl{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.42)}
+.dg{background:var(--erf);color:var(--ers);border:1.5px solid #F0C4C4;font-weight:700}
+.btn:focus-visible{outline:3px solid var(--a4);outline-offset:3px}
+.card{background:#fff;border:1.5px solid var(--n5);border-radius:var(--rc);padding:.75em .85em;margin-bottom:10px}
+.card.warn{background:var(--waf);border-color:#EFE0B8}
+.row{display:flex;align-items:baseline;gap:9px;padding:6px 0;border-bottom:1px solid var(--n1);font-size:.9em}
+.row:last-child{border:0}
+.note{border-radius:11px;padding:.68em .8em;font-size:.82em;line-height:1.5;margin-top:11px}
+.note.i{background:var(--inf);border:1px solid #D5E0EA;color:var(--in)}
+.note.w{background:var(--waf);border:1px solid #EFE0B8;color:var(--wa)}
+.note.e{background:var(--erf);border:1px solid #F0C4C4;color:var(--er)}
+.fld{margin-bottom:12px}
+.fld .l{font:600 .74em var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--n7);margin-bottom:5px}
+.fld .i{min-height:52px;border:1.5px solid var(--n5);border-radius:var(--rb);background:#fff;display:flex;align-items:center;padding:11px 13px;font-size:.95em;overflow-wrap:anywhere;min-width:0}
+.fld .i.ph{color:var(--n5);display:block;width:100%;max-width:100%;white-space:normal}
+.fld .i.foc{border:2.5px solid var(--t9);box-shadow:0 0 0 3px rgba(232,161,60,.4)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.chip{font:600 .76em var(--sans);padding:6px 11px;border-radius:999px;border:1.5px solid var(--n5);background:#fff;transition:all var(--fast) var(--ez)}
+.chip.on{background:var(--t0);border:2px solid var(--t9);color:var(--t9)}
+.pill{display:inline-flex;align-items:center;gap:5px;font:600 .76em var(--sans);padding:5px 10px;border-radius:999px;margin-top:8px}
+.pl{background:var(--waf);color:var(--wa)}.pm{background:var(--okf);color:var(--ok)}
+.pv{background:var(--a4);color:var(--n9);font-weight:700}
+
+/* ═════ NEW COMPONENTS ═════ */
+/* 16 ListRow — the workhorse */
+.lr{display:flex;align-items:center;gap:11px;width:100%;min-height:60px;padding:.65em .8em;background:#fff;
+ border:1.5px solid var(--n5);border-radius:var(--rc);margin-bottom:8px;cursor:pointer;text-align:left;
+ transition:background var(--fast) var(--ez),border-color var(--fast) var(--ez)}
+.lr:hover{background:var(--n0);border-color:var(--t9)}
+.lr .ic{flex:0 0 34px;height:34px;border-radius:10px;background:var(--t0);display:flex;align-items:center;justify-content:center;color:var(--t9);font-weight:700;font-size:.9em}
+.lr .tx{flex:1;min-width:0}
+.lr b{display:block;font-weight:600;font-size:.95em;line-height:1.3;overflow-wrap:anywhere}
+.lr i{display:block;font-style:normal;font-size:.8em;color:var(--n7);margin-top:2px;line-height:1.4;overflow-wrap:anywhere}
+.lr .ch{flex:0 0 auto;color:var(--n5);font-size:1.2em}
+
+/* 17 Switch */
+.sw{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px;padding:.6em 0;border-bottom:1px solid var(--n1)}
+.sw:last-child{border:0}
+.sw .tx b{display:block;font-weight:600;font-size:.95em;line-height:1.3}
+.sw .tx i{display:block;font-style:normal;font-size:.8em;color:var(--n7);margin-top:2px;line-height:1.4}
+.tog{flex:0 0 76px;width:76px;height:46px;border-radius:999px;background:var(--n3);border:2px solid var(--n5);
+ position:relative;cursor:pointer;transition:background var(--base) var(--ez),border-color var(--base) var(--ez)}
+.tog:focus-visible{outline:3px solid var(--a4);outline-offset:4px}
+.tog::after{content:'';position:absolute;top:3px;left:3px;width:36px;height:36px;border-radius:50%;background:#fff;
+ box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform var(--base) var(--ez)}
+.tog[aria-checked=true]{background:var(--t9);border-color:var(--t9)}
+.tog[aria-checked=true]::after{transform:translateX(30px)}
+.tog .yn{position:absolute;top:50%;transform:translateY(-50%);font:700 10px var(--sans);letter-spacing:.04em}
+.tog .on{left:8px;color:#fff;opacity:0}
+.tog .off{right:10px;color:var(--n7);opacity:1}
+.tog .on{left:11px}
+.tog[aria-checked=true] .on{opacity:1}.tog[aria-checked=true] .off{opacity:0}
+
+/* 18 Counter */
+.cnt{display:flex;align-items:center;gap:10px}
+.cnt button{width:56px;height:56px;border-radius:var(--rb);border:1.5px solid var(--n5);background:#fff;
+ font:700 1.5em var(--sans);color:var(--t9);cursor:pointer;transition:all var(--fast) var(--ez)}
+.cnt button:hover{background:var(--t0);border-color:var(--t9)}
+.cnt .v{flex:1;text-align:center;font:700 1.3em var(--sans)}
+
+/* 19 Segmented */
+.seg{display:flex;gap:0;border:1.5px solid var(--n5);border-radius:var(--rb);overflow:hidden;background:#fff}
+.seg button{flex:1;min-height:56px;border:0;background:#fff;font:600 .9em var(--sans);color:var(--n9);cursor:pointer;
+ border-right:1.5px solid var(--n5);transition:background var(--fast) var(--ez);padding:8px 4px;line-height:1.25}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed=true]{background:var(--t9);color:#fff}
+
+/* 20 Accordion */
+.acc{border:1.5px solid var(--n5);border-radius:var(--rc);background:#fff;margin-bottom:8px;overflow:hidden}
+.acc summary{list-style:none;cursor:pointer;min-height:60px;display:flex;align-items:center;justify-content:space-between;
+ gap:10px;padding:.7em .85em;font-weight:600;font-size:.95em;line-height:1.3}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary .pm2{flex:0 0 auto;color:var(--t9);font-size:1.3em;transition:transform var(--base) var(--ez)}
+.acc[open] summary .pm2{transform:rotate(45deg)}
+.acc .bd{padding:0 .85em .85em;font-size:.87em;color:var(--n7);line-height:1.55;animation:exp var(--base) var(--ez)}
+@keyframes exp{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+
+/* 21 Avatar */
+.av{width:44px;height:44px;border-radius:50%;background:var(--t8);color:#fff;display:flex;align-items:center;
+ justify-content:center;font:700 .95em var(--sans);flex:0 0 44px}
+.av.lg{width:76px;height:76px;flex:0 0 76px;font-size:1.5em}
+.avg{display:flex}.avg .av{margin-left:-11px;border:2.5px solid var(--n0)}.avg .av:first-child{margin:0}
+
+/* 22 Toast */
+.toast{position:absolute;left:12px;right:12px;bottom:64px;background:var(--n9);color:#fff;border-radius:var(--rc);
+ padding:.75em .85em;display:flex;align-items:center;gap:11px;font-size:.86em;box-shadow:0 6px 20px rgba(0,0,0,.3);
+ animation:up 220ms var(--ez);z-index:5}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.toast b{flex:1;font-weight:400;line-height:1.4}
+.toast button{background:transparent;border:1.5px solid rgba(255,255,255,.5);color:#fff;border-radius:9px;
+ font:700 .9em var(--sans);padding:9px 13px;min-height:44px;cursor:pointer;flex:0 0 auto}
+
+/* 23 Skeleton */
+.sk{background:linear-gradient(90deg,var(--n1) 25%,var(--n2) 37%,var(--n1) 63%);background-size:400% 100%;
+ border-radius:8px;animation:shim 1.4s ease-in-out infinite}
+@keyframes shim{0%{background-position:100% 0}100%{background-position:0 0}}
+
+/* 24 ProgressRing */
+.ring{position:relative;width:76px;height:76px;flex:0 0 76px}
+.ring svg{transform:rotate(-90deg)}
+.ring .v{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:700 .95em var(--sans);color:var(--t9)}
+.ring circle.f{stroke-dasharray:207;stroke-dashoffset:62;transition:stroke-dashoffset 700ms var(--ez)}
+
+/* 25 DayPicker */
+.days{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.day{min-height:66px;border:1.5px solid var(--n5);border-radius:var(--rb);background:#fff;cursor:pointer;
+ display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;transition:all var(--fast) var(--ez)}
+.day small{font:600 .68em var(--sans);color:var(--n7);text-transform:uppercase;letter-spacing:.04em}
+.day b{font:700 1.1em var(--sans)}
+.day[aria-pressed=true]{background:var(--t9);border-color:var(--t9);color:#fff}
+.day[aria-pressed=true] small{color:var(--t1)}
+
+/* 26 Calendar */
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal .hd{font:600 .66em var(--sans);color:var(--n7);text-align:center;padding:5px 0;text-transform:uppercase}
+.cal .dt{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+ border-radius:9px;font-size:.82em;font-weight:600;position:relative;color:var(--n9)}
+.cal .dt.o{color:var(--n4);font-weight:400}
+.cal .dt.hasT::after{content:'';width:5px;height:5px;border-radius:50%;background:var(--a4);position:absolute;bottom:5px}
+.cal .dt.sel{background:var(--t9);color:#fff}
+
+/* 27 Sisi animated */
+.sisi-anim rect.wait{animation:fill 2.4s var(--ez) infinite}
+@keyframes fill{0%,42%{fill:transparent;stroke:#B8B2A7}52%,88%{fill:#E8A13C;stroke:transparent}100%{fill:transparent;stroke:#B8B2A7}}
+
+/* 28 Tick draw */
+.tick path{stroke-dasharray:26;stroke-dashoffset:26;animation:draw 520ms var(--ez) 120ms forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+/* gallery */
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:18px}
+.gc{background:#fff;border:1.5px solid var(--n5);border-radius:var(--rc);padding:18px 20px}
+.gc h4{font:600 17px var(--sans);margin:0 0 3px}
+.gc .why{color:var(--n7);font-size:14.5px;line-height:1.5;margin-bottom:14px}
+.gc .demo{background:var(--n0);border:1px solid var(--n1);border-radius:11px;padding:14px}
+footer{background:var(--t9);color:var(--t1);padding:38px 0;text-align:center;margin-top:30px}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .ring circle.f{transition:none}
+}
+</style>
+</head>
+<body>
+
+<div class="mast"><div class="wrap">
+  <div class="eb">Teman — UI · Batch 2 of 3</div>
+  <h1>More components, and motion that earns its place</h1>
+  <p>Thirteen new primitives added to the fifteen from batch 1, chosen because they remove work across many screens rather than solving one. Plus 30 screens: profiles, people you care for, account, trusted Temans, recurring companionship, circles, calendar and the safety surfaces.</p>
+</div></div>
+
+<div class="bar"><div class="wrap">
+  <b>Text size</b>
+  <button data-fs="16" aria-pressed="true">Standard</button>
+  <button data-fs="19" aria-pressed="false">Large</button>
+  <button data-fs="22" aria-pressed="false">Extra large</button>
+  <span style="flex:1"></span>
+  <span style="font-size:15px;color:var(--n7)">All motion respects <code style="background:var(--n1);padding:2px 6px;border-radius:5px;font-size:14px">prefers-reduced-motion</code>.</span>
+</div></div>
+
+<div class="wrap">
+
+<!-- MOTION POLICY -->
+<div class="flow" style="border-top:0">
+  <div class="fh"><span class="fnum">MOTION</span><h2>What animation is allowed to do here</h2></div>
+  <p class="fsub">Motion is a feedback channel, not decoration. For an audience that includes people with slower processing speed and reduced contrast sensitivity, decorative movement is noise that competes with the thing they're trying to read. Four rules, and everything below obeys them.</p>
+  <div class="gal">
+    <div class="gc"><h4>Only in response to an action</h4><p class="why">A toggle flips, a sheet rises, a toast arrives, a tick draws. Nothing moves on its own, nothing loops for atmosphere, nothing animates on scroll inside the app. The one exception is the skeleton shimmer, which is communicating "still loading".</p></div>
+    <div class="gc"><h4>140–220 ms, ease-out, never linear</h4><p class="why">Fast enough not to delay, slow enough to be seen. Linear motion reads as mechanical; <code style="font-size:13px">cubic-bezier(.22,.61,.36,1)</code> is the single curve used everywhere. Nothing is ever lengthened to show it off.</p></div>
+    <div class="gc"><h4>Never blocks, never auto-advances</h4><p class="why">No screen moves on by itself. No modal animates in and out before it's read. An action's result is visible the moment it happens, with motion layered on top rather than gating it.</p></div>
+    <div class="gc"><h4>Reduced motion removes all of it</h4><p class="why">One media query kills every animation and transition in the product, and every screen still works. If a state is only legible because of the movement into it, that state is wrong.</p></div>
+  </div>
+</div>
+
+<!-- COMPONENT GALLERY -->
+<div class="flow">
+  <div class="fh"><span class="fnum">16–28</span><h2>Thirteen new components</h2></div>
+  <p class="fsub">Each of these was added because it appears on at least four screens. ListRow alone replaces bespoke markup on about twenty. Everything is live — toggle, press, expand.</p>
+  <div class="gal">
+
+    <div class="gc"><h4>16 · ListRow</h4><p class="why">The workhorse. Any navigable row: settings, people, circles, contacts. Whole row is the target at 60 px, chevron is decorative and never the only affordance.</p>
+      <div class="demo">
+        <button class="lr"><span class="ic">K</span><span class="tx"><b>Kumar</b><i>12 Teman Moments · Brickfields</i></span><span class="ch">›</span></button>
+        <button class="lr"><span class="ic">🌐</span><span class="tx"><b>Language</b><i>English</i></span><span class="ch">›</span></button>
+      </div></div>
+
+    <div class="gc"><h4>17 · Switch</h4><p class="why">62×36 px — larger than the platform default because thumbs are imprecise. Carries ON/OFF text, so the state never rests on position and colour alone.</p>
+      <div class="demo">
+        <div class="sw"><span class="tx"><b>Tell Meena when a session starts</b><i>Dad's trusted contact</i></span>
+          <button class="tog" role="switch" aria-checked="true"><span class="yn on">ON</span><span class="yn off">OFF</span></button></div>
+        <div class="sw"><span class="tx"><b>Share live location</b><i>Only while the app is open</i></span>
+          <button class="tog" role="switch" aria-checked="false"><span class="yn on">ON</span><span class="yn off">OFF</span></button></div>
+      </div></div>
+
+    <div class="gc"><h4>18 · Counter</h4><p class="why">Replaces every numeric input and every slider. 56 px buttons, value typed by nobody. Used for duration, how many people, how many weeks.</p>
+      <div class="demo"><p class="lb">Roughly how long?</p>
+        <div class="cnt"><button data-cnt="-1">−</button><span class="v" id="cv">3 hours</span><button data-cnt="1">+</button></div></div></div>
+
+    <div class="gc"><h4>19 · Segmented</h4><p class="why">Two or three exclusive options where radio cards would waste a screen. Never more than three — beyond that it becomes a row of unreadable slivers in Tamil.</p>
+      <div class="demo"><p class="lb">Who can see this</p>
+        <div class="seg"><button aria-pressed="true">Nearby</button><button aria-pressed="false">My circles</button><button aria-pressed="false">Trusted</button></div></div></div>
+
+    <div class="gc"><h4>20 · Accordion</h4><p class="why">Guidelines, FAQ, safety, privacy. Native <code style="font-size:13px">&lt;details&gt;</code> so it works without JS and reads correctly to a screen reader. Plus rotates to a cross; content fades in over 200 ms.</p>
+      <div class="demo">
+        <details class="acc"><summary>Is Teman really free?<span class="pm2">+</span></summary><div class="bd">Yes. There are no payments between members, no subscriptions and no commissions. If anyone asks you for money, report it.</div></details>
+        <details class="acc"><summary>What happens to my MyKad photo?<span class="pm2">+</span></summary><div class="bd">One reviewer checks it, then it's deleted 90 days later. We keep only that you were verified, never the number itself.</div></details>
+      </div></div>
+
+    <div class="gc"><h4>21 · Avatar &amp; group</h4><p class="why">Initials on teal when there's no photo — never a generic silhouette, which reads as absence. The group is used for circles and trusted sets.</p>
+      <div class="demo" style="display:flex;align-items:center;gap:16px">
+        <span class="av">K</span><span class="av lg">S</span>
+        <span class="avg"><span class="av">F</span><span class="av">M</span><span class="av">K</span><span class="av" style="background:var(--n5)">+5</span></span>
+      </div></div>
+
+    <div class="gc"><h4>22 · Toast with undo</h4><p class="why">Beats a blocking confirm for reversible actions. Slides up 220 ms. Stays <b>8 seconds</b>, not the usual 3 — a toast that vanished before it was read never existed. Persistent for screen readers.</p>
+      <div class="demo" style="position:relative;height:96px;background:var(--n1)">
+        <div class="toast" style="position:absolute;bottom:10px;left:10px;right:10px"><b>Availability removed</b><button>Undo</button></div>
+      </div></div>
+
+    <div class="gc"><h4>23 · Skeleton</h4><p class="why">Grey shapes matching the eventual layout. The only looping animation in the product, because the loop <em>is</em> the message. Appears after 400 ms, never instantly — a flash of skeleton is worse than none.</p>
+      <div class="demo">
+        <div class="sk" style="height:19px;width:62%;margin-bottom:9px"></div>
+        <div class="sk" style="height:14px;width:88%;margin-bottom:7px"></div>
+        <div class="sk" style="height:14px;width:74%"></div>
+      </div></div>
+
+    <div class="gc"><h4>24 · ProgressRing</h4><p class="why">Profile completeness. Fills over 700 ms when the screen opens — the one place a small reveal is justified, because progress is the message. Always paired with the number.</p>
+      <div class="demo" style="display:flex;align-items:center;gap:16px">
+        <span class="ring"><svg width="76" height="76"><circle cx="38" cy="38" r="33" fill="none" stroke="#E8E6E1" stroke-width="8"/><circle class="f" cx="38" cy="38" r="33" fill="none" stroke="#0A4D4A" stroke-width="8" stroke-linecap="round"/></svg><span class="v">70%</span></span>
+        <div><b style="font-size:15.5px">Almost there</b><p class="why" style="margin:3px 0 0">Add a photo and your languages and you're done.</p></div>
+      </div></div>
+
+    <div class="gc"><h4>25 · DayPicker</h4><p class="why">Four big day cards before any calendar appears. Most requests are for today, tomorrow or this weekend, and a calendar grid for that is needless precision.</p>
+      <div class="demo"><div class="days">
+        <button class="day" aria-pressed="false"><small>Thu</small><b>13</b></button>
+        <button class="day" aria-pressed="true"><small>Fri</small><b>14</b></button>
+        <button class="day" aria-pressed="false"><small>Sat</small><b>15</b></button>
+        <button class="day" aria-pressed="false"><small>More</small><b>›</b></button>
+      </div></div></div>
+
+    <div class="gc"><h4>26 · Calendar</h4><p class="why">Month grid, amber dot marking a day with a Teman. Read-only in the member app — tapping opens the day's agenda rather than editing.</p>
+      <div class="demo"><div class="cal">
+        <span class="hd">M</span><span class="hd">T</span><span class="hd">W</span><span class="hd">T</span><span class="hd">F</span><span class="hd">S</span><span class="hd">S</span>
+        <span class="dt o" aria-hidden="true"></span><span class="dt o" aria-hidden="true"></span><span class="dt o" aria-hidden="true"></span><span class="dt o" aria-hidden="true"></span><span class="dt">1</span><span class="dt">2</span><span class="dt">3</span>
+        <span class="dt">4</span><span class="dt">5</span><span class="dt hasT">6</span><span class="dt">7</span><span class="dt">8</span><span class="dt">9</span><span class="dt">10</span>
+        <span class="dt">11</span><span class="dt">12</span><span class="dt sel">13</span><span class="dt hasT">14</span><span class="dt">15</span><span class="dt">16</span><span class="dt">17</span>
+        <span class="dt">18</span><span class="dt">19</span><span class="dt hasT">20</span><span class="dt">21</span><span class="dt">22</span><span class="dt">23</span><span class="dt">24</span>
+      </div></div></div>
+
+    <div class="gc"><h4>27 · Sisi, animated</h4><p class="why">The one signature motion. The dashed space fills amber — the product's whole argument in half a second. Used on the match screen and nowhere else, so it never becomes wallpaper. Looping here only to demonstrate.</p>
+      <div class="demo ctr"><svg class="sisi-anim" width="94" height="66" viewBox="0 0 100 72"><rect x="20" y="14" width="24" height="46" rx="12" fill="#0A4D4A"/><rect class="wait" x="56" y="14" width="24" height="46" rx="12" fill="transparent" stroke="#B8B2A7" stroke-width="2.5" stroke-dasharray="5 5"/></svg></div></div>
+
+    <div class="gc"><h4>28 · Tick, drawn</h4><p class="why">Confirmation moments. The stroke draws over 520 ms rather than appearing — it reads as <em>something completed</em> rather than <em>something was already true</em>. Only on completion screens.</p>
+      <div class="demo ctr"><svg class="tick" width="54" height="54" viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" fill="none" stroke="#0E5814" stroke-width="2.5"/><path d="M13 22.5l6 6 12-12" fill="none" stroke="#0E5814" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+
+  </div>
+</div>
+
+<!-- ══ FLOW 8 ══ -->
+<div class="flow">
+  <div class="fh"><span class="fnum">FLOW 8</span><h2>Profile &amp; people you care for</h2></div>
+  <p class="fsub">Completeness is shown as a checklist with a ring, never a bare percentage — a number tells you that you're incomplete, a checklist tells you what to do. The care-recipient profile is deliberately shallow: free-text notes only, no structured medical fields, because the moment those exist someone fills them in.</p>
+  <div class="strip">
+
+    <div class="col"><div class="cap">C1 · Your profile<i>ProgressRing + checklist. What's missing, not just how much.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div style="display:flex;gap:13px;align-items:center;margin:12px 0 6px">
+        <span class="ring"><svg width="76" height="76"><circle cx="38" cy="38" r="33" fill="none" stroke="#E8E6E1" stroke-width="8"/><circle class="f" cx="38" cy="38" r="33" fill="none" stroke="#0A4D4A" stroke-width="8" stroke-linecap="round"/></svg><span class="v">70%</span></span>
+        <div><p class="h2">Dushy</p><p class="mut">Brickfields · joined August 2026</p><span class="pill pv" style="margin-top:6px">✓ Identity verified</span></div>
+      </div>
+      <p class="lb" style="margin-top:14px">Finish your profile</p>
+      <button class="lr"><span class="ic">📷</span><span class="tx"><b>Add a photo</b><i>People are twice as likely to offer</i></span><span class="ch">›</span></button>
+      <button class="lr"><span class="ic">語</span><span class="tx"><b>Languages you speak</b><i>Not set yet</i></span><span class="ch">›</span></button>
+      <div class="card" style="margin-top:6px"><div class="row"><span style="color:var(--ok);font-weight:700">✓</span><span>Name and area</span></div>
+        <div class="row"><span style="color:var(--ok);font-weight:700">✓</span><span>What you can help with</span></div></div>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">C2 · Edit profile<i>Autosaves. No save button, quiet status instead.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Your profile</p>
+      <p class="mut" style="color:var(--ok);font-weight:600">✓ Saved</p><div class="sp"></div>
+      <div class="fld"><div class="l">Name</div><div class="i">Dushy</div></div>
+      <div class="fld"><div class="l">Area</div><div class="i">Brickfields, Kuala Lumpur</div></div>
+      <div class="fld"><div class="l">A little about you <span style="text-transform:none;letter-spacing:0;font-weight:400">(optional)</span></div>
+        <div class="i foc" style="min-height:92px;align-items:flex-start;font-size:.9em;line-height:1.5">Work near KL Sentral. Usually free on weekends. Happy to go to hospitals or just sit and talk.</div>
+        <div style="font-size:.78em;color:var(--n7);margin-top:5px">Temans read this before offering.</div></div>
+      <button class="btn g">Done</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">C6 · People I care for<i>Empty state explains why the feature exists, not that it's empty.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">People you care for</p>
+      <p class="mut">Create requests for someone who doesn't use the app.</p><div class="sp"></div>
+      <button class="lr"><span class="ic">S</span><span class="tx"><b>Dad — Siva</b><i>72 · Tamil · 4 Teman Moments</i></span><span class="ch">›</span></button>
+      <button class="lr"><span class="ic">K</span><span class="tx"><b>Mum — Kamala</b><i>68 · Tamil</i></span><span class="ch">›</span></button>
+      <div class="sp"></div>
+      <button class="btn p">Add someone</button>
+      <div class="note i">They never need a phone or an account. You create requests and get every update.</div>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">C8 · Dad's profile<i>Free-text notes only. No structured medical fields, deliberately.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div style="display:flex;gap:12px;align-items:center;margin:12px 0 10px"><span class="av lg">S</span>
+        <div><p class="h2">Siva</p><p class="mut">Your father · 72</p><span class="pill pm" style="margin-top:5px">4 Teman Moments</span></div></div>
+      <button class="lr"><span class="ic">語</span><span class="tx"><b>Tamil</b><i>Preferred language</i></span><span class="ch">›</span></button>
+      <button class="lr"><span class="ic">🚶</span><span class="tx"><b>Walks slowly · needs rests</b><i>What a Teman should know</i></span><span class="ch">›</span></button>
+      <button class="lr"><span class="ic">M</span><span class="tx"><b>Meena — sister</b><i>Trusted contact</i></span><span class="ch">›</span></button>
+      <button class="lr"><span class="ic">♡</span><span class="tx"><b>Dad's Temans</b><i>Kumar, Farah, Mei Ling</i></span><span class="ch">›</span></button>
+      <div class="sp"></div><button class="btn p">Create a request for Dad</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">C4 · Languages<i>Chips, own scripts, multi-select. Instant toggle, no submit.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Which languages do you speak?</p>
+      <p class="mut">This is one of the strongest things we match on.</p><div class="sp2"></div>
+      <div class="chips" style="gap:8px">
+        <span class="chip on">English</span><span class="chip on">Bahasa Melayu</span>
+        <span class="chip on">தமிழ் Tamil</span><span class="chip">中文 Mandarin</span>
+        <span class="chip">廣東話 Cantonese</span><span class="chip">福建話 Hokkien</span><span class="chip">Other</span>
+      </div>
+      <p class="mut" style="color:var(--ok);font-weight:600;margin-top:14px">✓ Saved</p>
+      <div class="sp"></div><button class="btn g">Done</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">C3 · Photo<i>Toast with Undo instead of a blocking confirm.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Your photo</p>
+      <p class="mut">People are far more likely to offer help when they can see who they'd be meeting.</p>
+      <div class="ctr" style="padding:22px 0"><span class="av lg" style="width:110px;height:110px;flex:0 0 110px;font-size:2.2em">D</span></div>
+      <button class="btn p">Take a photo</button>
+      <button class="btn g">Choose from my gallery</button>
+      <div class="note i">Your face, clearly visible. This is what a Teman sees before they offer.</div>
+      <div class="toast"><b>Old photo removed</b><button>Undo</button></div>
+    </div></div></div>
+
+  </div>
+</div>
+
+<!-- ══ FLOW 9 ══ -->
+<div class="flow">
+  <div class="fh"><span class="fnum">FLOW 9</span><h2>Account &amp; settings</h2></div>
+  <p class="fsub">The unglamorous surface a design system is actually tested against. Switches are 62×36 px and carry ON/OFF text, because state must never rest on position and colour alone. Text size options render at their own size, so the choice is visible rather than described.</p>
+  <div class="strip">
+
+    <div class="col"><div class="cap">B6 · You<i>ListRow throughout. Every row shows its current value.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div style="display:flex;gap:12px;align-items:center;margin:12px 0 14px"><span class="av lg">D</span>
+        <div><p class="h2">Dushy</p><p class="mut">Brickfields</p><span class="pill pv" style="margin-top:5px">✓ Identity verified</span></div></div>
+      <button class="lr"><span class="ic">🌐</span><span class="tx"><b>Language</b><i>English</i></span><span class="ch">›</span></button>
+      <button class="lr"><span class="ic">Aa</span><span class="tx"><b>Text size</b><i>Standard</i></span><span class="ch">›</span></button>
+      <button class="lr"><span class="ic">♡</span><span class="tx"><b>People you care for</b><i>Dad, Mum</i></span><span class="ch">›</span></button>
+      <button class="lr"><span class="ic">☎</span><span class="tx"><b>Trusted contacts</b><i>Meena</i></span><span class="ch">›</span></button>
+      <button class="lr"><span class="ic">🔔</span><span class="tx"><b>Notifications</b><i>On</i></span><span class="ch">›</span></button>
+      <button class="lr"><span class="ic">🛡</span><span class="tx"><b>Safety centre</b><i>Guidelines and help</i></span><span class="ch">›</span></button>
+    </div></div>
+    <div class="nav" style="display:none"></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">B7 · Text size<i>Each option rendered at its own size. Live preview below.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Text size</p>
+      <p class="mut">This changes everything in Teman. You can come back any time.</p><div class="sp2"></div>
+      <div class="lr" style="font-size:16px"><span class="tx"><b>Standard</b></span><span style="color:var(--n5)">○</span></div>
+      <div class="lr" style="font-size:19px;border:2.5px solid var(--t9);background:var(--t0)"><span class="tx"><b>Large</b></span><span style="color:var(--t9);font-weight:700">✓</span></div>
+      <div class="lr" style="font-size:22px"><span class="tx"><b>Extra large</b></span><span style="color:var(--n5)">○</span></div>
+      <div class="card" style="margin-top:14px;font-size:19px"><p class="lb">How it will look</p>
+        <p class="h2">Hospital visit — Dad</p><p class="mut">Friday, 9:30 AM</p></div>
+      <div class="note i">If your phone's own text is also set large, Teman follows both.</div>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">B7b · Notifications<i>Switches with ON/OFF text. Nothing about streaks or re-engagement.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Notifications</p>
+      <p class="mut">We only send things you need. Never reminders to open the app.</p><div class="sp"></div>
+      <div class="sw"><span class="tx"><b>Someone offers to help</b><i>Also sent by SMS</i></span><button class="tog" role="switch" aria-checked="true"><span class="yn on">ON</span><span class="yn off">OFF</span></button></div>
+      <div class="sw"><span class="tx"><b>Requests near me</b><i>Matching your availability</i></span><button class="tog" role="switch" aria-checked="true"><span class="yn on">ON</span><span class="yn off">OFF</span></button></div>
+      <div class="sw"><span class="tx"><b>Reminders before a meeting</b><i>A day before, and an hour before</i></span><button class="tog" role="switch" aria-checked="true"><span class="yn on">ON</span><span class="yn off">OFF</span></button></div>
+      <div class="sw"><span class="tx"><b>Session updates</b><i>Started, arrived, ended</i></span><button class="tog" role="switch" aria-checked="true"><span class="yn on">ON</span><span class="yn off">OFF</span></button></div>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">I9 · Trusted contacts<i>Switches control exactly what each person is told.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Trusted contacts</p>
+      <p class="mut">Someone who should know when you or Dad are meeting a Teman.</p><div class="sp"></div>
+      <div class="card"><div style="display:flex;gap:11px;align-items:center;margin-bottom:8px"><span class="av">M</span>
+        <div><b style="font-size:.95em">Meena</b><p class="mut" style="font-size:.8em">Sister · +60 12 •••• 8823</p></div></div>
+        <div class="sw" style="min-height:52px"><span class="tx"><b style="font-size:.88em">When a session starts</b></span><button class="tog" role="switch" aria-checked="true" style="flex:0 0 72px;width:72px;height:46px"><span class="yn on">ON</span><span class="yn off">OFF</span></button></div>
+        <div class="sw" style="min-height:52px"><span class="tx"><b style="font-size:.88em">When it ends</b></span><button class="tog" role="switch" aria-checked="true" style="flex:0 0 72px;width:72px;height:46px"><span class="yn on">ON</span><span class="yn off">OFF</span></button></div>
+        <div class="sw" style="min-height:52px"><span class="tx"><b style="font-size:.88em">Live location</b></span><button class="tog" role="switch" aria-checked="false" style="flex:0 0 72px;width:72px;height:46px"><span class="yn on">ON</span><span class="yn off">OFF</span></button></div></div>
+      <button class="btn p">Add someone</button>
+    </div></div></div>
+
+  </div>
+</div>
+
+<!-- ══ FLOW 10 ══ -->
+<div class="flow">
+  <div class="fh"><span class="fnum">FLOW 10</span><h2>Trusted Temans &amp; recurring companionship</h2></div>
+  <p class="fsub">Where a one-off becomes a relationship. Ending a recurring arrangement is deliberately as easy as starting one and never asks for a reason — someone who feels trapped in an obligation stops using the product entirely, and the request they don't make is invisible to you.</p>
+  <div class="strip">
+
+    <div class="col"><div class="cap">K1 · Trusted Temans<i>Grouped by who they're trusted for. AvatarGroup carries the set.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Trusted Temans</p>
+      <p class="mut">People you'd ask first, before opening a request to everyone.</p><div class="sp"></div>
+      <p class="lb">Dad's Temans</p>
+      <button class="lr"><span class="ic">K</span><span class="tx"><b>Kumar</b><i>3 times together · Tamil, English</i></span><span class="ch">›</span></button>
+      <button class="lr"><span class="ic">F</span><span class="tx"><b>Farah</b><i>1 time together · Malay, English</i></span><span class="ch">›</span></button>
+      <p class="lb" style="margin-top:14px">Yours</p>
+      <button class="lr"><span class="ic">M</span><span class="tx"><b>Mei Ling</b><i>2 times together · Mandarin, English</i></span><span class="ch">›</span></button>
+      <div class="sp"></div><button class="btn g">Add someone</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">K3 · Make it recurring<i>Proposed, never imposed. Both must agree.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="ctr" style="padding:14px 0 4px"><span class="av lg">K</span></div>
+      <p class="h1 ctr">Ask Kumar regularly?</p>
+      <p class="mut ctr">You've met 3 times. If it suits you both, Teman can arrange it without you asking each time.</p>
+      <div class="sp2"></div>
+      <p class="lb">How often</p>
+      <div class="lr"><span class="tx"><b>Every week</b></span><span style="color:var(--n5)">○</span></div>
+      <div class="lr" style="border:2.5px solid var(--t9);background:var(--t0)"><span class="tx"><b>Every two weeks</b><i>Wednesday mornings</i></span><span style="color:var(--t9);font-weight:700">✓</span></div>
+      <div class="lr"><span class="tx"><b>Every month</b></span><span style="color:var(--n5)">○</span></div>
+      <button class="btn cn">Ask Kumar</button>
+      <p class="mut ctr" style="font-size:.78em">Nothing is arranged until he agrees.</p>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">K4 · Recurring detail<i>Pause is as prominent as anything else. No lock-in.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Wednesday walks</p>
+      <p class="mut">Dad and Kumar · every two weeks, 7:30 AM</p>
+      <div class="sp"></div>
+      <div class="card"><div class="row"><span style="color:var(--n7);min-width:70px">Next</span><span><b>Wed 20 Aug</b>, 7:30 AM</span></div>
+        <div class="row"><span style="color:var(--n7);min-width:70px">Where</span><span>Taman Rimba Bukit Kerinchi</span></div>
+        <div class="row"><span style="color:var(--n7);min-width:70px">So far</span><span>3 walks together</span></div></div>
+      <button class="btn p">Message Kumar</button>
+      <button class="btn g">Skip the next one</button>
+      <button class="btn g">Pause for now</button>
+      <button class="btn g">End this arrangement</button>
+      <div class="note i">Pausing or ending is always fine and Kumar isn't told why.</div>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">K5 · Ending it<i>Full screen, not a small dialog. No reason required.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">End Wednesday walks?</p>
+      <p class="mut">Kumar will be told the arrangement has ended. He won't be told why, and you don't need to give a reason.</p>
+      <div class="sp2"></div>
+      <div class="card"><p class="mut">You can still ask Kumar for a one-off any time, and he stays in Dad's trusted Temans.</p></div>
+      <div class="sp"></div>
+      <div class="fld"><div class="l">Want to say something to Kumar? <span style="text-transform:none;letter-spacing:0;font-weight:400">(optional)</span></div>
+        <div class="i ph" style="min-height:76px">A short thank-you, if you'd like</div></div>
+      <button class="btn p">End the arrangement</button>
+      <button class="btn g">Keep it going</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">K12 · Your activities<i>Volunteer side history. Counted, never scored or ranked.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Times you've been there</p>
+      <div class="seg" style="margin:10px 0 12px"><button aria-pressed="true">Done</button><button aria-pressed="false">Coming up</button></div>
+      <div class="card"><p class="h2">Hospital visit</p><p class="mut">With Siva, 72 · Fri 15 Aug · 3 h</p>
+        <div class="chips"><span class="chip" style="font-size:.72em">Patient</span><span class="chip" style="font-size:.72em">Kind</span></div></div>
+      <div class="card"><p class="h2">Groceries</p><p class="mut">With Aunty Fatimah · Sat 9 Aug · 1 h</p></div>
+      <div class="card"><p class="h2">Coffee and a talk</p><p class="mut">With Wei Jun · Thu 31 Jul · 2 h</p></div>
+      <div class="note i">13 Teman Moments. There's no level and no ranking — just the times you showed up.</div>
+    </div></div></div>
+
+  </div>
+</div>
+
+<!-- ══ FLOW 11 ══ -->
+<div class="flow">
+  <div class="fh"><span class="fnum">FLOW 11</span><h2>Circles, organisations &amp; calendar</h2></div>
+  <p class="fsub">The NGO's surface inside the member app. Membership never auto-matches anyone — a circle raises familiarity, it doesn't remove the choice. The calendar is read-only; tapping a day opens its agenda rather than an editor.</p>
+  <div class="strip">
+
+    <div class="col"><div class="cap">K6 · Circles near you<i>AvatarGroup does the work — a circle is people, not a logo.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Circles near you</p>
+      <p class="mut">Smaller groups where people already know each other.</p><div class="sp"></div>
+      <div class="card"><p class="h2">Brickfields Teman Community</p><p class="mut">38 members · your area</p>
+        <span class="avg" style="margin-top:9px"><span class="av">K</span><span class="av">F</span><span class="av">M</span><span class="av">R</span><span class="av" style="background:var(--n5)">+34</span></span>
+        <button class="btn g" style="margin-top:10px;min-height:52px">Join</button></div>
+      <div class="card"><p class="h2">Sri Lankan Community KL</p><p class="mut">64 members · Tamil mostly</p>
+        <button class="btn g" style="margin-top:9px;min-height:52px">Join</button></div>
+      <div class="card"><p class="h2">Vista Condo Residents</p><p class="mut">12 members · needs approval</p>
+        <button class="btn g" style="margin-top:9px;min-height:52px">Ask to join</button></div>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">K7 · Circle detail<i>Skeleton loading shown — the only looping animation in the app.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Brickfields Teman Community</p>
+      <p class="mut">Run by Pertubuhan Warga Emas KL</p>
+      <span class="pill pv">✓ Verified organisation</span>
+      <div class="sp2"></div>
+      <div class="card"><div class="row"><span style="color:var(--n7);min-width:74px">Members</span><span>38</span></div>
+        <div class="row"><span style="color:var(--n7);min-width:74px">This month</span><span>17 Teman Moments</span></div>
+        <div class="row"><span style="color:var(--n7);min-width:74px">Languages</span><span>Tamil, English, Malay</span></div></div>
+      <p class="lb">Loading members</p>
+      <div class="card"><div style="display:flex;gap:11px;align-items:center;margin-bottom:11px"><span class="sk" style="width:44px;height:44px;border-radius:50%"></span><span style="flex:1"><span class="sk" style="display:block;height:15px;width:52%;margin-bottom:6px"></span><span class="sk" style="display:block;height:12px;width:74%"></span></span></div>
+        <div style="display:flex;gap:11px;align-items:center"><span class="sk" style="width:44px;height:44px;border-radius:50%"></span><span style="flex:1"><span class="sk" style="display:block;height:15px;width:44%;margin-bottom:6px"></span><span class="sk" style="display:block;height:12px;width:66%"></span></span></div></div>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">K10 · Organisation<i>Verified NGO profile. Individuals still choose every time.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="ctr" style="padding:14px 0 6px"><span class="av lg" style="background:var(--t9)">P</span></div>
+      <p class="h1 ctr">Pertubuhan Warga Emas KL</p>
+      <p class="mut ctr">Senior support · Kuala Lumpur</p>
+      <div class="ctr"><span class="pill pv">✓ Verified organisation</span></div>
+      <div class="sp2"></div>
+      <p class="mut">A registered society supporting older adults across KL since 2011. They verify and support the Temans in this circle.</p>
+      <div class="sp"></div>
+      <button class="lr"><span class="ic">👥</span><span class="tx"><b>38 Temans</b><i>All identity verified</i></span><span class="ch">›</span></button>
+      <button class="lr"><span class="ic">📅</span><span class="tx"><b>Orientation sessions</b><i>Next: Sat 16 Aug, 10 AM</i></span><span class="ch">›</span></button>
+      <div class="note i">Being in this circle doesn't connect you to anyone automatically. You always choose.</div>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">K11 · Calendar<i>Amber dot = a day with a Teman. Read-only; tapping opens the agenda.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">August</p><div class="sp"></div>
+      <div class="cal">
+        <span class="hd">M</span><span class="hd">T</span><span class="hd">W</span><span class="hd">T</span><span class="hd">F</span><span class="hd">S</span><span class="hd">S</span>
+        <span class="dt o" aria-hidden="true"></span><span class="dt o" aria-hidden="true"></span><span class="dt o" aria-hidden="true"></span><span class="dt o" aria-hidden="true"></span><span class="dt">1</span><span class="dt">2</span><span class="dt">3</span>
+        <span class="dt">4</span><span class="dt">5</span><span class="dt hasT">6</span><span class="dt">7</span><span class="dt">8</span><span class="dt">9</span><span class="dt">10</span>
+        <span class="dt">11</span><span class="dt">12</span><span class="dt sel">13</span><span class="dt">14</span><span class="dt hasT">15</span><span class="dt">16</span><span class="dt">17</span>
+        <span class="dt">18</span><span class="dt">19</span><span class="dt hasT">20</span><span class="dt">21</span><span class="dt">22</span><span class="dt">23</span><span class="dt">24</span>
+        <span class="dt">25</span><span class="dt">26</span><span class="dt">27</span><span class="dt">28</span><span class="dt">29</span><span class="dt">30</span><span class="dt">31</span>
+      </div>
+      <p class="lb" style="margin-top:16px">Friday 15 August</p>
+      <div class="card" style="border-left:4px solid var(--a4)"><p class="h2">Hospital visit — Dad</p><p class="mut">Kumar · 9:30 AM · HKL</p></div>
+      <p class="lb">Wednesday 20 August</p>
+      <div class="card" style="border-left:4px solid var(--a4)"><p class="h2">Morning walk — Dad</p><p class="mut">Kumar · 7:30 AM · recurring</p></div>
+    </div></div></div>
+
+  </div>
+</div>
+
+<!-- ══ FLOW 12 ══ -->
+<div class="flow">
+  <div class="fh"><span class="fnum">FLOW 12</span><h2>Safety centre, guidelines &amp; reporting</h2></div>
+  <p class="fsub">Long, plain and unmarketed. A page that reads slightly legal here builds more trust, not less. Accordions are native <code style="background:var(--n1);padding:2px 6px;border-radius:5px;font-size:14px">&lt;details&gt;</code> so they work without JavaScript and read correctly to a screen reader.</p>
+  <div class="strip">
+
+    <div class="col"><div class="cap">I14 · Safety centre<i>Emergency number first. Everything else below it.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Safety</p>
+      <div class="note e" style="font-size:.88em"><b>Teman is not an emergency service.</b> If someone is in danger or needs medical help right now, call <b>999</b> first.</div>
+      <div class="sp"></div>
+      <button class="lr"><span class="ic">📖</span><span class="tx"><b>Community guidelines</b><i>What's expected of everyone</i></span><span class="ch">›</span></button>
+      <button class="lr"><span class="ic">🛡</span><span class="tx"><b>How verification works</b><i>The four levels</i></span><span class="ch">›</span></button>
+      <button class="lr"><span class="ic">⚑</span><span class="tx"><b>Report someone</b><i>Reviewed by a person</i></span><span class="ch">›</span></button>
+      <button class="lr"><span class="ic">🚫</span><span class="tx"><b>Blocked people</b><i>Nobody</i></span><span class="ch">›</span></button>
+      <button class="lr"><span class="ic">💬</span><span class="tx"><b>If you're struggling</b><i>Where to find real support</i></span><span class="ch">›</span></button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">K14 · Community guidelines<i>Accordion. Human-translated in all four languages, never machine.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">Community guidelines</p>
+      <p class="mut">Short version: be kind, be safe, and never ask anyone for money.</p><div class="sp"></div>
+      <details class="acc" open><summary>Money<span class="pm2">+</span></summary><div class="bd">Teman is free. Never ask a member for payment, a loan, a donation or a tip. Never offer to pay for help. If anyone asks you for money, report it — this is the most common way people are taken advantage of.</div></details>
+      <details class="acc"><summary>Dating and romance<span class="pm2">+</span></summary><div class="bd">Teman is not a dating platform. Romantic or sexual approaches are not allowed, in messages or in person.</div></details>
+      <details class="acc"><summary>Advice and medical help<span class="pm2">+</span></summary><div class="bd">A Teman is a companion, not a nurse or a counsellor. Don't give medical advice or handle medication.</div></details>
+      <details class="acc"><summary>Passwords and codes<span class="pm2">+</span></summary><div class="bd">Never ask for or share a PIN, password, OTP or banking detail — not even while helping with a phone.</div></details>
+      <details class="acc"><summary>Selling and recruiting<span class="pm2">+</span></summary><div class="bd">No selling, no business recruiting, no religious or political persuasion.</div></details>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">I11 · Report<i>Categories in the person's words, not policy language.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <p class="h1">What happened?</p>
+      <p class="mut">A person reads every report. Kumar is never told you made one.</p><div class="sp"></div>
+      <button class="lr"><span class="ic">💰</span><span class="tx"><b>Asked me for money</b><i>Payment, a loan, or a donation</i></span><span class="ch">›</span></button>
+      <button class="lr"><span class="ic">💔</span><span class="tx"><b>Romantic or sexual behaviour</b></span><span class="ch">›</span></button>
+      <button class="lr"><span class="ic">😠</span><span class="tx"><b>Rude, aggressive or frightening</b></span><span class="ch">›</span></button>
+      <button class="lr"><span class="ic">🚗</span><span class="tx"><b>Unsafe driving</b></span><span class="ch">›</span></button>
+      <button class="lr"><span class="ic">🎭</span><span class="tx"><b>Not who they said they were</b></span><span class="ch">›</span></button>
+      <button class="lr"><span class="ic">⋯</span><span class="tx"><b>Something else</b></span><span class="ch">›</span></button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">I12 · Report sent<i>Tick draws. Then the honest timeline of what happens next.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc">
+      <div class="ctr" style="padding:22px 0 8px"><svg class="tick" width="58" height="58" viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" fill="none" stroke="#0E5814" stroke-width="2.5"/><path d="M13 22.5l6 6 12-12" fill="none" stroke="#0E5814" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <p class="h1 ctr">Thank you for telling us</p>
+      <div class="sp"></div>
+      <p class="lb">What happens now</p>
+      <div class="card">
+        <div class="row"><span style="color:var(--ok);font-weight:700;min-width:16px">✓</span><span>Kumar can't be matched with you or Dad again</span></div>
+        <div class="row"><span style="color:var(--wa);font-weight:700;min-width:16px">◷</span><span>A coordinator reads this within 24 hours</span></div>
+        <div class="row"><span style="color:var(--n4);font-weight:700;min-width:16px">○</span><span>We'll tell you what was decided</span></div>
+      </div>
+      <div class="note e">If you feel unsafe right now, call <b>999</b>. Don't wait for us.</div>
+      <button class="btn g">Back</button>
+    </div></div></div>
+
+    <div class="arrow">›</div>
+
+    <div class="col"><div class="cap">B2 · Elder view home<i>Not a shrunken caregiver home — a different screen. Large text by default.</i></div>
+    <div class="ph"><div class="st"><span>9:41</span><span>▮▮</span></div><div class="sc" style="--fs:19px">
+      <p class="h1">Good morning, Siva</p><div class="sp"></div>
+      <button class="btn p" style="min-height:78px;text-align:left;padding-left:1em;font-size:1.05em">Someone to come with me<br><span style="font-weight:400;font-size:.76em;color:#CFEAE9">To an appointment or the shops</span></button>
+      <button class="btn g" style="min-height:78px;text-align:left;padding-left:1em;font-size:1.05em">Someone to talk to<br><span style="font-weight:400;font-size:.76em;color:var(--n7)">Coffee, a walk, or just company</span></button>
+      <div class="sp"></div>
+      <div class="card" style="border-left:4px solid var(--a4)"><p class="lb">Friday morning</p><p class="h2">Kumar is coming with you</p><p class="mut">9:30 AM · the hospital</p></div>
+      <button class="btn dg" style="min-height:70px">Call Dushy</button>
+    </div></div></div>
+
+  </div>
+</div>
+
+</div>
+
+<footer><div class="wrap">
+  <svg width="176" height="46" viewBox="0 0 180 46" aria-label="Teman"><rect x="4" y="8" width="12" height="30" rx="6" fill="#FAF9F7"/><rect x="22" y="8" width="12" height="30" rx="6" fill="#E8A13C"/><text x="46" y="34" font-family="Vollkorn,Georgia,serif" font-size="32" font-weight="700" fill="#FFFFFF">Teman</text></svg>
+  <p style="font-family:var(--serif);font-size:22px;font-weight:600;color:#fff;margin:12px 0 6px">Batch 2 of 3 — 28 components, 75 screens so far</p>
+  <p style="font-size:15px">Next: the admin platform and the public site.</p>
+</div></footer>
+
+<script>
+document.querySelectorAll('[data-fs]').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.sc:not([style*="--fs"])').forEach(s=>s.style.setProperty('--fs',b.dataset.fs+'px'));
+  document.querySelectorAll('[data-fs]').forEach(x=>x.setAttribute('aria-pressed',x===b));
+});
+document.querySelectorAll('.tog').forEach(t=>t.onclick=()=>t.setAttribute('aria-checked',t.getAttribute('aria-checked')!=='true'));
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>c.classList.toggle('on'));
+document.querySelectorAll('.seg').forEach(g=>g.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));}));
+document.querySelectorAll('.days').forEach(g=>g.querySelectorAll('.day').forEach(b=>b.onclick=()=>{
+  g.querySelectorAll('.day').forEach(x=>x.setAttribute('aria-pressed',x===b));}));
+let hrs=3; const cv=document.getElementById('cv');
+document.querySelectorAll('[data-cnt]').forEach(b=>b.onclick=()=>{
+  hrs=Math.max(1,Math.min(12,hrs+ +b.dataset.cnt)); cv.textContent=hrs+(hrs===1?' hour':' hours');});
+</script>
+</body>
+</html>
