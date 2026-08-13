@@ -15,6 +15,13 @@
       "when": 1786611614096,
       "tag": "0001_robust_marvel_boy",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1786612215030,
+      "tag": "0002_fat_rocket_raccoon",
+      "breakpoints": true
     }
   ]
 }

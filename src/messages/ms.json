@@ -200,5 +200,50 @@
     "callFamily": "Call my family",
     "noContactsTitle": "No family contact saved yet",
     "noContactsBody": "Ask the person who helps you with this phone to add a family contact in Teman."
+  },
+  "admin": {
+    "title": "Teman Admin",
+    "signedInAs": "{name} · {role}",
+    "role": {
+      "coordinator": "NGO coordinator",
+      "admin": "Platform admin"
+    },
+    "nav": {
+      "verifications": "Verification queue",
+      "duplicates": "Duplicate documents"
+    },
+    "queue": {
+      "title": "Verification queue",
+      "count": "{count, plural, =0 {Nothing waiting} one {# waiting} other {# waiting}}",
+      "name": "Name",
+      "area": "Area",
+      "doc": "Document",
+      "waiting": "Waiting",
+      "flags": "Flags",
+      "hoursWaiting": "{hours, plural, one {# hour} other {# hours}}",
+      "duplicateFlag": "Same document elsewhere",
+      "review": "Review",
+      "empty": "The queue is clear. New submissions appear here oldest first."
+    },
+    "review": {
+      "document": "Identity document",
+      "selfie": "Selfie",
+      "imagePurged": "Image deleted by the retention policy.",
+      "approve": "Approve (A)",
+      "reject": "Reject (R)",
+      "alreadyDecided": "Already decided: {state}",
+      "dupNote": "This document also appears on {count, plural, one {# other account} other {# other accounts}}. Check before approving."
+    },
+    "reject": {
+      "blurry": "Photo too blurry to read",
+      "cutOff": "Part of the document is cut off",
+      "nameMismatch": "Name does not match the account",
+      "expired": "Document has expired",
+      "notAnId": "Not an identity document",
+      "other": "Another reason",
+      "noteLabel": "Add a note the member will see",
+      "confirm": "Reject with this reason",
+      "back": "Back"
+    }
   }
 }

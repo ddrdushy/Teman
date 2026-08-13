@@ -76,6 +76,10 @@ export const person = pgTable('person', {
   transport:        jsonb('transport'),
   verificationTier: verifTier('verification_tier').notNull().default('none'),
   isElderView:      boolean('is_elder_view').notNull().default(false),
+  /* Two admin roles (docs/08): coordinator = verification review + volunteer
+     directory, read-only elsewhere; admin = everything. Enforced server-side
+     in every admin route — never by hiding buttons. Null = a member. */
+  role:             text('role'),
   /* Not a delete. Moderation needs history, and a serious report must restrict
      matching immediately while it is reviewed. */
   suspendedAt:      timestamp('suspended_at', { withTimezone: true }),
