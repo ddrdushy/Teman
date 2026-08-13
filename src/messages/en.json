@@ -981,5 +981,200 @@
     "endNoReason": "You can end this any time. Nobody is asked why.",
     "makeRecurringQ": "Would you like {name} to come regularly?",
     "recurringProposedNote": "Suggested. {name} will be asked — nothing happens until they agree."
+  },
+  "site": {
+    "tagline": "No one should have to go alone.",
+    "emergencyFooter": "In an emergency, call 999.",
+    "nav": {
+      "homeAria": "Teman home",
+      "how": "How it works",
+      "volunteer": "For volunteers",
+      "families": "For families",
+      "safety": "Safety",
+      "need": "Need a Teman",
+      "orgs": "For organisations",
+      "about": "About",
+      "faq": "Questions",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "contact": "Contact"
+    },
+    "hero": {
+      "need": "I need someone.",
+      "canBe": "I can be there.",
+      "missing": "Someone is missing.",
+      "there": "Someone is there.",
+      "lede": "Teman connects people in Kuala Lumpur who need someone beside them with neighbours who have a few hours to give.",
+      "free": "Always free. No payments, ever.",
+      "ctaNeed": "Find a Teman",
+      "ctaVolunteer": "Become a Teman"
+    },
+    "why": {
+      "title": "Loneliness in a city is rarely a logistics problem.",
+      "lede": "Most people can get themselves to the hospital. What they cannot do is walk in with nobody waiting for them to come out. Meanwhile the same neighbourhood is full of people with two free hours and no obvious way to give them away.",
+      "sit1": "“My father has a follow-up on Tuesday morning. I cannot take another day off, and he will not go by himself.”",
+      "sit1Who": "A son in Brickfields",
+      "sit2": "“I have been alone most of this week. I do not need advice. I would just like someone to have tea with.”",
+      "sit2Who": "A member in Petaling Jaya",
+      "sit3": "“I am free most Saturday mornings around Cheras. I have never known how to actually be useful with that.”",
+      "sit3Who": "A volunteer in Cheras"
+    },
+    "safetyBrief": {
+      "title": "Strangers meeting in real life. We treat that seriously.",
+      "b1": "A person checks every identity document — not an algorithm — and it is deleted 90 days after review.",
+      "b2": "Exact addresses and phone numbers stay hidden until both people accept, and every reveal is recorded.",
+      "b3": "A trusted contact is told when a session starts and when it ends safely.",
+      "b4": "A safety button sits in every session: call 999, alert your trusted contact, report what is happening.",
+      "more": "How safety works, in full"
+    },
+    "ngo": {
+      "title": "Run with a community partner",
+      "body": "Teman is piloted with a senior-citizens organisation in Kuala Lumpur. Organisations recruit and vouch for volunteers; individuals always choose whether to connect.",
+      "cta": "Partner with Teman"
+    },
+    "volunteer": {
+      "title": "You do not need training. You need two free hours.",
+      "lede": "A Teman keeps someone company — to a hospital appointment, at the market, over tea. You choose when, where, and how often. No commitment past the day you said yes to.",
+      "cta": "Become a Teman",
+      "whatTitle": "What you would actually do",
+      "whatBody1": "You say when you are free and how far you would go. When someone nearby needs company at a time that suits you, you see the request and decide. Nobody can contact you until you offer.",
+      "whatBody2": "Most requests are a few hours: accompany an uncle to a follow-up, help an aunty at the bank, sit and talk. You are company, not a nurse, not a driver, not a therapist.",
+      "dayTitle": "On the day",
+      "day": {
+        "d1": "You both confirm the meeting point in messages beforehand.",
+        "d2": "You press start together — that tells their family you have met.",
+        "d3": "You spend the time. That is the whole job.",
+        "d4": "You both press end. Their trusted contact is told it ended safely."
+      },
+      "verifTitle": "The identity check, stated plainly",
+      "verifBody1": "Before you can accompany anyone, a person at our partner organisation checks your MyKad or passport against a photo of you. Other members never see the document.",
+      "verifBody2": "It is deleted 90 days after review. We never store the number itself — only a scrambled code used to spot the same document on two accounts.",
+      "asksTitle": "What Teman asks of you",
+      "asksBody": "Show up when you said you would, tell us honestly when you cannot, and treat people the way you would want your own parents treated.",
+      "neverAsks": "Teman never asks you for money, and never pays you. If either happens, something is wrong — report it."
+    },
+    "orgs": {
+      "title": "You already have the volunteers. This gives them a way to be found.",
+      "lede": "NGOs, resident associations, universities and senior-care organisations run verified circles on Teman.",
+      "whatTitle": "What partnering involves",
+      "whatBody": "Your coordinator reviews your volunteers’ identity checks, sees who has registered and who has gone quiet, and runs your circle. Your members remain individuals — nothing auto-matches them.",
+      "toolsTitle": "Coordinator tools",
+      "tools": {
+        "t1": "A verification queue your coordinator works through — usually same-day during a recruitment drive.",
+        "t2": "A volunteer directory: who joined, which areas, who has not set availability yet.",
+        "t3": "Unmet demand by area — where to recruit next, and which languages are short.",
+        "t4": "A verified organisation profile and circles your members can join."
+      },
+      "costTitle": "What it costs",
+      "costBody": "Nothing. No fees for the organisation, no payments between members, no advertising. The pilot is grant-funded and the code is small enough for one person to run.",
+      "cta": "Talk to a person"
+    },
+    "how": {
+      "title": "Four steps, then you close the app.",
+      "lede": "The whole point is to get people off the screen and into the same room as fast as possible.",
+      "need": {
+        "title": "If you need someone",
+        "s1": "Say what you need — a few short questions, one at a time.",
+        "s2": "Someone nearby offers. You see who they are: verified identity, how many times they have shown up, what members said.",
+        "s3": "You both accept. Only then is the exact address shared.",
+        "s4": "You meet. Your trusted contact is told when it starts and ends."
+      },
+      "help": {
+        "title": "If you can be there",
+        "s1": "Say when you are free, how far you would go, and what you can help with.",
+        "s2": "See requests that fit. Offer only if it suits you.",
+        "s3": "They accept you. You agree the meeting point in messages.",
+        "s4": "You spend the time, press end together, and that is a Teman Moment."
+      },
+      "bothAccept": "Nothing is shared until both people say yes.",
+      "offApp": "Teman succeeds when you leave it — the app measures completed companionship, never time spent looking at screens."
+    },
+    "need": {
+      "title": "Someone can be there.",
+      "lede": "For a hospital visit, the bank, a walk, or just company for an afternoon.",
+      "ex1": "“Someone to sit with my mother at her appointment on Friday.”",
+      "ex2": "“Someone who speaks Hokkien to help uncle at the government office.”",
+      "ex3": "“I would like company for a walk in the mornings.”",
+      "costTitle": "What it costs",
+      "costBody": "Nothing, ever. No payments, no tips, no subscriptions. If anyone asks you for money on Teman, report them — that is the rule that keeps everyone safe.",
+      "isntTitle": "What a Teman is not",
+      "isntBody": "Not a nurse, not a driver for hire, not a therapist, not a dating service. A Teman is a neighbour who keeps you company.",
+      "cta": "Find a Teman"
+    },
+    "families": {
+      "title": "For the person arranging it all",
+      "lede": "You manage a parent’s profile, make requests on their behalf, and get every update. They never need to touch a phone.",
+      "manageTitle": "You stay in charge",
+      "manageBody": "Create a profile for Dad once — his language, his walking pace, what a Teman should know. Every request you make carries it, so a volunteer arrives already understanding him.",
+      "safeTitle": "Is my father safe with a stranger?",
+      "safeBody1": "The direct answer: every Teman who accompanies anyone has had their MyKad checked by a person, against a photo, at a partner organisation. You see their record and what other families said before you accept anyone.",
+      "safeBody2": "His exact address is shared only after you accept, every viewing of it is recorded, and a serious report stops a person from being matched before a human has even read it.",
+      "trackTitle": "On the day",
+      "trackBody": "You are told when the Teman arrives, when the session starts, and when it ends safely — and so is a trusted contact you choose, by SMS, no app needed.",
+      "cta": "Set up a profile for someone"
+    },
+    "safety": {
+      "title": "How safety works",
+      "lede": "Not a promise — specifics you can check.",
+      "emergencyTitle": "Teman is not an emergency service",
+      "emergencyBody": "If someone is in danger or needs medical help now, call 999 first. Everything below sits alongside that, never instead of it.",
+      "verificationTitle": "Identity, checked by a person",
+      "verificationBody": "MyKad or passport plus a photo, reviewed by a trained coordinator at a partner organisation. The document is deleted 90 days after review; the number itself is never stored, only a scrambled code that detects the same document on two accounts.",
+      "revealTitle": "Information is earned, not given",
+      "revealBody": "Before a match, only a general area is visible — never an address, never a phone number. Both people must accept before exact details unlock, and every single viewing is recorded in a log the member can ask about.",
+      "sessionTitle": "Sessions start and end together",
+      "sessionBody": "Neither person can start or end a session alone. Starting tells the trusted contact; ending safely tells them again. A session that never ends triggers a check on both parties.",
+      "contactsTitle": "Trusted contacts",
+      "contactsBody": "Each member is encouraged to save one person who is told, by SMS, when a session starts and ends — and who can be alerted with one tap from the safety button.",
+      "reportingTitle": "Reports are read by people",
+      "reportingBody": "Serious reports — money, harassment, romantic advances, fraud — stop that person from being matched immediately, before anyone has read a word. Then a person reviews it, usually within a day, and the reporter is told what was decided.",
+      "isnotTitle": "What Teman is not",
+      "isnotBody": "Not an emergency service, not healthcare, not therapy, not transport for hire, not a dating platform. Every one of those has professionals; Teman is the neighbour beside you."
+    },
+    "about": {
+      "title": "Why Teman exists",
+      "p1": "Loneliness in a city is rarely a logistics problem. People can usually get to the hospital; what they cannot do is walk in without anyone waiting for them to come out.",
+      "p2": "Meanwhile the same neighbourhood is full of people with two free hours and no obvious way to give them away.",
+      "p3": "Teman is the shortest possible bridge between those two facts. No payments, no ratings, no scores — a person being beside someone, unpaid and unranked.",
+      "p4": "Its success is measured one way: completed companionship. The strongest version of Teman is not an app people use every day. It is community infrastructure that sits quietly in the background until someone needs another human being."
+    },
+    "privacy": {
+      "title": "Privacy",
+      "lede": "Plain language first. This is what we hold, why, and for how long.",
+      "collectedTitle": "What we collect",
+      "collectedBody": "Your phone number (sign-in), name, area, languages, what you can help with, and — if you verify — your ID document and a photo, held only until review plus 90 days. For someone you care for: their preferred name, language, and what a companion should know, in your words.",
+      "whyTitle": "Why we collect it",
+      "whyBody": "To match people who fit, to let both sides judge trust before meeting, and to keep a record of consequential actions — who saw an address, who approved a document — that we can answer for.",
+      "retentionTitle": "How long we keep it",
+      "retentionBody": "ID documents: deleted 90 days after review, automatically. The document number: never stored, only a scrambled code. Everything else: while your account exists.",
+      "whoSeesTitle": "Who sees what",
+      "whoSeesBody": "Members see your first name, photo, area, languages, verification status and what other members said. Your phone and exact addresses unlock only after mutual acceptance. Reviewers see ID documents; every viewing is logged.",
+      "deletionTitle": "Deleting your account",
+      "deletionBody": "Your profile is removed. Session records and reports are kept, anonymised, for safeguarding — if something happened, it still happened.",
+      "rightsTitle": "Your rights (PDPA)",
+      "rightsBody": "You can ask what we hold about you, correct it, or delete it — including the log of who viewed your details. Write to hello@teman.my; a person answers."
+    },
+    "terms": {
+      "title": "Terms",
+      "lede": "Short, because the honest claims are small.",
+      "whatIsTitle": "What Teman is",
+      "whatIsBody": "A free platform that introduces people who need company to neighbours willing to give it. Teman is not a party to what two people agree to do together.",
+      "conductTitle": "Conduct",
+      "conductBody": "No money between members in either direction. No romantic or sexual approaches. No selling, recruiting, or proselytising. Breaking these means removal, and where warranted, a report to the authorities.",
+      "liabilityTitle": "Liability",
+      "liabilityBody": "Teman verifies identity and provides safety tooling, but people are responsible for their own decisions to meet. We do not guarantee any outcome and are not liable for what happens between members, to the extent the law allows.",
+      "emergencyTitle": "Not an emergency service",
+      "emergencyBody": "Teman must never be relied on in an emergency. Call 999. The safety features assist; they do not replace emergency services.",
+      "changesTitle": "Changes",
+      "changesBody": "If these terms change materially, every member is notified in their own language before the change takes effect."
+    },
+    "contact": {
+      "title": "Reach a person",
+      "lede": "Visible contact information is itself a trust signal. Here is ours.",
+      "emailTitle": "Email",
+      "responseTime": "A person replies, usually within two working days.",
+      "orgTitle": "Organisations",
+      "orgBody": "For partnership conversations, mention your organisation and area — the coordinator for your district will reply directly."
+    }
   }
 }
