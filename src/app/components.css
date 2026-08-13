@@ -279,7 +279,7 @@
 /* ── 19 · Segmented ─────────────────────────────────────────── */
 .segmented { display: flex; gap: 6px; border: 1.5px solid var(--n-500); border-radius: var(--r-btn); padding: 4px; background: var(--white); }
 .segmented button {
-  flex: 1; min-height: calc(var(--tap-min) - 10px);
+  flex: 1; min-height: var(--tap-min);
   border: 0; border-radius: calc(var(--r-btn) - 4px);
   background: transparent; color: var(--n-900);
   font: 600 0.92em/1.25 inherit; cursor: pointer; padding: 0.4em 0.5em;
