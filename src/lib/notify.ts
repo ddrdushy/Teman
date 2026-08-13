@@ -30,7 +30,8 @@ export type NotificationKind =
   | 'recurringProposed'
   | 'recurringAgreed'
   | 'recurringEnded'
-  | 'recurringSpawned';
+  | 'recurringSpawned'
+  | 'requestRemovedByModeration';
 
 const SISI_FOR_KIND: Record<NotificationKind, string | null> = {
   verificationApproved: 'answered',
@@ -53,6 +54,7 @@ const SISI_FOR_KIND: Record<NotificationKind, string | null> = {
   recurringAgreed: 'answered',
   recurringEnded: null,
   recurringSpawned: 'answered',
+  requestRemovedByModeration: null,
 };
 
 export async function notify(

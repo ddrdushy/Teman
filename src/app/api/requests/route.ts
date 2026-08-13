@@ -5,6 +5,7 @@ import { request, area, careRecipient, category } from '@/db/schema';
 import { personIdFromSession } from '@/auth';
 import { jitterPoint, toWkt } from '@/lib/geo';
 import { audit } from '@/lib/privacy';
+import { triageText } from '@/lib/moderation';
 
 const GENDERS = ['any', 'women', 'men'] as const;
 
@@ -94,6 +95,12 @@ export async function POST(req: NextRequest) {
     mood: (b.mood ?? []).slice(0, 4),
   };
 
+  /* triage flags, never blocks — a person reviews in N15 */
+  const flags = await triageText(
+    `${b.destinationText} ${b.description ?? ''}`,
+    'en',
+  );
+
   const [row] = await db.insert(request).values({
     requesterId: personId,
     beneficiaryType: b.beneficiaryType === 'care_recipient' ? 'care_recipient' : 'self',
@@ -112,6 +119,7 @@ export async function POST(req: NextRequest) {
     isFlexible: b.whenType === 'asap',
     prefs,
     visibility: b.visibility === 'circles' || b.visibility === 'trusted_only' ? b.visibility : 'public',
+    flaggedReason: flags.length ? flags.join(',') : null,
     expiresAt,
   }).returning({ id: request.id });
 

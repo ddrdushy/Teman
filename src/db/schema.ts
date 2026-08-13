@@ -149,6 +149,9 @@ export const request = pgTable('request', {
   isFlexible:      boolean('is_flexible').notNull().default(false),
   prefs:           jsonb('prefs'),   // {gender, languages[], ageRange, driving, verifiedOnly, sameDestination}
   visibility:      text('visibility').notNull().default('public'),
+  /* Set by moderation triage at publish (keyword rules, or AI when
+     configured — either way it FLAGS, never acts; N15 reviews). */
+  flaggedReason:   text('flagged_reason'),
   /* Load-bearing. This is what lets a job say "no one could make Friday"
      *before* Friday, instead of leaving someone to find out on the morning. */
   expiresAt:       timestamp('expires_at', { withTimezone: true }).notNull(),

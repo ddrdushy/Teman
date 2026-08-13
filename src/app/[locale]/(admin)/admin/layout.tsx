@@ -23,12 +23,29 @@ export default async function AdminLayout({ children }: { children: ReactNode })
         <p style={{ fontFamily: 'var(--serif)', fontWeight: 700, fontSize: '18px', margin: '0 0 var(--s-3)' }}>
           {t('title')}
         </p>
-        <Link href={`/${locale}/admin/verifications`} style={{ color: 'var(--t-900)', textDecoration: 'none', padding: '6px 0' }}>
-          {t('nav.verifications')}
-        </Link>
-        <Link href={`/${locale}/admin/verifications/duplicates`} style={{ color: 'var(--t-900)', textDecoration: 'none', padding: '6px 0' }}>
-          {t('nav.duplicates')}
-        </Link>
+        {[
+          ['', 'dashboard'],
+          ['/verifications', 'verifications'],
+          ['/verifications/duplicates', 'duplicates'],
+          ['/volunteers', 'volunteers'],
+          ...(actor.role === 'admin'
+            ? [
+                ['/users', 'users'],
+                ['/incidents', 'incidents'],
+                ['/requests/flagged', 'flagged'],
+                ['/circles', 'circles'],
+                ['/analytics', 'analytics'],
+                ['/analytics/demand', 'demand'],
+                ['/translations', 'translations'],
+                ['/audit', 'audit'],
+              ]
+            : [['/circles', 'circles'], ['/analytics', 'analytics'], ['/analytics/demand', 'demand']]),
+        ].map(([path, key]) => (
+          <Link key={key} href={`/${locale}/admin${path}`}
+            style={{ color: 'var(--t-900)', textDecoration: 'none', padding: '6px 0' }}>
+            {t(`nav.${key}` as never)}
+          </Link>
+        ))}
         <p style={{ marginTop: 'auto', color: 'var(--n-700)', fontSize: '13px' }}>
           {t('signedInAs', { name: actor.displayName, role: t(`role.${actor.role}`) })}
         </p>
