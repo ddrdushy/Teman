@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
   // Without this Next walks up and roots the trace at $HOME, which breaks
   // the standalone copy step (and the Docker build with it).
   outputFileTracingRoot: process.cwd(),
+  // Lets a verification build run beside `pnpm dev` / the Playwright
+  // webServer without the two fighting over .next.
+  distDir: process.env.NEXT_DIST_DIR ?? '.next',
 };
 
 export default withNextIntl(nextConfig);

@@ -14,3 +14,8 @@ dist/
 npm-debug.log*
 pnpm-debug.log*
 .data/
+
+# test artifacts
+test-results/
+playwright-report/
+.next-goal/
