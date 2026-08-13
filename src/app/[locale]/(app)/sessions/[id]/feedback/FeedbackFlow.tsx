@@ -110,9 +110,47 @@ export function FeedbackFlow({ sessionId, otherName }: { sessionId: string; othe
         {t('momentTitle')}
       </h1>
       <p style={{ color: 'var(--t-100)', margin: 0 }}>{t('momentBody', { name: otherName })}</p>
+      <ProposeRecurring sessionId={sessionId} otherName={otherName} />
       <Link href={`/${locale}/home`} className="btn btn-ghost btn-lg" style={{ textDecoration: 'none' }}>
         {t('done')}
       </Link>
     </main>
+  );
+}
+
+/* K3 · "Make this recurring?" — offered at the moment it would occur to you. */
+function ProposeRecurring({ sessionId, otherName }: { sessionId: string; otherName: string }) {
+  const t = useTranslations('community');
+  const [freq, setFreq] = useState<string | null>(null);
+  const [proposed, setProposed] = useState(false);
+  const [busy, setBusy] = useState(false);
+
+  async function propose(frequency: string) {
+    setBusy(true);
+    const res = await fetch('/api/recurring', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sessionId, frequency, timeOfDay: '09:00' }),
+    });
+    setBusy(false);
+    if (res.ok) setProposed(true);
+  }
+
+  if (proposed) {
+    return <Banner variant="success">{t('recurringProposedNote', { name: otherName })}</Banner>;
+  }
+  return (
+    <div style={{ display: 'grid', gap: 'var(--s-2)' }}>
+      <p style={{ color: 'var(--t-100)', margin: 0, fontSize: '0.9em' }}>{t('makeRecurringQ', { name: otherName })}</p>
+      <div className="chips" style={{ justifyContent: 'center' }}>
+        {['weekly', 'fortnightly', 'monthly'].map((f) => (
+          <button key={f} type="button" className="chip" aria-pressed={freq === f}
+            disabled={busy}
+            onClick={() => { setFreq(f); propose(f); }}>
+            {t(`freq.${f}` as never)}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 }

@@ -258,6 +258,57 @@ export const trustedTeman = pgTable('trusted_teman', {
   uniq: uniqueIndex('trusted_teman_unique').on(t.ownerId, t.temanId, t.forRecipientId),
 }));
 
+/* Community circles (§28) and organisations (§46). Membership never
+   auto-matches anyone — individuals always choose. */
+export const organisation = pgTable('organisation', {
+  id:         uuid('id').primaryKey().defaultRandom(),
+  name:       text('name').notNull(),
+  type:       text('type'),                    // ngo | university | residents | corporate | senior_care
+  areaId:     uuid('area_id').references(() => area.id),
+  verifiedAt: timestamp('verified_at', { withTimezone: true }),
+  contact:    jsonb('contact'),
+  createdAt:  timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const circle = pgTable('circle', {
+  id:             uuid('id').primaryKey().defaultRandom(),
+  name:           text('name').notNull(),
+  areaId:         uuid('area_id').references(() => area.id),
+  organisationId: uuid('organisation_id').references(() => organisation.id),
+  joinPolicy:     text('join_policy').notNull().default('open'),     // open | approval
+  status:         text('status').notNull().default('pending'),       // pending | active
+  createdBy:      uuid('created_by').references(() => person.id),
+  createdAt:      timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const circleMember = pgTable('circle_member', {
+  circleId: uuid('circle_id').notNull().references(() => circle.id, { onDelete: 'cascade' }),
+  personId: uuid('person_id').notNull().references(() => person.id, { onDelete: 'cascade' }),
+  role:     text('role').notNull().default('member'),      // member | coordinator
+  state:    text('state').notNull().default('member'),     // member | pending
+  joinedAt: timestamp('joined_at', { withTimezone: true }).notNull().defaultNow(),
+}, (t) => ({
+  uniq: uniqueIndex('circle_member_unique').on(t.circleId, t.personId),
+}));
+
+/* Recurring companionship (§26) — absent from docs/03, added here. Both
+   parties must agree; either can pause or end, any time, no reason needed.
+   Each occurrence auto-creates a pre-matched request (worker job). */
+export const recurring = pgTable('recurring', {
+  id:             uuid('id').primaryKey().defaultRandom(),
+  requesterId:    uuid('requester_id').notNull().references(() => person.id, { onDelete: 'cascade' }),
+  temanId:        uuid('teman_id').notNull().references(() => person.id, { onDelete: 'cascade' }),
+  forRecipientId: uuid('for_recipient_id').references(() => careRecipient.id),
+  categoryId:     uuid('category_id').notNull().references(() => category.id),
+  title:          text('title').notNull(),
+  frequency:      text('frequency').notNull(),              // weekly | fortnightly | monthly
+  timeOfDay:      text('time_of_day').notNull(),            // HH:MM
+  state:          text('state').notNull().default('proposed'), // proposed | active | paused | ended
+  proposedBy:     uuid('proposed_by').notNull().references(() => person.id),
+  nextDate:       timestamp('next_date', { withTimezone: true }),
+  createdAt:      timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
 export const trustedContact = pgTable('trusted_contact', {
   id:           uuid('id').primaryKey().defaultRandom(),
   personId:     uuid('person_id').notNull().references(() => person.id, { onDelete: 'cascade' }),

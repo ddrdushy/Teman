@@ -11,7 +11,8 @@
 import PgBoss from 'pg-boss';
 import { and, eq, gt, isNotNull, lt, sql } from 'drizzle-orm';
 import { db } from '@/db';
-import { verification, request, match, notification } from '@/db/schema';
+import { verification, request, match, notification, recurring, session } from '@/db/schema';
+import { person as personTable } from '@/db/schema';
 import { deleteStoredObject } from '@/lib/storage';
 import { audit } from '@/lib/privacy';
 import { notify } from '@/lib/notify';
@@ -71,6 +72,56 @@ async function sendReminders() {
   }
 }
 
+/** J-02/K3 · Each active recurring occurrence auto-creates a pre-matched
+ *  request ~3 days ahead. Advancing nextDate in the same pass is the
+ *  double-spawn guard. */
+async function spawnRecurring() {
+  const FREQ_DAYS: Record<string, number> = { weekly: 7, fortnightly: 14, monthly: 28 };
+  const due = await db.select().from(recurring).where(and(
+    eq(recurring.state, 'active'),
+    isNotNull(recurring.nextDate),
+    lt(recurring.nextDate, new Date(Date.now() + 72 * 3600_000)),
+  ));
+  for (const rec of due) {
+    const startsAt = new Date(rec.nextDate!);
+    const [hh, mm] = rec.timeOfDay.split(':').map(Number);
+    startsAt.setHours(hh, mm, 0, 0);
+    if (startsAt.getTime() > Date.now()) {
+      const requester = await db.query.person.findFirst({ where: eq(personTable.id, rec.requesterId) });
+      if (requester?.approxPoint) {
+        const [req] = await db.insert(request).values({
+          requesterId: rec.requesterId,
+          beneficiaryType: rec.forRecipientId ? 'care_recipient' : 'self',
+          beneficiaryId: rec.forRecipientId,
+          categoryId: rec.categoryId,
+          status: 'matched',
+          urgency: 'planned',
+          title: rec.title,
+          areaId: requester.areaId,
+          approxPoint: requester.approxPoint,
+          startsAt,
+          endsAt: new Date(startsAt.getTime() + 2 * 3600_000),
+          expiresAt: startsAt,
+          visibility: 'trusted_only',
+        }).returning({ id: request.id });
+        const [m] = await db.insert(match).values({
+          requestId: req.id,
+          temanId: rec.temanId,
+          acceptedByRequesterAt: new Date(),
+          acceptedByTemanAt: new Date(),
+        }).returning({ id: match.id });
+        await db.insert(session).values({ matchId: m.id });
+        await notify(rec.requesterId, 'recurringSpawned', { title: rec.title });
+        await notify(rec.temanId, 'recurringSpawned', { title: rec.title });
+      }
+    }
+    const next = new Date(rec.nextDate!);
+    next.setDate(next.getDate() + (FREQ_DAYS[rec.frequency] ?? 7));
+    await db.update(recurring).set({ nextDate: next }).where(eq(recurring.id, rec.id));
+  }
+  if (due.length) console.log(`recurring-spawn: ${due.length} occurrence(s) handled`);
+}
+
 async function main() {
   const boss = new PgBoss({
     connectionString: process.env.DATABASE_URL,
@@ -91,7 +142,11 @@ async function main() {
   await boss.schedule('reminders', '*/10 * * * *');
   await boss.work('reminders', sendReminders);
 
-  console.log('worker: jobs registered — purge-documents, request-expiry, reminders');
+  await boss.createQueue('recurring-spawn');
+  await boss.schedule('recurring-spawn', '0 6 * * *', undefined, { tz: 'Asia/Kuala_Lumpur' });
+  await boss.work('recurring-spawn', spawnRecurring);
+
+  console.log('worker: jobs — purge-documents, request-expiry, reminders, recurring-spawn');
 }
 
 main().catch((err) => {

@@ -9,6 +9,8 @@ import { readUrl } from '@/lib/storage';
 import { Avatar } from '@/components/Avatar';
 import { Pill } from '@/components/Pill';
 import { Card } from '@/components/Card';
+import { careRecipient } from '@/db/schema';
+import { AddToTrusted } from './AddToTrusted';
 
 /* J4 · Someone's profile — verification, Moments count, tenure, descriptor
    words, languages, area. Facts and words; no rating exists to show. */
@@ -82,6 +84,15 @@ export default async function PersonProfilePage({
             ))}
           </div>
         </div>
+      )}
+      {viewerId !== id && (
+        <AddToTrusted
+          temanId={id}
+          recipients={(await db.query.careRecipient.findMany({
+            where: eq(careRecipient.managedBy, viewerId),
+            columns: { id: true, preferredName: true },
+          })).map((r) => ({ id: r.id, name: r.preferredName }))}
+        />
       )}
     </main>
   );

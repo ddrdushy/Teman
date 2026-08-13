@@ -26,7 +26,11 @@ export type NotificationKind =
   | 'temanArrived'
   | 'sessionStarted'
   | 'sessionEnded'
-  | 'trustedAlert';
+  | 'trustedAlert'
+  | 'recurringProposed'
+  | 'recurringAgreed'
+  | 'recurringEnded'
+  | 'recurringSpawned';
 
 const SISI_FOR_KIND: Record<NotificationKind, string | null> = {
   verificationApproved: 'answered',
@@ -45,6 +49,10 @@ const SISI_FOR_KIND: Record<NotificationKind, string | null> = {
   sessionStarted: 'together',
   sessionEnded: 'moment',
   trustedAlert: null,
+  recurringProposed: 'answered',
+  recurringAgreed: 'answered',
+  recurringEnded: null,
+  recurringSpawned: 'answered',
 };
 
 export async function notify(
