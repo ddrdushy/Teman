@@ -1,0 +1,23 @@
+# Local dress-rehearsal of the production stack — the same image, worker and
+# db wiring as the VPS, minus Caddy (no domain yet; Caddy's config is two
+# lines and auto-TLS, the least risky piece). App published on 3200.
+#
+#   docker compose -f docker-compose.yml -f docker-compose.localprod.yml \
+#     up -d db app worker
+services:
+  app:
+    image: teman:local
+    build: null
+    ports:
+      - "127.0.0.1:3200:3000"
+    environment:
+      DEMO_MODE: "true"
+      DEMO_OTP: "000000"
+      REQUESTS_OPEN: "true"
+      AUTH_TRUST_HOST: "true"
+      AUTH_URL: http://localhost:3200
+  worker:
+    image: teman:local
+    build: null
+    environment:
+      DEMO_MODE: "true"

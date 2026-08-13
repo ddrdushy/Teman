@@ -13,7 +13,7 @@ FROM base AS build
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN pnpm build && pnpm build:worker
+RUN pnpm build && pnpm build:worker && pnpm build:migrate
 
 FROM node:22-alpine AS runner
 WORKDIR /app
@@ -23,7 +23,7 @@ COPY --from=build /app/.next/standalone ./
 COPY --from=build /app/.next/static ./.next/static
 COPY --from=build /app/public ./public
 COPY --from=build /app/dist ./dist
-COPY --from=build /app/node_modules/pg-boss ./node_modules/pg-boss
+COPY --from=build /app/src/db/migrations ./migrations
 USER teman
 EXPOSE 3000
 CMD ["node", "server.js"]

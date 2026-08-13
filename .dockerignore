@@ -1,0 +1,12 @@
+node_modules
+.next
+.next-goal
+.data
+.git
+.env
+dist
+test-results
+playwright-report
+design
+docs
+*.md

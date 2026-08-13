@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:worker": "esbuild src/worker.ts --bundle --platform=node --target=node22 --packages=external --outfile=dist/worker.js",
+    "build:worker": "esbuild src/worker.ts --bundle --platform=node --target=node22 --external:pg-native --outfile=dist/worker.js",
     "start": "next start",
     "check:contrast": "node scripts/check-contrast.mjs",
     "db:generate": "drizzle-kit generate && node scripts/unquote-geography.mjs",
@@ -15,7 +15,11 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:debug": "playwright test --debug",
-    "seed:demo": "node scripts/seed/areas.mjs && node scripts/seed/categories.mjs && node scripts/seed/admins.mjs && node scripts/seed/demo.mjs"
+    "test:report": "node scripts/test-report.mjs",
+    "test:report:quick": "node scripts/test-report.mjs --quick",
+    "test:report:open": "playwright show-report test-reports/playwright-html",
+    "seed:demo": "node scripts/seed/areas.mjs && node scripts/seed/categories.mjs && node scripts/seed/admins.mjs && node scripts/seed/demo.mjs",
+    "build:migrate": "esbuild src/migrate.ts --bundle --platform=node --target=node22 --external:pg-native --outfile=dist/migrate.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1109.0",
@@ -48,5 +52,6 @@
   },
   "engines": {
     "node": ">=20"
-  }
+  },
+  "packageManager": "pnpm@9.12.0"
 }
