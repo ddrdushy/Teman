@@ -1,30 +1,20 @@
 /**
- * R2, S3-compatible. ID documents and selfies only — deliberately not on the
- * app disk (docs/01 §1). Access is via short-lived signed URLs; the admin
- * review screens log every read (that logging lives with the caller, which
- * has the actor and the subject).
+ * Document storage: R2 when configured (production — keeps ID documents off
+ * the app disk, docs/01 §1), local disk under .data/uploads otherwise (dev
+ * and the demo environment, which must run with nothing external).
+ *
+ * Reads are short-lived signed URLs on R2, or the self/admin-gated
+ * /api/files route locally. Callers log access — they know the actor.
  */
 
+import { mkdir, readFile, writeFile, unlink } from 'node:fs/promises';
+import { dirname, join, normalize } from 'node:path';
 import {
   S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
-export class StorageUnavailableError extends Error {
-  constructor() { super('R2 is not configured'); this.name = 'StorageUnavailableError'; }
-}
-
-function client(): S3Client {
-  const { R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY } = process.env;
-  if (!R2_ACCOUNT_ID || !R2_ACCESS_KEY_ID || !R2_SECRET_ACCESS_KEY) {
-    throw new StorageUnavailableError();
-  }
-  return new S3Client({
-    region: 'auto',
-    endpoint: `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-    credentials: { accessKeyId: R2_ACCESS_KEY_ID, secretAccessKey: R2_SECRET_ACCESS_KEY },
-  });
-}
+const LOCAL_ROOT = '.data/uploads';
 
 export function storageConfigured(): boolean {
   return Boolean(
@@ -34,27 +24,57 @@ export function storageConfigured(): boolean {
   );
 }
 
-const bucket = () => process.env.R2_BUCKET ?? 'teman-documents';
-
-/** For the member's browser to PUT a document directly. 5 minutes. */
-export async function signedUploadUrl(key: string, contentType: string) {
-  return getSignedUrl(
-    client(),
-    new PutObjectCommand({ Bucket: bucket(), Key: key, ContentType: contentType }),
-    { expiresIn: 300 },
-  );
+function client(): S3Client {
+  return new S3Client({
+    region: 'auto',
+    endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+    credentials: {
+      accessKeyId: process.env.R2_ACCESS_KEY_ID!,
+      secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
+    },
+  });
 }
 
-/** For an admin to view a document. 60 seconds — the caller logs the access. */
-export async function signedReadUrl(key: string) {
-  return getSignedUrl(
-    client(),
-    new GetObjectCommand({ Bucket: bucket(), Key: key }),
-    { expiresIn: 60 },
-  );
+const bucket = () => process.env.R2_BUCKET ?? 'teman-documents';
+
+function localPath(key: string): string {
+  const p = normalize(join(LOCAL_ROOT, key));
+  if (!p.startsWith(LOCAL_ROOT)) throw new Error('bad storage key');
+  return p;
+}
+
+export async function putObject(key: string, body: Buffer, contentType: string): Promise<void> {
+  if (storageConfigured()) {
+    await client().send(new PutObjectCommand({ Bucket: bucket(), Key: key, Body: body, ContentType: contentType }));
+    return;
+  }
+  const p = localPath(key);
+  await mkdir(dirname(p), { recursive: true });
+  await writeFile(p, body);
+}
+
+/** A URL an authorised viewer can open right now. R2: 60s signed. Local: the
+ *  gated /api/files route. Access logging is the caller's job. */
+export async function readUrl(key: string): Promise<string> {
+  if (storageConfigured()) {
+    return getSignedUrl(client(), new GetObjectCommand({ Bucket: bucket(), Key: key }), { expiresIn: 60 });
+  }
+  return `/api/files/${key}`;
+}
+
+export async function readObject(key: string): Promise<Buffer> {
+  if (storageConfigured()) {
+    const res = await client().send(new GetObjectCommand({ Bucket: bucket(), Key: key }));
+    return Buffer.from(await res.Body!.transformToByteArray());
+  }
+  return readFile(localPath(key));
 }
 
 /** The 90-day retention job (C-07) deletes through here. */
-export async function deleteObject(key: string) {
-  await client().send(new DeleteObjectCommand({ Bucket: bucket(), Key: key }));
+export async function deleteStoredObject(key: string): Promise<void> {
+  if (storageConfigured()) {
+    await client().send(new DeleteObjectCommand({ Bucket: bucket(), Key: key }));
+    return;
+  }
+  await unlink(localPath(key)).catch(() => {});
 }
