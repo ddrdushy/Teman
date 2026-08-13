@@ -9,11 +9,12 @@
  *  - "requests now open" broadcast — the promise made during recruitment
  */
 import PgBoss from 'pg-boss';
-import { and, eq, isNotNull, lt } from 'drizzle-orm';
+import { and, eq, gt, isNotNull, lt, sql } from 'drizzle-orm';
 import { db } from '@/db';
-import { verification } from '@/db/schema';
+import { verification, request, match, notification } from '@/db/schema';
 import { deleteStoredObject } from '@/lib/storage';
 import { audit } from '@/lib/privacy';
+import { notify } from '@/lib/notify';
 
 /** C-07: reviewed documents are deleted 90 days after review. The promise is
  *  stated to the member before upload — this job is what keeps it. */
@@ -33,6 +34,43 @@ async function purgeDocuments() {
   if (due.length) console.log(`purge-documents: ${due.length} verification(s) purged`);
 }
 
+/** D-19: the honest notice, sent BEFORE the date — "no one could make
+ *  Friday" arrives Thursday evening, never Friday morning. */
+async function expireRequests() {
+  const due = await db.select().from(request).where(
+    and(eq(request.status, 'looking'), lt(request.expiresAt, new Date())),
+  );
+  for (const r of due) {
+    await db.update(request).set({ status: 'expired', updatedAt: new Date() })
+      .where(eq(request.id, r.id));
+    await notify(r.requesterId, 'requestExpired', { title: r.title });
+  }
+  if (due.length) console.log(`request-expiry: ${due.length} expired with honest notice`);
+}
+
+/** G-05: reminders at 24h and 2h, both parties, exactly once. */
+async function sendReminders() {
+  for (const [kind, hours] of [['reminder24h', 24], ['reminder2h', 2]] as const) {
+    const windowStart = new Date(Date.now() + (hours - 0.5) * 3600_000);
+    const windowEnd = new Date(Date.now() + hours * 3600_000);
+    const rows = await db.select({
+      requestId: request.id, title: request.title,
+      requesterId: request.requesterId, temanId: match.temanId,
+    }).from(request)
+      .innerJoin(match, eq(match.requestId, request.id))
+      .where(and(eq(request.status, 'matched'),
+        gt(request.startsAt, windowStart), lt(request.startsAt, windowEnd)));
+    for (const r of rows) {
+      const already = await db.select({ n: sql<number>`count(*)::int` }).from(notification)
+        .where(and(eq(notification.kind, kind),
+          sql`${notification.params}->>'requestId' = ${r.requestId}`));
+      if (already[0].n > 0) continue;
+      await notify(r.requesterId, kind, { requestId: r.requestId, title: r.title });
+      await notify(r.temanId, kind, { requestId: r.requestId, title: r.title });
+    }
+  }
+}
+
 async function main() {
   const boss = new PgBoss({
     connectionString: process.env.DATABASE_URL,
@@ -45,7 +83,15 @@ async function main() {
   await boss.schedule('purge-documents', '30 3 * * *', undefined, { tz: 'Asia/Kuala_Lumpur' });
   await boss.work('purge-documents', purgeDocuments);
 
-  console.log('worker: pg-boss started; jobs: purge-documents (daily 03:30)');
+  await boss.createQueue('request-expiry');
+  await boss.schedule('request-expiry', '*/10 * * * *');
+  await boss.work('request-expiry', expireRequests);
+
+  await boss.createQueue('reminders');
+  await boss.schedule('reminders', '*/10 * * * *');
+  await boss.work('reminders', sendReminders);
+
+  console.log('worker: jobs registered — purge-documents, request-expiry, reminders');
 }
 
 main().catch((err) => {

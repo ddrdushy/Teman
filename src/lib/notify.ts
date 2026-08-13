@@ -13,12 +13,38 @@ import { notification } from '@/db/schema';
 export type NotificationKind =
   | 'verificationApproved'
   | 'verificationRejected'
-  | 'requestsOpen';
+  | 'requestsOpen'
+  | 'offerReceived'
+  | 'offerAccepted'
+  | 'offerDeclined'
+  | 'matchConfirmed'
+  | 'requestExpired'
+  | 'requestCancelledByRequester'
+  | 'matchCancelledByTeman'
+  | 'reminder24h'
+  | 'reminder2h'
+  | 'temanArrived'
+  | 'sessionStarted'
+  | 'sessionEnded'
+  | 'trustedAlert';
 
 const SISI_FOR_KIND: Record<NotificationKind, string | null> = {
   verificationApproved: 'answered',
   verificationRejected: null,
   requestsOpen: 'waiting',
+  offerReceived: 'answered',
+  offerAccepted: 'answered',
+  offerDeclined: 'waiting',
+  matchConfirmed: 'answered',
+  requestExpired: 'waiting',
+  requestCancelledByRequester: null,
+  matchCancelledByTeman: 'waiting',
+  reminder24h: 'answered',
+  reminder2h: 'answered',
+  temanArrived: 'answered',
+  sessionStarted: 'together',
+  sessionEnded: 'moment',
+  trustedAlert: null,
 };
 
 export async function notify(

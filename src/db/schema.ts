@@ -232,6 +232,32 @@ export const feedback = pgTable('feedback', {
   createdAt:       timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 });
 
+/* Coordination messaging is scoped to a request (G-04) — the thread IS the
+   request. Not a general chat platform, so there is no free-standing thread
+   table to grow into one. */
+export const message = pgTable('message', {
+  id:        uuid('id').primaryKey().defaultRandom(),
+  requestId: uuid('request_id').notNull().references(() => request.id, { onDelete: 'cascade' }),
+  senderId:  uuid('sender_id').notNull().references(() => person.id),
+  body:      text('body').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  readAt:    timestamp('read_at', { withTimezone: true }),
+}, (t) => ({
+  byRequest: index('message_by_request').on(t.requestId, t.createdAt),
+}));
+
+/* "Mum's Temans" — per-recipient trusted sets (J-01). Referenced by the
+   matching query's ranking from day one (docs/03). */
+export const trustedTeman = pgTable('trusted_teman', {
+  id:             uuid('id').primaryKey().defaultRandom(),
+  ownerId:        uuid('owner_id').notNull().references(() => person.id, { onDelete: 'cascade' }),
+  temanId:        uuid('teman_id').notNull().references(() => person.id, { onDelete: 'cascade' }),
+  forRecipientId: uuid('for_recipient_id').references(() => careRecipient.id, { onDelete: 'cascade' }),
+  createdAt:      timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+}, (t) => ({
+  uniq: uniqueIndex('trusted_teman_unique').on(t.ownerId, t.temanId, t.forRecipientId),
+}));
+
 export const trustedContact = pgTable('trusted_contact', {
   id:           uuid('id').primaryKey().defaultRandom(),
   personId:     uuid('person_id').notNull().references(() => person.id, { onDelete: 'cascade' }),
