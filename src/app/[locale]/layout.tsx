@@ -5,11 +5,20 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { locales, type Locale } from '@/i18n';
 import { resolveTextScale } from '@/lib/preferences';
+import { token } from '@/lib/tokens';
+import { PwaSetup } from './PwaSetup';
 import '../globals.css';
 
 export const metadata: Metadata = {
   title: 'Teman',
+  manifest: '/manifest.webmanifest',
+  appleWebApp: { capable: true, title: 'Teman', statusBarStyle: 'default' },
+  icons: { apple: '/icons/apple-touch-icon.png' },
 };
+
+export function generateViewport() {
+  return { themeColor: token('t-900') };
+}
 
 /* The whole app renders per-account (text scale, session), so routes are
    dynamic. Static prerendering returns for the public site in G20, which gets
@@ -35,6 +44,7 @@ export default async function LocaleLayout({
       {/* Fonts are self-hosted via fonts.css — nothing external loads. */}
       <body>
         <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+        <PwaSetup />
       </body>
     </html>
   );

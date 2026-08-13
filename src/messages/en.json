@@ -1208,5 +1208,9 @@
       "idQ": "What happens to my ID after verification?",
       "idA": "One trained reviewer checks it, then it is deleted within 90 days. The number itself is never stored — only a scrambled code that detects the same document on two accounts."
     }
+  },
+  "pwa": {
+    "offlineTitle": "No connection right now",
+    "offlineBody": "Nothing you typed is lost. Teman will pick up where you left off the moment the connection returns."
   }
 }
